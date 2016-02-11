@@ -14,7 +14,7 @@ Full Stack Web Application
 <h4>Organziational/Development Technologies</h4>
 <ol>
 <li><a href="https://github.com/DenverGrown303/CouncilOfBattle">GitHub</a></li>
-<li>Trello</li>
+<li><a href="https://trello.com/b/t1krXoJZ/council-of-battle">Trello</a></li>
 <li>LucidChart</li>
 <li>PowerPoint</li>
 <li>InvisionApp</li>
