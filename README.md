@@ -54,6 +54,7 @@ We are building a full stack web application that will have real world utility a
 <ul>
 <li>Feedback System</li>
 <li>Grade Tracking</li>
+<li>Attendence 3.0 (Absences excused or not)</li>
 </ul>
 
 <h4>Excluded Features list</h4>
