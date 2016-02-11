@@ -13,7 +13,7 @@ Full Stack Web Application
 
 <h4>Organziational/Development Technologies</h4>
 <ol>
-<li>GitHub</li>
+<li><a href="https://github.com/DenverGrown303/CouncilOfBattle">GitHub</a></li>
 <li>Trello</li>
 <li>LucidChart</li>
 <li>PowerPoint</li>
