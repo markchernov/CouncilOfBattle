@@ -1,5 +1,7 @@
-# CouncilOfBattle
-Council of Battle full stack group project.
+#
+<h1>Classroom Helper</h1>
+<h2>Created by the Council Of Battle</h2>
+Full Stack Web Application
 
 <h3>Collaborators</h3>
 Ryan Ardiente<br>
@@ -23,5 +25,24 @@ Pelham Anderson<br>
 5.HTML/CSS<br>
 
 <h4>Project Overview</h4>
-We are building a full stack web application that will have real world utility and implications.  We are primarily using the Scrum and Agile methodologies, but will be flexible in adapting methodologies if needed.
+We are building a full stack web application that will have real world utility and implications.  We are primarily using the Scrum and Agile methodologies, but will be flexible in adapting methodologies if needed.  Our project is called Classroom Helper and will assist with classroom management.
+
+<h4>Critical Features</4>
+Class Roster
+Staff Roseter
+Attendance
+User login and User profiles
+User Permission Levels
+Create basic ticketing system (tickets are created and put into a queue)
+
+<h4>Secondary Features</4>
+Ticketing Assignments(tickets are assigned to an instructor)
+Ticketing Scheduling (tickets are assigned to a time slot)
+Attendance Notification to teachers and students when a student falls behind
+
+<h4>Tertiary Features</4>
+Feedback System
+
+<h4>Excluded Features</4>
+Student-to-Student (S2S) messaging
 
