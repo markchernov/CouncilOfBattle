@@ -23,11 +23,11 @@ Full Stack Web Application
 
 <h4>Progamming Languages</h4>
 <ol>
-<li>Java</li><br>
-<li>Spring MVC</li><br>
-<li>JPA</li><br>
-<li>MySQL</li><br>
-<li>HTML/CSS</li><br>
+<li>Java</li>
+<li>Spring MVC</li>
+<li>JPA</li>
+<li>MySQL</li>
+<li>HTML/CSS</li>
 </ol>
 
 <h4>Project Overview</h4>
