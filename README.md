@@ -15,9 +15,9 @@ Full Stack Web Application
 <ol>
 <li><a href="https://github.com/DenverGrown303/CouncilOfBattle">GitHub</a></li>
 <li><a href="https://trello.com/b/t1krXoJZ/council-of-battle">Trello</a></li>
-<li>LucidChart</li>
+<li><a href="https://www.lucidchart.com/invitations/accept/89367942-d4eb-4833-b4e2-122b8fbbc567">LucidChart</a></li>
 <li>PowerPoint</li>
-<li>InvisionApp</li>
+<li><a href="https://invis.io/5X5ZU14HF"></a>InvisionApp</li>
 <li>Eclipse</li>
 </ol>
 
