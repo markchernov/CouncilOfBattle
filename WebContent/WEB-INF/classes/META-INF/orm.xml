@@ -13,7 +13,7 @@ All rights reserved by Capstone Courseware, LLC.
 
   <persistence-unit-metadata>
     <persistence-unit-defaults>
-      <schema>companydb</schema>
+      <schema>helperdb</schema>
     </persistence-unit-defaults>
   </persistence-unit-metadata>
   
