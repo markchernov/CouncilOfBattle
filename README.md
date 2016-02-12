@@ -24,6 +24,7 @@ Full Stack Web Application
 <h4>Progamming Languages</h4>
 <ol>
 <li>Java</li>
+<li>CSS</li>
 <li>Spring MVC</li>
 <li>JPA</li>
 <li>MySQL</li>
@@ -36,7 +37,7 @@ We are building a full stack web application that will have real world utility a
 <h4>Critical Features List</h4>
 <ul>
 <li>Class Roster</li>
-<li>Staff Roseter</li>
+<li>Staff Roster</li>
 <li>Attendance</li>
 <li>User login and User profiles</li>
 <li>User Permission Levels</li>
