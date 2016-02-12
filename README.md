@@ -24,6 +24,7 @@ Full Stack Web Application
 <h4>Progamming Languages</h4>
 <ol>
 <li>Java</li>
+<li>CSS</li>
 <li>Spring MVC</li>
 <li>JPA</li>
 <li>MySQL</li>
