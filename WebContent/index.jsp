@@ -81,7 +81,7 @@
 
 					<div class="card-action">
 
-						<form action="GetData.do" method="GET" class="myForm">
+						<form action="GetStudent.do" method="GET" class="myForm">
 
 							<div class="row">
 								<div class="input-field col s12">
