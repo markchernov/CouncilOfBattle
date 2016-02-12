@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.ClassID.color=0,0,0
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.Declaration.color=0,0,0
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.Element.color=43,145,175
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.default.color=0,0,0
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.number.color=0,0,0
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.punctuation.color=0,0,0
+org.eclipse.e4.CSS.syntaxColorer.tokenStyles.string.color=163,21,21

@@ -1,0 +1,10 @@
+DEBUG.consoleOpenOnOut=true
+eclipse.preferences.version=1
+org.eclipse.debug.ui.MemoryHistoryKnownColor=235,235,235
+org.eclipse.debug.ui.MemoryHistoryUnknownColor=170,175,185
+org.eclipse.debug.ui.changedDebugElement=255,128,128
+org.eclipse.debug.ui.consoleBackground=255,255,255
+org.eclipse.debug.ui.errorColor=231,7,11
+org.eclipse.debug.ui.inColor=0,255,0
+org.eclipse.debug.ui.outColor=0,255,255
+overriddenByCSS=,org.eclipse.debug.ui.MemoryHistoryKnownColor,org.eclipse.debug.ui.MemoryHistoryUnknownColor,org.eclipse.debug.ui.changedDebugElement,
