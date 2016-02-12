@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: Nayrdnt
 Build-Jdk: 1.8.0_66
-=======
-Built-By: Acer
-Build-Jdk: 1.8.0_60
->>>>>>> e95cb4c0e3c5418d02cae00688713deef7bc4079
 Created-By: Maven Integration for Eclipse
 
