@@ -1,0 +1,27 @@
+@CHARSET "ISO-8859-1";
+
+ body {
+	
+	background-color: #b39ddb;
+	
+} 
+
+
+.page-footer deep-purple {
+	
+	
+	display: inline-flex;
+	
+	
+}
+
+
+.main {
+	max-width: 100%; 
+	margin-center: auto; 
+	/* margin: 0 auto; */ 
+}
+
+
+
+
