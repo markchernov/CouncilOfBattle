@@ -27,6 +27,7 @@ public class HelperDAO {
 	public User getUser(int id) {
 		User us = em.find(User.class, id);
 		em.detach(us);
+		System.out.println(us);
 		return us;
 	}
 	
