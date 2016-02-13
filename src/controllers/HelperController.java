@@ -16,6 +16,8 @@ public class HelperController {
 	
 	@RequestMapping(path="GetUser.do", method=RequestMethod.GET)
 	public ModelAndView getUser() {
+		
+		
 		return new ModelAndView("index.jsp");
 	}
 

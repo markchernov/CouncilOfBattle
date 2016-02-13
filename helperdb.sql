@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `users` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,=======
+  `user_id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
