@@ -5,16 +5,16 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema helperdb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `helperdb` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema helperdb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `helperdb` DEFAULT CHARACTER SET utf8 ;
 SHOW WARNINGS;
-USE `mydb` ;
+USE `helperdb` ;
 
 -- -----------------------------------------------------
 -- Table `cohorts`
@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `users` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` INT NOT NULL,
+  `user_id` INT NOT NULL AUTO_INCREMENT,=======
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -280,6 +280,26 @@ CREATE TABLE IF NOT EXISTS `user_accounts` (
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Data for table `users`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `helperdb`;
+INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `email`) VALUES (DEFAULT, 'Bob', 'Dobbs', 'bdobbs@example.com');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `user_accounts`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `helperdb`;
+INSERT INTO `user_accounts` (`user_id`, `access_level`, `password`, `username`) VALUES (1, '2', 'wombat1', 'bdobbs');
+
+COMMIT;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

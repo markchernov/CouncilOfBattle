@@ -24,6 +24,11 @@ public class HelperDAO {
 	
 	private EntityManager em;
 
+	public User getUser(int id) {
+		User us = em.find(User.class, id);
+		em.detach(us);
+		return us;
+	}
 	
 	
 	
