@@ -11,21 +11,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
+
 public class HelperDAO {
+	
+	@PersistenceContext
+	
+	private EntityManager em;
 
-	public Connection createConnection() throws SQLException, ClassNotFoundException {
-
-		Class.forName("com.mysql.jdbc.Driver");
-
-		String url = "jdbc:mysql://localhost:3306/companydb";
-		String username = "student";
-		String password = "student";
-
-		Connection conn = DriverManager.getConnection(url, username, password);
-
-		return conn;
+	public User getUser(int id) {
+		User us = em.find(User.class, id);
+		em.detach(us);
+		return us;
 	}
-
+	
 	
 	
 	
