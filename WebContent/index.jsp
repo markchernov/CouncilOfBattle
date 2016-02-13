@@ -81,7 +81,7 @@
 
 					<div class="card-action">
 
-						<form action="GetStudent.do" method="GET" class="myForm">
+						<form action="GetUser.do" method="GET" class="myForm">
 
 							<div class="row">
 								<div class="input-field col s12">
@@ -89,6 +89,8 @@
 										class="validate" name="input"> <label class="active"
 										for="first_name2">Please type your SELECT SQL
 										statement:</label>
+										
+										<p> ${user} </p>
 								</div>
 							</div>
 

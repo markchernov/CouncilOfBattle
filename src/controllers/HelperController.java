@@ -7,18 +7,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import data.HelperDAO;
+import data.User;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 @Controller
 
 public class HelperController {
 
-	@Autowired HelperDAO helperDAO;
+	@Autowired 
+	private HelperDAO helperDAO;
 	
 	@RequestMapping(path="GetUser.do", method=RequestMethod.GET)
+	
 	public ModelAndView getUser() {
 		
 		
-		return new ModelAndView("index.jsp");
+		User user = helperDAO.getUser(1);
+		
+		System.out.println(user);
+		
+		return new ModelAndView("index.jsp", "user", user);
 	}
 
 	
