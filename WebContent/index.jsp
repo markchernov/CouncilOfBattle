@@ -85,10 +85,9 @@
 
 							<div class="row">
 								<div class="input-field col s12">
-									<input value="SELECT * FROM employees;" id="select" type="text"
+									<input value="Click the SELECT button to see the USER #1" id="select" type="text"
 										class="validate" name="input"> <label class="active"
-										for="first_name2">Please type your SELECT SQL
-										statement:</label>
+										for="first_name2">Click the SELECT button to see the USER #1:</label>
 										
 										<p> ${user} </p>
 								</div>
