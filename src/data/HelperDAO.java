@@ -31,6 +31,21 @@ public class HelperDAO {
 		return us;
 	}
 	
+	public User setUser() {
+		
+		
+		User user = new User();
+		
+		user.setFirstname("Ben");
+		user.setLastname("K");
+		user.setEmail("bk@gmail.com");
+		
+		em.persist(user);
+
+		System.out.println(user);
+		return user;
+	}
+	
 	
 	
 	

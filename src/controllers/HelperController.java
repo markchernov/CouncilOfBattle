@@ -35,6 +35,20 @@ public class HelperController {
 		return new ModelAndView("index.jsp", "user", user);
 	}
 
+@RequestMapping(path="SetUser.do", method=RequestMethod.GET)
+	
+	public ModelAndView setUser() {
+		
+		
+		User user = helperDAO.setUser();
+		
+		System.out.println(user);
+		
+		return new ModelAndView("index.jsp", "user", user);
+	}
+	
+	
+	
 	
 	
 	

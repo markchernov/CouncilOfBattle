@@ -105,7 +105,31 @@
 
 					</div>
 
+                    <div class="card-action">
 
+						<form action="SetUser.do" method="GET" class="myForm">
+
+							<div class="row">
+								<div class="input-field col s12">
+									<input value="Click the CREATE button to create a USER" id="select" type="text"
+										class="validate" name="input"> <label class="active"
+										for="first_name2">Click the CREATE button to save a USER:</label>
+										
+										<p> ${user} </p>
+								</div>
+							</div>
+
+
+
+							<button class="btn waves-effect waves-light deep-purple"
+								type="submit">
+								CREATE <i class="material-icons right">launch</i>
+							</button>
+
+
+						</form>
+
+					</div>
 
 
 
