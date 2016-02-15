@@ -5,23 +5,23 @@ import java.util.Date;
 
 public class AddressId implements Serializable{
 
-	private int id;
+	private int user;
 	private String addresstype;
 	
 	
 	public AddressId() {};
 	
 	
-	public AddressId(String addresstype, int id) {
+	public AddressId(String addresstype, int user) {
 		
-		this.id = id;
+		this.user = user;
 		this.addresstype = addresstype;
 		
 	}
 
 
 	public int getId() {
-		return id;
+		return user;
 	}
 
     String getType() {
@@ -29,8 +29,8 @@ public class AddressId implements Serializable{
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int user) {
+		this.user = user;
 	}
 
 
@@ -45,7 +45,7 @@ public class AddressId implements Serializable{
 		int result = 1;
 		result = prime * result
 				+ ((addresstype == null) ? 0 : addresstype.hashCode());
-		result = prime * result + id;
+		result = prime * result + user;
 		return result;
 	}
 	
@@ -63,7 +63,7 @@ public class AddressId implements Serializable{
 				return false;
 		} else if (!addresstype.equals(other.addresstype))
 			return false;
-		if (id != other.id)
+		if (user != other.user)
 			return false;
 		return true;
 	}

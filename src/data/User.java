@@ -3,20 +3,28 @@ package data;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-@Embeddable
-@Inheritance
+
+
+@Inheritance(strategy = InheritanceType.JOINED)
+
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+
+
 public class User {
 
 	@Id
@@ -28,13 +36,13 @@ public class User {
 	private String lastname;
 	private String email;
 
-	@OneToOne(mappedBy = "user")
+	/*@OneToOne(mappedBy = "user")
 	private Student student;
 
 	@OneToOne(mappedBy = "user")
-	private Instructor instructor;
+	private Instructor instructor;*/
 
-	@OneToMany
+	@OneToMany(mappedBy = "user")
 	Collection<Address> addresses;
 	
 	@OneToMany(mappedBy = "user")
@@ -76,7 +84,7 @@ public class User {
 
 
 
-	public Student getStudent() {
+	/*public Student getStudent() {
 		return student;
 	}
 
@@ -85,7 +93,7 @@ public class User {
 
 	public Instructor getInstructor() {
 		return instructor;
-	}
+	}*/
 
 
 
@@ -132,7 +140,7 @@ public class User {
 
 
 
-	public void setStudent(Student student) {
+	/*public void setStudent(Student student) {
 		this.student = student;
 	}
 
@@ -142,7 +150,7 @@ public class User {
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
-
+*/
 
 
 
@@ -163,8 +171,13 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", student=" + student + ", instructor=" + instructor + ", addresses=" + addresses + "]";
+				+ ", addresses=" + addresses + ", accounts=" + accounts + "]";
 	}
+
+
+
+
+	
 
 	
 	

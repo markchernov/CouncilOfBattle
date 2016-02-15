@@ -3,6 +3,7 @@ package data;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "instructors")
 
-
+@DiscriminatorValue("instructor")
 
 
 
@@ -29,10 +30,9 @@ public class Instructor extends User{
 	private int id;*/
 	
 	
-    @Embedded
-	@OneToOne
+	/*@OneToOne
 	@JoinColumn(name = "user_id")
-	private User user;
+	private User user;*/
     
     
     
@@ -57,9 +57,9 @@ public class Instructor extends User{
 
 
 
-	public User getUser() {
+	/*public User getUser() {
 		return user;
-	}
+	}*/
 
 
 
@@ -81,9 +81,9 @@ public class Instructor extends User{
 
 
 
-	public void setUser(User user) {
+	/*public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 
 
@@ -107,9 +107,13 @@ public class Instructor extends User{
 
 	@Override
 	public String toString() {
-		return "Instructor [user=" + user + ", level=" + level + ", subjects=" + subjects + ", competencies="
-				+ competencies + "]";
-	};
+		return "Instructor [level=" + level + ", subjects=" + subjects + ", competencies=" + competencies
+				+ ", addresses=" + addresses + ", accounts=" + accounts + "]";
+	}
+
+
+
+	
 	
 	
 	
