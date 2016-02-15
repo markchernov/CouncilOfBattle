@@ -18,13 +18,13 @@
 		<class>data.Account</class>
 		<class>data.Address</class>
 		<class>data.Attendance</class>
-		<class>data.Attendance</class>
 		<class>data.Cohort</class>
 		<class>data.Competency</class>
 		<class>data.Grade</class>
 		<class>data.Instructor</class>
 		<class>data.Project</class>
 		<class>data.Student</class>
+		<class>data.Subject</class>
 		<class>data.User</class>
 		
 		
