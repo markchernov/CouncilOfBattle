@@ -144,7 +144,12 @@ public class Attendance {
 	public String toString() {
 		return "Attendance [student=" + student + ", date=" + date + ", present=" + present + ", late=" + late
 				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
-	};
+	}
+
+
+
+
+	
 	
 	
 	
