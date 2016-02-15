@@ -2,6 +2,7 @@ package data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ public class Account {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@Id
 	private User user;
 	
 	
