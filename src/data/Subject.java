@@ -30,6 +30,10 @@ public class Subject {
 	@ManyToMany(mappedBy = "subjects")
 	private Collection<Instructor> instructors;
 	
+	@ManyToMany(mappedBy = "subjects")
+	private Collection<Project> projects;
+	
+	
 	
 	public Subject () {}
 
@@ -49,8 +53,16 @@ public class Subject {
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	
+
+
+	public Collection<Project> getProjects() {
+		return projects;
+	}
+
+
+	public void setProjects(Collection<Project> projects) {
+		this.projects = projects;
 	}
 
 
@@ -66,8 +78,11 @@ public class Subject {
 
 	@Override
 	public String toString() {
-		return "Subject [id=" + id + ", name=" + name + ", instructors=" + instructors + "]";
-	};
+		return "Subject [id=" + id + ", name=" + name + ", instructors=" + instructors + ", projects=" + projects + "]";
+	}
+
+
+	
 	
 	
 	

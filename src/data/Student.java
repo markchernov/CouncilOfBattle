@@ -3,6 +3,7 @@ package data;
 import java.util.Collection;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +17,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "students")
 
-@Inheritance
+
+@DiscriminatorValue("student")
+
+
+
 public class Student extends User{
 
 	
@@ -31,10 +36,10 @@ public class Student extends User{
 	@JoinColumn(name = "cohort_id")
 	private Cohort cohort;
 	
-	@Embedded
+	/*
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private User user;
+	private User user;*/
 	
 	
 	@OneToMany(mappedBy = "student")
@@ -42,6 +47,24 @@ public class Student extends User{
 	
 	
 	
+	@OneToMany(mappedBy = "student")
+	private Collection<Grade> grades;
+	
+	
+	
+	
+	public Collection<Grade> getGrades() {
+		return grades;
+	}
+
+
+
+	public void setGrades(Collection<Grade> grades) {
+		this.grades = grades;
+	}
+
+
+
 	public Student () {}
 
 
@@ -52,9 +75,9 @@ public class Student extends User{
 
 
 
-	public User getUser() {
+	/*public User getUser() {
 		return user;
-	}
+	}*/
 
 
 
@@ -70,9 +93,9 @@ public class Student extends User{
 
 
 
-	public void setUser(User user) {
+	/*public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 
 
@@ -84,8 +107,17 @@ public class Student extends User{
 
 	@Override
 	public String toString() {
-		return "Student [cohort=" + cohort + ", user=" + user + ", attendances=" + attendances + "]";
-	};
+		return "Student [cohort=" + cohort + ", attendances=" + attendances + ", grades=" + grades + ", addresses="
+				+ addresses + ", accounts=" + accounts + "]";
+	}
+
+
+
+	
+
+
+
+	
 	
 	
 	
