@@ -5,23 +5,23 @@ import java.util.Date;
 
 public class AttendanceId implements Serializable{
 
-	private int id;
+	private int student;
 	private Date date;
 	
 	
 	public AttendanceId() {};
 	
 	
-	public AttendanceId(Date date, int id) {
+	public AttendanceId(Date date, int student) {
 		
-		this.id = id;
+		this.student = student;
 		this.date = date;
 		
 	}
 
 
 	public int getId() {
-		return id;
+		return student;
 	}
 
 
@@ -30,8 +30,8 @@ public class AttendanceId implements Serializable{
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int student) {
+		this.student = student;
 	}
 
 
@@ -46,7 +46,7 @@ public class AttendanceId implements Serializable{
 		int result = 1;
 		result = prime * result
 				+ ((date == null) ? 0 : date.hashCode());
-		result = prime * result + id;
+		result = prime * result + student;
 		return result;
 	}
 	
@@ -64,7 +64,7 @@ public class AttendanceId implements Serializable{
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
-		if (id != other.id)
+		if (student != other.student)
 			return false;
 		return true;
 	}

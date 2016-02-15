@@ -71,9 +71,7 @@ public class Project {
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 
 
 	public void setGrades(Collection<Grade> grades) {
@@ -100,7 +98,10 @@ public class Project {
 	public String toString() {
 		return "Project [id=" + id + ", grades=" + grades + ", subjects=" + subjects + ", startdate=" + startdate
 				+ ", enddate=" + enddate + "]";
-	};
+	}
+
+
+	
 	
 	
 	
