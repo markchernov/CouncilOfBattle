@@ -7,10 +7,6 @@
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -88,7 +84,7 @@
 									<input value="Click the SELECT button to see the USER #1" id="select" type="text"
 										class="validate" name="input"> <label class="active"
 										for="first_name2">Click the SELECT button to see the USER #1:</label>
-										
+
 										<p> ${user} </p>
 								</div>
 							</div>
