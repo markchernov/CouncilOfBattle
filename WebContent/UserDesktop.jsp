@@ -37,9 +37,12 @@
 </header>
 
 <!--We can have the right .jsp called by the button, that hits the *.do and returns the name of the .jsp from the controller-->
+<c:choose>
+<c:when test="${! empty jspString}">
 <jsp:include page="${jspString}"></jsp:include>
+</c:when>
+</c:choose>
 
-<!--Or we can do it via a conditional statement  -->
 <%-- <jsp:include page="attendance.jsp"></jsp:include>
 <jsp:include page="grades.jsp"></jsp:include>
 <jsp:include page="helpTickets.jsp"></jsp:include>

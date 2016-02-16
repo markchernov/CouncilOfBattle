@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.persistence.internal.codegen.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,17 +51,22 @@ public class HelperController {
 			mv.addObject("userAttendance", userAttendance);
 			return mv;
 		}
-		else if (al != "2" && al != "3")
+		if(al == "2" || al == "3")
 		{
-			mv.setViewName("index.jsp");
-			
-			return mv;
-			
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		}
-		else{
-			return mv;
-		}
-		
+		return mv;
+//		else if (al != "2" && al != "3")
+//		{
+//			//mv.setViewName("index.jsp");
+//			
+//			return mv;
+//			
+//		}
+//		else{
+//			return mv;
+//		}
+//		
 	}
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) {
@@ -70,7 +76,9 @@ public class HelperController {
 		mv.addObject("jspString","attendance.jsp");
 		return mv;
 	}
-	
+	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
+	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ){
+		return null;}
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
@@ -105,7 +113,7 @@ public class HelperController {
 			return mv;
 		}
 		mv.setViewName("UserDesktop.jsp");
-		mv.addObject("jspString", "");
+		mv.addObject("jspString", null);
 		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("sessionUser", currentUser);
 		return mv;

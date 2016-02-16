@@ -61,15 +61,16 @@ public class HelperDAO {
 
 	}
 
-	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id) {
+	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id){
+		
 
-		List<Attendance> attendanceByDate = em.createNamedQuery("Attendance.getAttendancebyDates")
-				.setParameter(1, startdate).setParameter(2, enddate).setParameter(3, id).getResultList();
+		List<Attendance> attendanceByDate =  em.createNamedQuery("Attendance.getAttendancebyDates").setParameter(1, startdate).setParameter(2, enddate).setParameter(3, id).getResultList();
+		
+		
 
 		return attendanceByDate;
 
 	}
-	
 	
 	public List<Attendance> getStudentAttendanceWithDatesByLastName(String startdate, String enddate, String lastname) {
 
@@ -93,8 +94,7 @@ public class HelperDAO {
 
 	public List<String> getAttendanceByCohort(String cohort) {
 
-		List<String> attendanceByCohort = em.createNamedQuery("Attendance.getStudentsLastNames")
-				.setParameter("cohort", cohort).getResultList();
+		List<String> attendanceByCohort = em.createNamedQuery("Attendance.getStudentsLastNames").setParameter("cohort", cohort).getResultList();
 
 		return attendanceByCohort;
 

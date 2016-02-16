@@ -26,7 +26,7 @@
 </div>
 </c:when>
 
-<c:when>
+<c:when test="${accessLevel == '2'}">
 <div id="instructorTable">
 <form>
 	<form action= "attendance.do", method="GET">
@@ -52,7 +52,7 @@
 </div>
 </c:when>
 
-<c:when>
+<c:when test="${accessLevel == '3'}">
 <div id="adminTable">
 <form>
 	<form action= "attendance.do", method="GET">
