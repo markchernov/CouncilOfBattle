@@ -62,5 +62,13 @@ public class HelperDAO {
 		
 		
 	}
+	public ArrayList<Attendance> getStudentAttendance(String date){
+		
+		List<Attendance> attendanceByDate = em.createNamedQuery("");
+		return null;
+		
+		
+	}
+	
 	
 }
