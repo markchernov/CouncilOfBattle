@@ -55,9 +55,11 @@ public class HelperDAO {
 		return user;
 	}
 
-	public ArrayList<Attendance> getUserAttendance(int sessionUserId) {
+	public List<Attendance> getUserAttendanceByID(int sessionUserId) {
 
-		return null;
+		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyID").setParameter("id", sessionUserId).getResultList();
+		
+		return attendanceByID;
 
 	}
 
