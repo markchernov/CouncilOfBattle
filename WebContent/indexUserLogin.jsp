@@ -35,7 +35,6 @@
 		<input type="submit" value="GO!" />
 	</form>
 	<!-- 	<a href="newUser.jsp">New User</a> -->
-	
 </body>
 
 <footer> Classroom Helper powered by coffee and lack of sleep.
