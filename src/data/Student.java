@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("student")
 
 @NamedQueries({
-	@NamedQuery(name="Attendance.getStudentsLastNames", query="select s from Student s")})
+	@NamedQuery(name="Attendance.getStudentsLastNames", query="select s.lastname from Student s")})
 
 public class Student extends User{
 
