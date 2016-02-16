@@ -19,7 +19,7 @@
 			  </tr>
 			<c:forEach var="attendance" items="${userAttendance}" varStatus="loop"><tr> 
 			  <tr>
-			    <td>${attendance.id}</td>
+			    <td>${attendance.student}</td>
 			    <td>${attendance.date}</td>
 			    <td>${attendance.present}</td>
 			    <td>${attendance.late}</td>

@@ -21,7 +21,7 @@ import data.Student;
 import data.User;
 
 @Controller
-@SessionAttributes({"sessionUser",""})
+@SessionAttributes({"sessionUser","accessLevel"})
 public class HelperController {
 
 	@Autowired
@@ -37,23 +37,37 @@ public class HelperController {
 		return "";
 	}
 
-	@RequestMapping(path = "attendance.do", method = RequestMethod.GET)
-	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String al) {
-		
+	@RequestMapping(path = "attendance.do")
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
+		System.out.println("TEST: in MVC showAttendance");
+		System.out.println("TEST: User access level is "+accessLevel);
+		System.out.println("TEST: User's first name"+sessionUser.getFirstname());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("sessionUser", sessionUser);
-		mv.addObject("accessLevel", al);
+		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("jspString","attendance.jsp");
-		if(al == "1")
+		
+		if(accessLevel.equals("1"))
 		{		
-			Student currentStudent = (Student) sessionUser;
-			List<Attendance> userAttendance = (List) currentStudent.getAttendances();
+			System.out.println("TEST: inside the attendance.do access 'if' block");
+			
+//			Student currentStudent = (Student) sessionUser;
+			
+//			System.out.println(currentStudent.getFirstname());
+//			System.out.println(((List)currentStudent.getAttendances()).get(0).toString());
+			List<Attendance> userAttendance = (List)((Student)(sessionUser)).getAttendances();
+			
 			mv.addObject("userAttendance", userAttendance);
+			for (Attendance attendance : userAttendance) {
+				System.out.println(attendance.getDate());
+			}
+			System.out.println("in student");
 			return mv;
 		}
-		if(al == "2" || al == "3")
+		else if(accessLevel.equals("2") || accessLevel.equals("3"))
 		{
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			System.out.println("in admin/ta");
 		}
 		return mv;
 //		else if (al != "2" && al != "3")
