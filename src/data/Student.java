@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,7 +22,8 @@ import javax.persistence.Table;
 
 @DiscriminatorValue("student")
 
-
+@NamedQueries({
+	@NamedQuery(name="Attendance.getStudentsLastNames", query="select s from Student s")})
 
 public class Student extends User{
 
