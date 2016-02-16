@@ -7,10 +7,6 @@
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -25,11 +21,6 @@
 <title>Classroom Helper</title>
 
 <!-- CSS  -->
-
-
-
-
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet"
@@ -88,7 +79,7 @@
 									<input value="Click the SELECT button to see the USER #1" id="select" type="text"
 										class="validate" name="input"> <label class="active"
 										for="first_name2">Click the SELECT button to see the USER #1:</label>
-										
+
 										<p> ${user} </p>
 								</div>
 							</div>
