@@ -23,8 +23,23 @@
 
 <body>
 <header>
-
+<div id="sign-in">
     <div class="logo">Classroom Helper</div><br/>
+    <c:choose> 
+        <c:when test="${accessLevel == '1'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a student
+        </c:when>
+        <c:when test="${accessLevel == '2'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Instructor.
+        </c:when>
+        <c:when test="${accessLevel == '3'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Administrator.
+        </c:when>
+        <c:otherwise>
+      		<c:redirect url="index.jsp"/>
+        </c:otherwise>
+    </c:choose>
+
 		<h4>Welcome ${sessionUser.firstname}</h4>
         <nav>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
@@ -34,7 +49,9 @@
                 <li><a href="tickets.do">Help Ticket</a></li>
             </ul>
         </nav>
+</div>
 </header>
+
 
 <!--We can have the right .jsp called by the button, that hits the *.do and returns the name of the .jsp from the controller-->
 <c:choose>

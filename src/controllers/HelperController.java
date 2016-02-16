@@ -53,7 +53,7 @@ public class HelperController {
 		}
 		if(al == "2" || al == "3")
 		{
-			mv.addObject("studentLastnameList", helperDAO.getStudentsLastName());
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		}
 		return mv;
 //		else if (al != "2" && al != "3")
@@ -81,6 +81,7 @@ public class HelperController {
 	{
 		return null;
 	}
+
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
