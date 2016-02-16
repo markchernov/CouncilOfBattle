@@ -26,9 +26,5 @@
 		Password:<input type="password" name="password"><br/> 
 		<input type="submit" value="GO!" />
 	</form>
-	<!--TODO: createUser.do for version 3.0 -->
-	<!-- 	<a href="newUser.jsp">New User</a> -->
-</body>
-
-<footer> Classroom Helper powered by coffee and lack of sleep.
+	<!--TODO: createUser.d ed by coffee and lack of sleep.
 	Council of Battle @Copyright 2016 </footer>
