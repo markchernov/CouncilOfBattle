@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.persistence.internal.codegen.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,6 +51,10 @@ public class HelperController {
 			mv.addObject("userAttendance", userAttendance);
 			return mv;
 		}
+		if(al == "2" || al == "3")
+		{
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastName());
+		}
 		return mv;
 //		else if (al != "2" && al != "3")
 //		{
@@ -71,7 +76,8 @@ public class HelperController {
 		mv.addObject("jspString","attendance.jsp");
 		return mv;
 	}
-	
+	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
+	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate )
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
