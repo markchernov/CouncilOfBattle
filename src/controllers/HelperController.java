@@ -59,8 +59,8 @@ public ModelAndView loginUser(@RequestParam("username") String username, @Reques
 {
 	
 	ModelAndView mv = new ModelAndView("index.jsp");
-	User currentUser = helperDAO.loginUser(username, password);
-//	User currentUser = helperDAO.loginUser("inst", "54321");
+	/*User currentUser = helperDAO.loginUser(username, password);*/
+	User currentUser = helperDAO.loginUser("inst", "54321");
 	if(currentUser == null)
 	{
 		//do X
