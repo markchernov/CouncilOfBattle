@@ -17,6 +17,7 @@
 
 		<class>data.Account</class>
 		<class>data.Address</class>
+		<class>data.Admin</class>
 		<class>data.Attendance</class>
 		<class>data.Cohort</class>
 		<class>data.Competency</class>
