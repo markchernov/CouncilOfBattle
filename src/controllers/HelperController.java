@@ -50,17 +50,18 @@ public class HelperController {
 			mv.addObject("userAttendance", userAttendance);
 			return mv;
 		}
-		else if (al != "2" && al != "3")
-		{
-			mv.setViewName("index.jsp");
-			
-			return mv;
-			
-		}
-		else{
-			return mv;
-		}
-		
+		return mv;
+//		else if (al != "2" && al != "3")
+//		{
+//			//mv.setViewName("index.jsp");
+//			
+//			return mv;
+//			
+//		}
+//		else{
+//			return mv;
+//		}
+//		
 	}
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) {
@@ -105,7 +106,7 @@ public class HelperController {
 			return mv;
 		}
 		mv.setViewName("UserDesktop.jsp");
-		mv.addObject("jspString", "");
+		mv.addObject("jspString", null);
 		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("sessionUser", currentUser);
 		return mv;
