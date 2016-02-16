@@ -16,7 +16,10 @@ import javax.persistence.Table;
 @Table(name = "daily_attendance")
 
 
-
+@NamedQueries({
+	@NamedQuery(name="Attendance.getAttendancebyUsername", query="select a from Account a where a.username = :username")
+})
+	
 
 public class Attendance {
 

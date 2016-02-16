@@ -31,7 +31,7 @@
 	<h2>Welcome to Skill Distillery's Classroom Helper</h2>
 	<form action="login.do" method="POST">
 		Username:<input type="text" name="username"><br/> 
-		Password:<input type="text" name="password"><br/> 
+		Password:<input type="password" name="password"><br/> 
 		<input type="submit" value="GO!" />
 	</form>
 	<!-- 	<a href="newUser.jsp">New User</a> -->

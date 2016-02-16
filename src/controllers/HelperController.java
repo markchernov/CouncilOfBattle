@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import org.eclipse.persistence.internal.codegen.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,67 +12,100 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import data.Account;
 import data.Attendance;
+import data.Grade;
 import data.HelperDAO;
 import data.Student;
 import data.User;
 
-
-
 @Controller
-@SessionAttributes("sessionUser")
+@SessionAttributes({"sessionUser",""})
 public class HelperController {
 
-	@Autowired 
+	@Autowired
 	private HelperDAO helperDAO;
-	
+
 	@ModelAttribute("sessionUser")
-	public User initUser()
-	{
+	public User initUser() {
 		return null;
 	}
-	@RequestMapping(path="GetUser.do", method=RequestMethod.GET)
-	
-	public ModelAndView getStudentAttendance(@RequestParam("sessionUser") User sessionUser) {
-		
-		Student currentStudent = (Student)sessionUser;
-				
-		List<Attendance> userAttendance = (List)currentStudent.getAttendances();
-		
-		
-		return new ModelAndView("index.jsp", "userattendance", userAttendance);
+	@ModelAttribute("accessLevel")
+	public String initAccessLevel()
+	{
+		return "";
 	}
 
-@RequestMapping(path="SetUser.do", method=RequestMethod.GET)
+	@RequestMapping(path = "attendance.do", method = RequestMethod.GET)
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String al) {
+		
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("sessionUser", sessionUser);
+		mv.addObject("accessLevel", al);
+		mv.addObject("addressString","attendance.jsp");
+		if(al == "1")
+		{		
+			Student currentStudent = (Student) sessionUser;
+			List<Attendance> userAttendance = (List) currentStudent.getAttendances();
+			mv.addObject("userAttendance", userAttendance);
+			return mv;
+		}
+		else if (al != "2" && al != "3")
+		{
+			mv.setViewName("index.jsp");
+			
+			return mv;
+			
+		}
+		else{
+			return mv;
+		}
+		
+	}
+	@RequestMapping(path = "attendance.do",params="date", method = RequestMethod.GET)
+	public ModelAndView showAttendance(@RequestParam("date") String date) {
+		
+		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendance(date);
+		return new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
+	}
 	
+	
+	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
+	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
+	{
+		Student currentStudent = (Student)sessionUser;
+		List<Grade> usergrades = (List)currentStudent.getGrades();
+		for (Grade grade : usergrades) {
+			System.out.println(grade.getGrade());
+		}
+		return new ModelAndView("UserDesktop.jsp", "userGrades", usergrades);
+	}
+	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
 	public ModelAndView setUser() {
-		
-		
+
 		User user = helperDAO.setUser();
-		
+
 		System.out.println(user);
-		
+
 		return new ModelAndView("index.jsp", "user", user);
 	}
-	
-@RequestMapping(path="Login.do", method=RequestMethod.POST)
-public ModelAndView loginUser(@RequestParam("username") String username, @RequestParam("password") String password)
-{
-	
-	ModelAndView mv = new ModelAndView("index.jsp");
-	/*User currentUser = helperDAO.loginUser(username, password);*/
-	User currentUser = helperDAO.loginUser("inst", "54321");
-	if(currentUser == null)
-	{
-		//do X
-	}
-	
-	mv.addObject("sessionUser" , currentUser);
-	return mv;
-}
 
-	
-	
-	
+	@RequestMapping(path = "login.do", method = RequestMethod.POST)
+	public ModelAndView loginUser(@RequestParam("username") String username,
+			@RequestParam("password") String password) {
+
+		ModelAndView mv = new ModelAndView();
+		User currentUser = helperDAO.loginUser(username, password);
+		String accessLevel = ((Account) (((List) currentUser.getAccounts()).get(0))).getAccessLevel();
+		// User currentUser = helperDAO.loginUser("inst", "54321");
+		if (currentUser == null) {
+			mv.setViewName("index.jsp");
+			return mv;
+		}
+		mv.setViewName("UserDesktop.jsp");
+		mv.addObject("accessLevel", accessLevel);
+		mv.addObject("sessionUser", currentUser);
+		return mv;
+	}
 	
 }

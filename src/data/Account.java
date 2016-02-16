@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Account.getAccountbyUsername", query="select a from Account a where a.username = :username"),
 	@NamedQuery(name="Account.getAccountbyPassword", query="select a from Account a where a.password = :password"),
-	@NamedQuery(name="Account.getAccountbyUserAndPass", query="select a from Account a where a.username = :username and a.password = :password")
+	@NamedQuery(name="Account.getAccountbyUserAndPass", query="select a from Account a where a.username = :username and a.password = :password"),
+	@NamedQuery(name="Account.getAccountLeveByUserIdAndAccessLevel", query="select a.accessLevel from Account a where a.username = :username and a.password = :password")
 })
 @Table(name = "user_accounts")
 
