@@ -24,11 +24,36 @@ public class HelperDAO {
 	
 	private EntityManager em;
 
+	
+	public void init() {
+		
+		Student stu = new Student();
+		
+		System.out.println(stu);
+		
+	}
+	
+	
 	public User getUser(int id) {
 		User us = em.find(User.class, id);
 		em.detach(us);
 		System.out.println(us);
 		return us;
+	}
+	
+	public User setUser() {
+		
+		
+		User user = new User();
+		
+		user.setFirstname("Ben");
+		user.setLastname("K");
+		user.setEmail("bk@gmail.com");
+		
+		em.persist(user);
+
+		System.out.println(user);
+		return user;
 	}
 	
 	
