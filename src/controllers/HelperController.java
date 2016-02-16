@@ -77,7 +77,10 @@ public class HelperController {
 		return mv;
 	}
 	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
-	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate )
+	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname )
+	{
+		return null;
+	}
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
