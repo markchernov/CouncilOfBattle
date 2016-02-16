@@ -1,4 +1,3 @@
-
 <c:choose>
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
