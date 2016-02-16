@@ -1,6 +1,10 @@
 package data;
 
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,10 +66,12 @@ public class HelperDAO {
 		
 		
 	}
-	public ArrayList<Attendance> getStudentAttendance(String date){
+	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id){
 		
-		List<Attendance> attendanceByDate = em.createNamedQuery("");
-		return null;
+		List<Attendance> attendanceByDate =  em.createNamedQuery("Attendance.getAttendancebyDates").setParameter(1, startdate).setParameter(2, enddate).setParameter(3, id).getResultList();
+		
+		
+		return attendanceByDate;
 		
 		
 	}
