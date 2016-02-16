@@ -27,7 +27,18 @@ public class Project {
 	@Column(name = "project_id")
 	private int id;
 	
+	private String name;
 	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	@OneToMany(mappedBy = "project")
 	private Collection<Grade> grades;
 	
@@ -96,9 +107,11 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", grades=" + grades + ", subjects=" + subjects + ", startdate=" + startdate
-				+ ", enddate=" + enddate + "]";
+		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects + ", startdate="
+				+ startdate + ", enddate=" + enddate + "]";
 	}
+
+
 
 
 	

@@ -123,7 +123,12 @@ public class Address {
 	public String toString() {
 		return "Address [user=" + user + ", addresstype=" + addresstype + ", street=" + street + ", city=" + city
 				+ ", state=" + state + ", zip=" + zip + "]";
-	};
+	}
+
+
+
+
+	
 	
 	
 	
