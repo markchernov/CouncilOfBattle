@@ -42,7 +42,7 @@ public class HelperController {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", al);
-		mv.addObject("addressString","attendance.jsp");
+		mv.addObject("jspString","attendance.jsp");
 		if(al == "1")
 		{		
 			Student currentStudent = (Student) sessionUser;
@@ -62,11 +62,13 @@ public class HelperController {
 		}
 		
 	}
-	@RequestMapping(path = "attendance.do",params="date", method = RequestMethod.GET)
-	public ModelAndView showAttendance(@RequestParam("date") String date) {
+	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) {
 		
-		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendance(date);
-		return new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
+		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate, sessionUser.getId());
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
+		mv.addObject("jspString","attendance.jsp");
+		return mv;
 	}
 	
 	
@@ -103,6 +105,7 @@ public class HelperController {
 			return mv;
 		}
 		mv.setViewName("UserDesktop.jsp");
+		mv.addObject("jspString", "");
 		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("sessionUser", currentUser);
 		return mv;
