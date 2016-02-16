@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +57,22 @@ public class HelperDAO {
 		return user;
 	}
 	
-	
-	
+	public User loginUser(String username, String password)
+	{
+		Account account = em.createNamedQuery("Account.getAccountbyUserAndPass", Account.class).setParameter("username", username).setParameter("password", password).getSingleResult();
+		if (account == null)
+		{
+			return null;
+		}
+		User user = account.getUser();
+		return user;
+	}
+	public ArrayList<Attendance> getUserAttendance(int sessionUserId){
+		
+		
+		return null;
+		
+		
+	}
 	
 }

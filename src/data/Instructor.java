@@ -108,7 +108,7 @@ public class Instructor extends User{
 	@Override
 	public String toString() {
 		return "Instructor [level=" + level + ", subjects=" + subjects + ", competencies=" + competencies
-				+ ", addresses=" + addresses + ", accounts=" + accounts + "]";
+				+ ", addresses=" + addresses + ", accounts=" + accounts + super.toString() + "]";
 	}
 
 

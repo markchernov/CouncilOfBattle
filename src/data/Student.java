@@ -108,8 +108,11 @@ public class Student extends User{
 	@Override
 	public String toString() {
 		return "Student [cohort=" + cohort + ", attendances=" + attendances + ", grades=" + grades + ", addresses="
-				+ addresses + ", accounts=" + accounts + "]";
+				+ addresses + ", accounts=" + accounts + ", toString()=" + super.toString() + "]";
 	}
+
+
+
 
 
 
