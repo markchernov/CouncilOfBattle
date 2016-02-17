@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("student")
 
 @NamedQueries({ @NamedQuery(name = "Attendance.getStudentsLastNames", query = "select s.lastname from Student s"),
-	@NamedQuery(name = "Attendance.getStudentsByCohort", query = "select s from Student s where s.cohort_id = cohort") })
+	/*@NamedQuery(name = "Attendance.getStudentsByCohort", query = "select s from Student s where s.cohort_id = cohort")*/ })
 
 public class Student extends User {
 

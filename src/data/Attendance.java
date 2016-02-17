@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 
 @NamedQueries({
-	@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendances from Student s where s.student.id = :id"),
+	/*@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendance from Student s where s.student.id = :id"),*/
 	@NamedQuery(name="Attendance.getAttendancebyStudent", query="select a from Attendance a where a.student = :sessionUser"),
 	@NamedQuery(name="Attendance.getAttendancebyUsername", query="select a from Account a where a.username = :username"),
 	@NamedQuery(name="Attendance.getAttendancebyDates", query="select a from Attendance a where a.date between  ?1 and ?2 and a.student.id = ?3"),
