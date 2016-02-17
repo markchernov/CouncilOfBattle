@@ -109,7 +109,8 @@ public class HelperController {
 		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", todaysAttendancelist);
 		mv.addObject("jspString","attendance.jsp");
-		return null;
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		return mv;
 	}
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)

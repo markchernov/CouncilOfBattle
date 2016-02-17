@@ -64,6 +64,8 @@
 	<table>
 		 <tr>			 	
 
+		    <th>ID</th>
+			<th>Name</th>
 		    <th>Date</th>
 		    <th>Present</th>
 		    <th>Late</th>
@@ -74,6 +76,9 @@
 		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
 		<tr>
 		   <form action="modifyAttendanceRecord.do" method="POST">
+		    
+		    <td>${attendance.student.id}</td>
+		    <td>${attendance.student.firstname}  ${ attendance.student.lastname } </td>
 		    <td>${attendance.date}</td>
 		    <td><form:input path="${attendance.present}"/></td>		    
 		    <td><form:input path="${attendance.late}"/></td>		    
