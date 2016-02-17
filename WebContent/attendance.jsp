@@ -99,9 +99,10 @@
    			</td>	
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
-		    <td><input type="submit" value="Edit Record"></form></td>
-		    <td><form action="deleteAttendanceRecord.do" method="POST"><input type="submit" value="Delete Record"></form></td>
+		    <td><input type="submit" value="Edit Record"></td>
 		   </form>
+		    <td><form action="deleteAttendanceRecord.do" method="POST"><input type="submit" value="Delete Record"></form></td>
+		   </tr>
 		</c:forEach>
 	</table>
 	

@@ -41,9 +41,7 @@ public class HelperController {
 
 	@RequestMapping(path = "attendance.do")
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
-		System.out.println("TEST: in MVC showAttendance");
-		System.out.println("TEST: User access level is "+accessLevel);
-		
+
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", accessLevel);
@@ -51,7 +49,7 @@ public class HelperController {
 		
 		if(accessLevel.equals("1"))
 		{		
-			System.out.println("TEST: inside the attendance.do access 'if' block");
+			
 			
 //			Student currentStudent = (Student) sessionUser;
 			
@@ -60,17 +58,12 @@ public class HelperController {
 			List<Attendance> userAttendance = helperDAO.getUserAttendanceByStudent((Student)sessionUser);
 			
 			mv.addObject("userAttendance", userAttendance);
-			for (Attendance attendance : userAttendance) {
-				System.out.println(attendance.getDate());
-				
-			}
 			System.out.println("in student");
 			return mv;
 		}
 		else if(accessLevel.equals("2") || accessLevel.equals("3"))
 		{
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
-			System.out.println("in admin/ta");
 		}
 		return mv;
 //		else if (al != "2" && al != "3")
@@ -94,7 +87,7 @@ public class HelperController {
 		
 		return mv;
 	}
-	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
+	@RequestMapping(path="attendanceAdminAndTA.do", method=RequestMethod.GET)
 	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname ) throws ParseException
 	{
 		List<Attendance> adminStudentAttendance = helperDAO.getStudentAttendanceWithDatesByLastName(startDate, endDate, lastname);
@@ -105,14 +98,24 @@ public class HelperController {
 	}
 		
 		
-//	@RequestMapping(path= "modifyAttendanceRecord.do", method = RequestMethod.GET)
-//	public ModelAndView modifyAttendanceRecord(@RequestParam ){
-//	}
-//	
-//	@RequestMapping(path= "modifyAttendanceRecord.do", method= RequestMethod.POST)
-//	public String modifyAttendanceRecord(@Valid  ){
-//	}
-//		
+	
+	@RequestMapping(path= "modifyAttendanceRecord.do", method= RequestMethod.POST)
+	public ModelAndView modifyAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,  @RequestParam("present") String present,@RequestParam("late") String late,@RequestParam("excused") String excused){
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		helperDAO.updateDailyAttendance(id, date, present, late, excused);
+		mv.addObject("jspString","attendance.jsp");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		return mv;
+	}
+	@RequestMapping(path="deleteAttendanceRecord.do", method =RequestMethod.POST)
+	public ModelAndView deleteAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,  @RequestParam("present") String present,@RequestParam("late") String late,@RequestParam("excused") String excused){
+		{
+			ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+			helperDAO.deleteStudentAttendanceRecord(id, date, present, late, excused);
+			mv.addObject("jspString","attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			return mv;
+		}
 		
 	@RequestMapping(path="createClassAttendances.do", method=RequestMethod.POST)
 	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort) throws ParseException
@@ -135,8 +138,6 @@ public class HelperController {
 	public ModelAndView setUser() {
 
 		User user = helperDAO.setUser();
-
-		System.out.println(user);
 
 		return new ModelAndView("index.jsp", "user", user);
 	}
