@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
 
 <!--conditional test for access level 1-->
@@ -31,6 +33,37 @@
 		  </tr>
 		</c:forEach>
 	</table>
+
+			<form action="attendanceStudent.do" method="GET">
+			Enter Start Date: <input type="date" name="startDate">
+			<br />
+			Enter End Date: <input type="date" name="endDate" />
+			<input type="submit" value="Search Dates" />
+			</form>
+			<table>
+			 <tr>			 	
+
+			    <th>Date</th>
+			    <th>Present</th>
+			    <th>Late</th>
+			    <th>Excused</th>
+			    <th>Check-in Time</th>
+			    <th>Check-Out Time</th>
+			  </tr>
+			<c:forEach var="attendance" items="${userAttendance}">
+			  <tr>
+
+			    <td>${attendance.date}</td>
+			    <td>${attendance.present}</td>
+			    <td>${attendance.late}</td>
+			    <td>${attendance.excused}</td>
+			    <td>${attendance.checkin}</td>
+			    <td>${attendance.checkout}</td>
+
+			  </tr>
+			</c:forEach>
+			</table>
+
 </div>
 </c:when>
 
@@ -84,7 +117,7 @@
 		<input type="text" name="userFirst">
 		<input type="submit" value="Add New Attendance Record" />
 	</form> -->
-			
+			g
 </div>
 </c:when>
 

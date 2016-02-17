@@ -1,11 +1,13 @@
 package controllers;
 
+
+import java.util.ArrayList;
+import java.text.ParseException;
+
 import java.util.List;
 
-import org.eclipse.persistence.internal.codegen.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +23,7 @@ import data.Student;
 import data.User;
 
 @Controller
-@SessionAttributes({"sessionUser",""})
+@SessionAttributes({"sessionUser","accessLevel"})
 public class HelperController {
 
 	@Autowired
@@ -37,23 +39,38 @@ public class HelperController {
 		return "";
 	}
 
-	@RequestMapping(path = "attendance.do", method = RequestMethod.GET)
-	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String al) {
-		
+	@RequestMapping(path = "attendance.do")
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
+		System.out.println("TEST: in MVC showAttendance");
+		System.out.println("TEST: User access level is "+accessLevel);
+		System.out.println("TEST: User's first name"+sessionUser.getFirstname());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("sessionUser", sessionUser);
-		mv.addObject("accessLevel", al);
+		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("jspString","attendance.jsp");
-		if(al == "1")
+		
+		if(accessLevel.equals("1"))
 		{		
-			Student currentStudent = (Student) sessionUser;
-			List<Attendance> userAttendance = (List) currentStudent.getAttendances();
+			System.out.println("TEST: inside the attendance.do access 'if' block");
+			
+//			Student currentStudent = (Student) sessionUser;
+			
+//			System.out.println(currentStudent.getFirstname());
+//			System.out.println(((List)currentStudent.getAttendances()).get(0).toString());
+			List<Attendance> userAttendance = helperDAO.getUserAttendanceByID((Student)sessionUser);
+			
 			mv.addObject("userAttendance", userAttendance);
+			for (Attendance attendance : userAttendance) {
+				System.out.println(attendance.getDate());
+				
+			}
+			System.out.println("in student");
 			return mv;
 		}
-		if(al == "2" || al == "3")
+		else if(accessLevel.equals("2") || accessLevel.equals("3"))
 		{
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			System.out.println("in admin/ta");
 		}
 		return mv;
 //		else if (al != "2" && al != "3")
@@ -69,7 +86,7 @@ public class HelperController {
 //		
 	}
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
-	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) {
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) throws ParseException {
 		
 		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate, sessionUser.getId());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
@@ -77,8 +94,11 @@ public class HelperController {
 		return mv;
 	}
 	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
-	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ){
-		return null;}
+	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname )
+	{
+		return null;
+	}
+
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
