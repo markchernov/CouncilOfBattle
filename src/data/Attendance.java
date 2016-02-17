@@ -153,11 +153,11 @@ public class Attendance {
 
 
 
-	@Override
-	public String toString() {
-		return "Attendance [student=" + student + ", date=" + date + ", present=" + present + ", late=" + late
-				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Attendance [student=" + student + ", date=" + date + ", present=" + present + ", late=" + late
+//				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
+//	}
 
 
 
