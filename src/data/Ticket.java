@@ -37,9 +37,9 @@ public class Ticket {
 
 	private Date date;
 	@Column(name = "submit_time")
-	private Date submitTime;
+	private String submitTime;
 	@Column(name = "close_time")
-	private Date closeTime;
+	private String closeTime;
 
 	public int getId() {
 		return id;
@@ -49,11 +49,11 @@ public class Ticket {
 		return date;
 	}
 
-	public Date getSubmitTime() {
+	public String getSubmitTime() {
 		return submitTime;
 	}
 
-	public Date getCloseTime() {
+	public String getCloseTime() {
 		return closeTime;
 	}
 
@@ -61,11 +61,11 @@ public class Ticket {
 		this.date = date;
 	}
 
-	public void setSubmitTime(Date submitTime) {
+	public void setSubmitTime(String submitTime) {
 		this.submitTime = submitTime;
 	}
 
-	public void setCloseTime(Date closeTime) {
+	public void setCloseTime(String closeTime) {
 		this.closeTime = closeTime;
 	}
 
@@ -104,7 +104,7 @@ public class Ticket {
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", student=" + student + ", subject=" + subject + ", instructor=" + instructor
-				+ ", description=" + description + ", date=" + date + ", submitTime=" + submitTime + ", closeTime="
+				+ ", description=" + description  + ", submitTime=" + submitTime + ", closeTime="
 				+ closeTime + "]";
 	}
 
