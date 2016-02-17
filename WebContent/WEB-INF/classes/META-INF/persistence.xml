@@ -26,6 +26,7 @@
 		<class>data.Project</class>
 		<class>data.Student</class>
 		<class>data.Subject</class>
+		<class>data.Ticket</class>
 		<class>data.User</class>
 		
 		

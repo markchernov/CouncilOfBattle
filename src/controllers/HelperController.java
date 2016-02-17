@@ -130,7 +130,7 @@ public class HelperController {
 
 		ModelAndView mv = new ModelAndView();
 		User currentUser = helperDAO.loginUser(username, password);
-		String accessLevel = ((Account) (((List) currentUser.getAccounts()).get(0))).getAccessLevel();
+		String accessLevel = currentUser.getAccount().getAccessLevel();
 		// User currentUser = helperDAO.loginUser("inst", "54321");
 		if (currentUser == null) {
 			mv.setViewName("index.jsp");
