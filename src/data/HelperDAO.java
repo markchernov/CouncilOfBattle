@@ -170,8 +170,9 @@ public class HelperDAO {
 	public void updateDailyAttendance(String userId, String date, String present,
 			String late, String excused) throws ParseException {
 
+		System.out.println("insid updateAttendance");
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
 		Date dailyDate = formatter.parse(date);
 		
@@ -185,8 +186,8 @@ public class HelperDAO {
 		
 		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
 		
-		tempAttendance.setStudent(tempUser);
-		tempAttendance.setDate(dailyDate);
+		/*tempAttendance.setStudent(tempUser);*/
+/*		tempAttendance.setDate(dailyDate);*/
 		tempAttendance.setPresent(present);
 		tempAttendance.setLate(late);
 		tempAttendance.setExcused(excused);
@@ -199,11 +200,25 @@ public class HelperDAO {
 
 	}
 
-	public String deleteDailyAttendance(Attendance attendance) {
+	public String deleteDailyAttendance(String userId, String date) throws ParseException {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
-		em.remove(attendance);
+		Date dailyDate = formatter.parse(date);
+		
+		
+		int id = Integer.parseInt(userId);
+		
+		Student tempUser = em.find(Student.class, id);
+		
+        AttendanceId compositeKeyId = new AttendanceId(dailyDate,id);
+		
+		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
+		
 
-		String confirmation = "Attendance record: " + attendance + " was deleted";
+		em.remove(tempAttendance);
+
+		String confirmation = "Attendance record: " + tempAttendance + " was deleted";
 
 		return confirmation;
 	}
