@@ -168,9 +168,9 @@ public class HelperDAO {
 			attendance.setLate("N");
 			attendance.setExcused("N");
 
-			attendance.setCheckin(new Date());
+			attendance.setCheckin("07:00");
 
-			attendance.setCheckout(new Date());
+			attendance.setCheckout("17:00");
 
 			dailyAttendance.add(attendance);
 			
@@ -183,7 +183,7 @@ public class HelperDAO {
 	}
 
 	public Attendance updateDailyAttendance(Attendance attendance, Student student, Date date, String present,
-			String late, String excused, Date checkin, Date checkout) {
+			String late, String excused, String checkin, String checkout) {
 
 		attendance.setStudent(student);
 		attendance.setDate(date);
@@ -209,7 +209,7 @@ public class HelperDAO {
 	}
 
 	public Attendance addDailyAttendance(Student student, Date date, String present, String late, String excused,
-			Date checkin, Date checkout) {
+			String checkin, String checkout) {
 
 		Attendance attendance = new Attendance();
 
