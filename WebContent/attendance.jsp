@@ -76,13 +76,27 @@
 		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
 		<tr>
 		   <form action="modifyAttendanceRecord.do" method="POST">
-		    
 		    <td>${attendance.student.id}</td>
-		    <td>${attendance.student.firstname}  ${ attendance.student.lastname } </td>
+		    <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
 		    <td>${attendance.date}</td>
-		    <td><form:input path="${attendance.present}"/></td>		    
-		    <td><form:input path="${attendance.late}"/></td>		    
-		    <td><form:input path="${attendance.excused}"/></td>		    
+		    <td>
+		  		<select name="present">
+	            	<option selected="${attendance.present}">Y</option>
+	            	<option selected="${! attendance.present}">N</option>
+   			 	</select>
+   			</td>	
+		    <td>
+		  		<select name="late">
+	            	<option selected="${attendance.late}">Y</option>
+	            	<option selected="${! attendance.late}">N</option>
+   			 	</select>
+   			</td>	
+		    <td>
+		  		<select name="excused">
+	            	<option selected="${attendance.excused}">Y</option>
+	            	<option selected="${! attendance.excused}">N</option>
+   			 	</select>
+   			</td>	
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
 		    <td><input type="submit" value="Edit Record"></form></td>

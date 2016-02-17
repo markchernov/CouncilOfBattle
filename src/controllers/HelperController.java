@@ -103,6 +103,17 @@ public class HelperController {
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
+		
+		
+//	@RequestMapping(path= "modifyAttendanceRecord.do", method = RequestMethod.GET)
+//	public ModelAndView modifyAttendanceRecord(@RequestParam ){
+//	}
+//	
+//	@RequestMapping(path= "modifyAttendanceRecord.do", method= RequestMethod.POST)
+//	public String modifyAttendanceRecord(@Valid  ){
+//	}
+//		
+		
 	@RequestMapping(path="createClassAttendances.do", method=RequestMethod.POST)
 	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort)
 	{
