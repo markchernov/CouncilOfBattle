@@ -1,6 +1,9 @@
 package controllers;
 
+
 import java.util.ArrayList;
+import java.text.ParseException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +86,7 @@ public class HelperController {
 //		
 	}
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
-	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) {
+	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) throws ParseException {
 		
 		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate, sessionUser.getId());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
