@@ -160,6 +160,10 @@ public class HelperDAO {
 			attendance.setCheckout(new Date());
 
 			dailyAttendance.add(attendance);
+			
+			System.out.println(attendance);
+			
+			/*em.persist(attendance);*/
 		}
 
 		return dailyAttendance;
