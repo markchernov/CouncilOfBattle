@@ -57,7 +57,7 @@ public class HelperController {
 			
 //			System.out.println(currentStudent.getFirstname());
 //			System.out.println(((List)currentStudent.getAttendances()).get(0).toString());
-			List<Attendance> userAttendance = helperDAO.getUserAttendanceByID((Student)sessionUser);
+			List<Attendance> userAttendance = helperDAO.getUserAttendanceByStudent((Student)sessionUser);
 			
 			mv.addObject("userAttendance", userAttendance);
 			for (Attendance attendance : userAttendance) {

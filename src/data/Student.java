@@ -16,7 +16,8 @@ import javax.persistence.Table;
 
 @DiscriminatorValue("student")
 
-@NamedQueries({ @NamedQuery(name = "Attendance.getStudentsLastNames", query = "select s.lastname from Student s") })
+@NamedQueries({ @NamedQuery(name = "Attendance.getStudentsLastNames", query = "select s.lastname from Student s"),
+	@NamedQuery(name = "Attendance.getStudentsByCohort", query = "select s from Student s where s.cohort_id = cohort") })
 
 public class Student extends User {
 
@@ -37,6 +38,11 @@ public class Student extends User {
 		return tickets;
 	}
 
+	
+	public Student() {
+	}
+	
+	
 	public void setTickets(Collection<Ticket> tickets) {
 		this.tickets = tickets;
 	}
@@ -49,9 +55,7 @@ public class Student extends User {
 		this.grades = grades;
 	}
 
-	public Student() {
-	}
-
+	
 	public Cohort getCohort() {
 		return cohort;
 	}
