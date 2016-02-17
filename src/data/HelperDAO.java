@@ -166,21 +166,26 @@ public class HelperDAO {
 		return dailyAttendance;
 	}
 
-	public void updateDailyAttendance(String userId, Date date, String present,
-			String late, String excused) {
+	public void updateDailyAttendance(String userId, String date, String present,
+			String late, String excused) throws ParseException {
 
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date dailyDate = formatter.parse(date);
+		
 		
 		int id = Integer.parseInt(userId);
 		
 		Student tempUser = em.find(Student.class, id);
 		
 		
-		AttendanceId compositeKeyId = new AttendanceId(date,id);
+		AttendanceId compositeKeyId = new AttendanceId(dailyDate,id);
 		
 		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
 		
 		tempAttendance.setStudent(tempUser);
-		tempAttendance.setDate(date);
+		tempAttendance.setDate(dailyDate);
 		tempAttendance.setPresent(present);
 		tempAttendance.setLate(late);
 		tempAttendance.setExcused(excused);
