@@ -4,17 +4,21 @@
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
 	
-	<form action="attendanceStudent.do" method="GET">
+	<form action=<a href="ticket.jsp>"helpTickets.do"</a> method="GET">
 		Enter Start Date: <input type="date" name="startDate">
 		<br />
 		Enter End Date: <input type="date" name="endDate" />
-		<input type="submit" value="Search Dates" />
+		<input type="submit" value="Edit Ticket" />
 	</form>
 	
 	<table>
 		 <tr>
-		    <th>?</th>
-		    <th>?</th>
+		    <th>Ticket Number</th>
+			    <!--TODO: ^^ verify column header name-->
+		    <th>Student</th>
+			    <!--TODO: ^^ verify column header name-->
+		    <th>Subject</th>
+			    <!--TODO: ^^ verify column header name-->
 		 </tr>
 		<c:forEach var="helpTickets" items="${userhelpTickets}" varStatus="loop"><tr> 
 		  <tr>
@@ -67,27 +71,7 @@
 
 <c:when test="${accessLevel == 3}">
 <div id="adminTable">
-<form>
-	<form action= "helpTickets.do", method="GET">
-			<table>
-			  <tr>
-			    <th>?</th>
-			    <th>?</th>
-			    <th>?</th>
-			    <th>?</th>
-			    <th>?</th>
-			    <th>?</th>
-			  </tr>
-			  <tr>
-			    <td>Row 1: Col 1</td>
-			    <td>Row 1: Col 2</td>
-			    <td>Row 1: Col 3</td>
-			    <td>Row 1: Col 4</td>
-			    <td>Row 1: Col 5</td>
-			  </tr>
-			</table>
-	<input type= "submit", value="Show helpTickets"/>
-</form>
+<!--in the interest of time, we combined the lvl 3 function with the lvl 2 function  -->
 </div>
 </c:when>
 
