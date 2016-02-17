@@ -63,11 +63,5 @@
 </c:when>
 </c:choose>
 
-<!--Alternatively, we could use a condition statement to pick the jsp segment:-->
-<!-- <jsp:include page="attendance.jsp"></jsp:include>
-<jsp:include page="grades.jsp"></jsp:include>
-<jsp:include page="helpTickets.jsp"></jsp:include>
- -->
-
 </body>
 </html>

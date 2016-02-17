@@ -68,7 +68,7 @@ public class HelperDAO {
 	}
 	public List<Attendance> getUserAttendanceByID(Student sessionUserId) {
 		
-		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyId").setParameter("sessionUserId", sessionUserId).getResultList();
+		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyId").setParameter("sessionUser", sessionUserId).getResultList();
 		
 		return attendanceByID;
 		

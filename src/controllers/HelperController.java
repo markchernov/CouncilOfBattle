@@ -89,8 +89,12 @@ public class HelperController {
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate ) throws ParseException {
 		
 		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate, sessionUser.getId());
-		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "studentAttendanceByDate", studentAttendanceByDate);
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
+		for (Attendance attendance : studentAttendanceByDate) {
+			System.out.println(attendance.getDate());
+		}
 		mv.addObject("jspString","attendance.jsp");
+		
 		return mv;
 	}
 	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
