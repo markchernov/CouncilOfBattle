@@ -129,8 +129,14 @@ public class HelperDAO {
 
 	}
 
-	public List<Student> getStudentsByCohort(String cohort) {
+	public List<Student> getStudentsByCohort(String cohortId) {
 
+		 int id = Integer.parseInt(cohortId);
+		
+		Cohort cohort = em.find(Cohort.class, id);
+		
+		System.out.println(cohort);
+		
 		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
 				.setParameter("cohort", cohort).getResultList();
 
