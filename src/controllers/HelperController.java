@@ -109,10 +109,10 @@ public class HelperController {
 		return mv;
 	}
 	@RequestMapping(path="deleteAttendanceRecord.do", method =RequestMethod.POST)
-	public ModelAndView deleteAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,  @RequestParam("present") String present,@RequestParam("late") String late,@RequestParam("excused") String excused){
+	public ModelAndView deleteAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,  @RequestParam("present") String present,@RequestParam("late") String late,@RequestParam("excused") String excused) throws ParseException{
 		
 			ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-			helperDAO.deleteDailyStudentAttendance(id, date);
+			helperDAO.deleteDailyStudentAttendanceRecord(id, date);
 			System.out.println("in the delete");
 			mv.addObject("jspString","attendance.jsp");
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
