@@ -1,5 +1,7 @@
 package data;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,24 +20,53 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ticket_id")
 	private int id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private Student student;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "instructor_id")
 	private Instructor instructor;
-	
+
 	private String description;
+
+	private Date date;
+	@Column(name = "submit_time")
+	private Date submitTime;
+	@Column(name = "close_time")
+	private Date closeTime;
 
 	public int getId() {
 		return id;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public Date getSubmitTime() {
+		return submitTime;
+	}
+
+	public Date getCloseTime() {
+		return closeTime;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setSubmitTime(Date submitTime) {
+		this.submitTime = submitTime;
+	}
+
+	public void setCloseTime(Date closeTime) {
+		this.closeTime = closeTime;
 	}
 
 	public Student getStudent() {
@@ -53,8 +84,6 @@ public class Ticket {
 	public String getDescription() {
 		return description;
 	}
-
-	
 
 	public void setStudent(Student student) {
 		this.student = student;
@@ -75,12 +104,10 @@ public class Ticket {
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", student=" + student + ", subject=" + subject + ", instructor=" + instructor
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", date=" + date + ", submitTime=" + submitTime + ", closeTime="
+				+ closeTime + "]";
 	}
+
 	
-	
-	
-	
-	
-	
+
 }

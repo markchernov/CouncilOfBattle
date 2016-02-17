@@ -57,7 +57,7 @@ public class HelperController {
 			
 //			System.out.println(currentStudent.getFirstname());
 //			System.out.println(((List)currentStudent.getAttendances()).get(0).toString());
-			List<Attendance> userAttendance = helperDAO.getUserAttendanceByID((Student)sessionUser);
+			List<Attendance> userAttendance = helperDAO.getUserAttendanceByStudent((Student)sessionUser);
 			
 			mv.addObject("userAttendance", userAttendance);
 			for (Attendance attendance : userAttendance) {
@@ -90,28 +90,33 @@ public class HelperController {
 		
 		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate, sessionUser.getId());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
-		for (Attendance attendance : studentAttendanceByDate) {
-			System.out.println(attendance.getDate());
-		}
 		mv.addObject("jspString","attendance.jsp");
 		
 		return mv;
 	}
 	@RequestMapping(path="attendanceAdminAndTA", method=RequestMethod.GET)
-	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname )
+	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname ) throws ParseException
 	{
+		List<Attendance> adminStudentAttendance = helperDAO.getStudentAttendanceWithDatesByLastName(startDate, endDate, lastname);
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", adminStudentAttendance);
+		mv.addObject("jspString","attendance.jsp");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		return mv;
+	}
+	@RequestMapping(path="createClassAttendances", method=RequestMethod.POST)
+	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort)
+	{
+		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", todaysAttendancelist);
+		mv.addObject("jspString","attendance.jsp");
 		return null;
 	}
-
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
 	{
 		Student currentStudent = (Student)sessionUser;
 		List<Grade> usergrades = (List)currentStudent.getGrades();
-		for (Grade grade : usergrades) {
-			System.out.println(grade.getGrade());
-		}
 		return new ModelAndView("UserDesktop.jsp", "userGrades", usergrades);
 	}
 	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
@@ -123,7 +128,7 @@ public class HelperController {
 
 		return new ModelAndView("index.jsp", "user", user);
 	}
-
+	
 	@RequestMapping(path = "login.do", method = RequestMethod.POST)
 	public ModelAndView loginUser(@RequestParam("username") String username,
 			@RequestParam("password") String password) {
