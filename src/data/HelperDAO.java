@@ -171,7 +171,7 @@ public class HelperDAO {
 
 		System.out.println("insid updateAttendance");
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
 		Date dailyDate = formatter.parse(date);
 		
@@ -201,7 +201,7 @@ public class HelperDAO {
 
 	public String deleteDailyAttendance(String userId, String date) throws ParseException {
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
 		Date dailyDate = formatter.parse(date);
 		
