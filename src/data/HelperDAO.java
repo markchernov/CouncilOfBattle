@@ -169,6 +169,11 @@ public class HelperDAO {
 	public void updateDailyAttendance(String userId, String date, String present,
 			String late, String excused) throws ParseException {
 
+		
+		String presentChar = present.trim();
+		String lateChar = late.trim();
+		String excusedChar = excused.trim();
+		
 		System.out.println("insid updateAttendance");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
@@ -187,9 +192,9 @@ public class HelperDAO {
 		
 		/*tempAttendance.setStudent(tempUser);*/
 /*		tempAttendance.setDate(dailyDate);*/
-		tempAttendance.setPresent(present);
-		tempAttendance.setLate(late);
-		tempAttendance.setExcused(excused);
+		tempAttendance.setPresent(presentChar);
+		tempAttendance.setLate(lateChar);
+		tempAttendance.setExcused(excusedChar);
 		/*tempAttendance.setCheckin(checkin);
 		tempAttendance.setCheckout(checkout);*/
 
