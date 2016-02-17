@@ -1,7 +1,11 @@
 package data;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -57,16 +61,22 @@ public class HelperDAO {
 
 	public List<Attendance> getUserAttendanceByID(int sessionUserId) {
 
-		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyID").setParameter("id", sessionUserId).getResultList();
+		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyId").setParameter("sessionUserId", sessionUserId).getResultList();
 		
 		return attendanceByID;
 
 	}
 
-	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id){
+	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id) throws ParseException{
 		
-
-		List<Attendance> attendanceByDate =  em.createNamedQuery("Attendance.getAttendancebyDates").setParameter(1, startdate).setParameter(2, enddate).setParameter(3, id).getResultList();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date startDate = formatter.parse(startdate);
+		
+		Date endDate = formatter.parse(enddate);
+		
+		List<Attendance> attendanceByDate =  em.createNamedQuery("Attendance.getAttendancebyDates").setParameter(1, startDate).setParameter(2, endDate).setParameter(3, id).getResultList();
 		
 		
 
@@ -74,10 +84,18 @@ public class HelperDAO {
 
 	}
 	
-	public List<Attendance> getStudentAttendanceWithDatesByLastName(String startdate, String enddate, String lastname) {
+	public List<Attendance> getStudentAttendanceWithDatesByLastName(String startdate, String enddate, String lastname) throws ParseException {
 
 		List<Attendance> attendanceByDateLastName = em.createNamedQuery("Attendance.getAttendancebyDatesAndLastName")
 				.setParameter(1, startdate).setParameter(2, enddate).setParameter(3, lastname).getResultList();
+		
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date startDate = formatter.parse(startdate);
+		
+		Date endDate = formatter.parse(enddate);
+		
+		
 
 		return attendanceByDateLastName;
 
