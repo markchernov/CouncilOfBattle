@@ -17,14 +17,6 @@ public class HelperDAO {
 
 	private EntityManager em;
 
-	public void init() {
-
-		User stu = new User();
-
-		System.out.println(stu);
-
-	}
-
 	/*---------------------- USER METHODS -----------------------*/
 
 	public User getUser(int id) {
@@ -74,8 +66,7 @@ public class HelperDAO {
 
 		System.out.println(cohort);
 
-		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
-				.setParameter("cohort", cohort).getResultList();
+		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort").setParameter("cohort", cohort).getResultList();
 
 		return studentsByCohort;
 
@@ -141,29 +132,49 @@ public class HelperDAO {
 
 	}
 
-	public List<Attendance> createDailyAttendance(String cohort) {
+	public List<Attendance> createDailyAttendance(String cohort) throws ParseException {
 
+		System.out.println(cohort);
+		
 		List<Student> currentStudents = getStudentsByCohort(cohort);
+		
+		System.out.println(currentStudents);
+
 
 		List<Attendance> dailyAttendance = new ArrayList<>();
+		System.out.println(cohort);
 
 		for (Student student : currentStudents) {
-
+			System.out.println(student.getFirstname());
+		}
+		for (Student student : currentStudents) {
+		
 			Attendance attendance = new Attendance();
+			
+			System.out.println(attendance);
+			System.out.println("createDailyAttendance" );
 
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date startDate = formatter.parse("2016-02-17");
+			
+			
+			
 			attendance.setStudent(student);
-			attendance.setDate(new Date());
+			attendance.setDate(startDate);
 			attendance.setPresent("Y");
 			attendance.setLate("N");
-			attendance.setExcused("N/A");
+			attendance.setExcused("N");
+
 			attendance.setCheckin(new Date());
+
 			attendance.setCheckout(new Date());
 
 			dailyAttendance.add(attendance);
 			
 			System.out.println(attendance);
 			
-			/*em.persist(attendance);*/
+			
 		}
 
 		return dailyAttendance;

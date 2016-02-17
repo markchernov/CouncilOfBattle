@@ -43,7 +43,7 @@ public class HelperController {
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
 		System.out.println("TEST: in MVC showAttendance");
 		System.out.println("TEST: User access level is "+accessLevel);
-		System.out.println("TEST: User's first name"+sessionUser.getFirstname());
+		
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", accessLevel);
@@ -115,7 +115,7 @@ public class HelperController {
 //		
 		
 	@RequestMapping(path="createClassAttendances.do", method=RequestMethod.POST)
-	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort)
+	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort) throws ParseException
 	{
 		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", todaysAttendancelist);
