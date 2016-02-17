@@ -72,10 +72,10 @@ public class Student extends User {
 		this.attendances = attendances;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Student [cohort=" + cohort + ", attendances=" + attendances + ", grades=" + grades + ", tickets="
 				+ tickets + ", addresses=" + addresses + ", account=" + account + "]";
-	}
+	}*/
 
 }
