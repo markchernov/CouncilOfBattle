@@ -37,9 +37,9 @@
 <div id="instructorTable">
 	<form action= "attendanceAdminAndTA.do", method="GET">
 	<select name="lastname">
-		<c:if test="${! empty lastname}">
-	          <c:forEach var="lastName" items="${lastname}">
-	            <option value="${lastname}">${lastname}</option>
+		<c:if test="${! empty studentLastnameList}">
+	          <c:forEach var="lastName" items="${studentLastnameList}">
+	            <option value="${lastName}">${lastName}</option>
 	          </c:forEach>
 	    </c:if>      
     </select>
