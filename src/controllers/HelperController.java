@@ -1,11 +1,10 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.persistence.internal.codegen.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,11 +54,12 @@ public class HelperController {
 			
 //			System.out.println(currentStudent.getFirstname());
 //			System.out.println(((List)currentStudent.getAttendances()).get(0).toString());
-			List<Attendance> userAttendance = (List)((Student)(sessionUser)).getAttendances();
+			List<Attendance> userAttendance = helperDAO.getUserAttendanceByID((Student)sessionUser);
 			
 			mv.addObject("userAttendance", userAttendance);
 			for (Attendance attendance : userAttendance) {
 				System.out.println(attendance.getDate());
+				
 			}
 			System.out.println("in student");
 			return mv;

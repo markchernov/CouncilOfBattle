@@ -57,10 +57,17 @@ public class HelperDAO {
 
 	public List<Attendance> getUserAttendanceByID(int sessionUserId) {
 
-		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyID").setParameter("id", sessionUserId).getResultList();
+		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyId").setParameter("sessionUserId", sessionUserId).getResultList();
 		
 		return attendanceByID;
 
+	}
+	public List<Attendance> getUserAttendanceByID(Student sessionUserId) {
+		
+		List<Attendance> attendanceByID =  em.createNamedQuery("Attendance.getAttendancebyId").setParameter("sessionUserId", sessionUserId).getResultList();
+		
+		return attendanceByID;
+		
 	}
 
 	public List<Attendance> getStudentAttendanceWithDates(String startdate, String enddate, int id){

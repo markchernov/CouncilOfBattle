@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
@@ -9,7 +11,7 @@
 			</form>
 			<table>
 			 <tr>			 	
-			    <th>Id</th>
+
 			    <th>Date</th>
 			    <th>Present</th>
 			    <th>Late</th>
@@ -17,9 +19,9 @@
 			    <th>Check-in Time</th>
 			    <th>Check-Out Time</th>
 			  </tr>
-			<c:forEach var="attendance" items="${userAttendance}" varStatus="loop"><tr> 
+			<c:forEach var="attendance" items="${userAttendance}">
 			  <tr>
-			    <td>${attendance.student}</td>
+
 			    <td>${attendance.date}</td>
 			    <td>${attendance.present}</td>
 			    <td>${attendance.late}</td>
