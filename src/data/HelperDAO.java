@@ -153,19 +153,29 @@ public class HelperDAO {
 			attendance.setLate("N");
 			attendance.setExcused("N");
 
-			attendance.setCheckin("07:00");
+			attendance.setCheckin("08:00");
 
-			attendance.setCheckout("17:00");
+			attendance.setCheckout("18:00");
 
 			dailyAttendance.add(attendance);
 
 			System.out.println(attendance);
 
 		}
-
+		
+		for (Attendance attendance : dailyAttendance) {
+			
+			em.merge(attendance);
+			em.persist(attendance);
+			
+		} 
+		
 		return dailyAttendance;
 	}
 
+	
+	
+	
 	public void updateDailyAttendance(String userId, String date, String present,
 			String late, String excused) throws ParseException {
 
@@ -204,7 +214,7 @@ public class HelperDAO {
 
 	}
 
-	public String deleteDailyAttendance(String userId, String date) throws ParseException {
+	public String deleteDailyStudentAttendanceRecord(String userId, String date) throws ParseException {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
