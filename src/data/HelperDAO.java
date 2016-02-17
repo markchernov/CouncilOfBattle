@@ -66,7 +66,8 @@ public class HelperDAO {
 
 		System.out.println(cohort);
 
-		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort").setParameter("cohort", cohort).getResultList();
+		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
+				.setParameter("cohort", cohort).getResultList();
 
 		return studentsByCohort;
 
@@ -134,34 +135,18 @@ public class HelperDAO {
 
 	public List<Attendance> createDailyAttendance(String cohort) throws ParseException {
 
-		System.out.println(cohort);
-		
 		List<Student> currentStudents = getStudentsByCohort(cohort);
-		
-		System.out.println(currentStudents);
-
-
-
 
 		List<Attendance> dailyAttendance = new ArrayList<>();
-		System.out.println(cohort);
 
 		for (Student student : currentStudents) {
-			System.out.println(student.getFirstname());
-		}
-		for (Student student : currentStudents) {
-		
+
 			Attendance attendance = new Attendance();
-			
-			System.out.println(attendance);
-			System.out.println("createDailyAttendance" );
 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 			Date startDate = formatter.parse("2016-02-17");
-			
-			
-			
+
 			attendance.setStudent(student);
 			attendance.setDate(startDate);
 			attendance.setPresent("Y");
@@ -173,29 +158,38 @@ public class HelperDAO {
 			attendance.setCheckout("17:00");
 
 			dailyAttendance.add(attendance);
-			
+
 			System.out.println(attendance);
-			
-			
+
 		}
 
 		return dailyAttendance;
 	}
 
-	public Attendance updateDailyAttendance(Attendance attendance, Student student, Date date, String present,
-			String late, String excused, String checkin, String checkout) {
+	public void updateDailyAttendance(String userId, Date date, String present,
+			String late, String excused) {
 
-		attendance.setStudent(student);
-		attendance.setDate(date);
-		attendance.setPresent(present);
-		attendance.setLate(late);
-		attendance.setExcused(excused);
-		attendance.setCheckin(checkin);
-		attendance.setCheckout(checkout);
+		
+		int id = Integer.parseInt(userId);
+		
+		Student tempUser = em.find(Student.class, id);
+		
+		
+		AttendanceId compositeKeyId = new AttendanceId(date,id);
+		
+		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
+		
+		tempAttendance.setStudent(tempUser);
+		tempAttendance.setDate(date);
+		tempAttendance.setPresent(present);
+		tempAttendance.setLate(late);
+		tempAttendance.setExcused(excused);
+		/*tempAttendance.setCheckin(checkin);
+		tempAttendance.setCheckout(checkout);*/
 
-		em.persist(attendance);
+		em.persist(tempAttendance);
 
-		return attendance;
+		System.out.println(tempAttendance);
 
 	}
 
