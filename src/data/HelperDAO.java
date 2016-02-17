@@ -1,18 +1,12 @@
 package data;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.print.attribute.standard.DateTimeAtCreation;
-
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -25,11 +19,13 @@ public class HelperDAO {
 
 	public void init() {
 
-		Student stu = new Student();
+		User stu = new User();
 
 		System.out.println(stu);
 
 	}
+
+	/*---------------------- USER METHODS -----------------------*/
 
 	public User getUser(int id) {
 		User us = em.find(User.class, id);
@@ -62,12 +58,46 @@ public class HelperDAO {
 		return user;
 	}
 
+	public List<String> getStudentsLastNames() {
+
+		List<String> studentsLastNames = em.createNamedQuery("Attendance.getStudentsLastNames").getResultList();
+
+		return studentsLastNames;
+
+	}
+
+	public List<Student> getStudentsByCohort(String cohortId) {
+
+		int id = Integer.parseInt(cohortId);
+
+		Cohort cohort = em.find(Cohort.class, id);
+
+		System.out.println(cohort);
+
+		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
+				.setParameter("cohort", cohort).getResultList();
+
+		return studentsByCohort;
+
+	}
+
+	/*---------------------- ATTENDANCE METHODS -----------------------*/
+
 	public List<Attendance> getUserAttendanceById(int id) {
 
 		List<Attendance> attendanceByID = em.createNamedQuery("Attendance.getAttendancebyId").setParameter("id", id)
 				.getResultList();
 
 		return attendanceByID;
+
+	}
+
+	public List<String> getAttendanceByCohort(String cohort) {
+
+		List<String> attendanceByCohort = em.createNamedQuery("Attendance.getStudentsLastNames")
+				.setParameter("cohort", cohort).getResultList();
+
+		return attendanceByCohort;
 
 	}
 
@@ -101,46 +131,13 @@ public class HelperDAO {
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-
 		Date startDate = formatter.parse(startdate);
 
 		Date endDate = formatter.parse(enddate);
-		List<Attendance> attendanceByDateLastName = em.createNamedQuery("Attendance.getAttendancebyDatesAndLastName").setParameter(1, startDate).setParameter(2, endDate).setParameter(3, lastname).getResultList();
-		
+		List<Attendance> attendanceByDateLastName = em.createNamedQuery("Attendance.getAttendancebyDatesAndLastName")
+				.setParameter(1, startDate).setParameter(2, endDate).setParameter(3, lastname).getResultList();
 
 		return attendanceByDateLastName;
-
-	}
-
-	public List<String> getStudentsLastNames() {
-
-		List<String> studentsLastNames = em.createNamedQuery("Attendance.getStudentsLastNames").getResultList();
-
-		return studentsLastNames;
-
-	}
-
-	public List<String> getAttendanceByCohort(String cohort) {
-
-		List<String> attendanceByCohort = em.createNamedQuery("Attendance.getStudentsLastNames")
-				.setParameter("cohort", cohort).getResultList();
-
-		return attendanceByCohort;
-
-	}
-
-	public List<Student> getStudentsByCohort(String cohortId) {
-
-		 int id = Integer.parseInt(cohortId);
-		
-		Cohort cohort = em.find(Cohort.class, id);
-		
-		System.out.println(cohort);
-		
-		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
-				.setParameter("cohort", cohort).getResultList();
-
-		return studentsByCohort;
 
 	}
 
@@ -163,15 +160,18 @@ public class HelperDAO {
 			attendance.setCheckout(new Date());
 
 			dailyAttendance.add(attendance);
+			
+			System.out.println(attendance);
+			
+			/*em.persist(attendance);*/
 		}
 
 		return dailyAttendance;
 	}
 
-	public Attendance updateDailyAttendance(Attendance attendance,Student student, Date date, String present, String late, String excused,
-			Date checkin, Date checkout) {
-		
-		
+	public Attendance updateDailyAttendance(Attendance attendance, Student student, Date date, String present,
+			String late, String excused, Date checkin, Date checkout) {
+
 		attendance.setStudent(student);
 		attendance.setDate(date);
 		attendance.setPresent(present);
@@ -179,12 +179,74 @@ public class HelperDAO {
 		attendance.setExcused(excused);
 		attendance.setCheckin(checkin);
 		attendance.setCheckout(checkout);
-		
-		
-		
+
+		em.persist(attendance);
 
 		return attendance;
 
+	}
+
+	public String deleteDailyAttendance(Attendance attendance) {
+
+		em.remove(attendance);
+
+		String confirmation = "Attendance record: " + attendance + " was deleted";
+
+		return confirmation;
+	}
+
+	public Attendance addDailyAttendance(Student student, Date date, String present, String late, String excused,
+			Date checkin, Date checkout) {
+
+		Attendance attendance = new Attendance();
+
+		attendance.setStudent(student);
+		attendance.setDate(date);
+		attendance.setPresent(present);
+		attendance.setLate(late);
+		attendance.setExcused(excused);
+		attendance.setCheckin(checkin);
+		attendance.setCheckout(checkout);
+
+		em.persist(attendance);
+
+		return attendance;
+
+	}
+
+	/*---------------------- GRADES METHODS -----------------------*/
+
+	public Grade createGrade(Student student, Project project, int grade) {
+
+		Grade gradeObject = new Grade();
+
+		gradeObject.setStudent(student);
+		gradeObject.setProject(project);
+		gradeObject.setGrade(grade);
+
+		em.persist(gradeObject);
+
+		return gradeObject;
+
+	}
+
+	public Grade updateGrade(Grade gradeObject, Student student, Project project, int grade) {
+
+		gradeObject.setStudent(student);
+		gradeObject.setProject(project);
+		gradeObject.setGrade(grade);
+
+		em.persist(gradeObject);
+
+		return gradeObject;
+
+	}
+
+	public Grade getGradeByUserId(int id) {
+
+		Grade grade = em.find(Grade.class, id);
+
+		return grade;
 	}
 
 }
