@@ -12,13 +12,13 @@
 </head>
 
 <body>
-<!--TODO: Choose CSS styling  -->
 <!-- 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
 -->
+<!--TODO: ^^ Choose CSS styling  -->
 </head>
 
 <body>
@@ -47,23 +47,27 @@
                 <li><a href="attendance.do">Attendance</a></li>
                 <li><a href="grades.do">Grades</a></li>
                 <li><a href="tickets.do">Help Ticket</a></li>
+                <li><a href="logout.do">Logout</a></li>
+                <!--TODO: ^^ create logout.do in the controller-->
             </ul>
         </nav>
 </div>
 </header>
 
 
-<!--We can have the right .jsp called by the button, that hits the *.do and returns the name of the .jsp from the controller-->
+<!--We are calling the specific .jsp segement by the buttons from the header menu-->
+<!--The .do method calls the controller which returns the name of the .jsp segment-->
 <c:choose>
 <c:when test="${! empty jspString}">
 <jsp:include page="${jspString}"></jsp:include>
 </c:when>
 </c:choose>
 
-<%-- <jsp:include page="attendance.jsp"></jsp:include>
+<!--Alternatively, we could use a condition statement to pick the jsp segment:-->
+<!-- <jsp:include page="attendance.jsp"></jsp:include>
 <jsp:include page="grades.jsp"></jsp:include>
 <jsp:include page="helpTickets.jsp"></jsp:include>
- --%>
+ -->
 
 </body>
 </html>
