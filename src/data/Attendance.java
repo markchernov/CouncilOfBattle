@@ -39,11 +39,12 @@ public class Attendance {
 	Date date;
 	
 	String present;
-	String late;
+	String late;  
+	
 	String excused;
 	
-	Date checkin;
-	Date checkout;
+	String checkin;
+	String checkout;
 	
 	
 	
@@ -90,14 +91,14 @@ public class Attendance {
 
 
 
-	public Date getCheckin() {
+	public String getCheckin() {
 		return checkin;
 	}
 
 
 
 
-	public Date getCheckout() {
+	public String getCheckout() {
 		return checkout;
 	}
 
@@ -139,25 +140,25 @@ public class Attendance {
 
 
 
-	public void setCheckin(Date checkin) {
+	public void setCheckin(String checkin) {
 		this.checkin = checkin;
 	}
 
 
 
 
-	public void setCheckout(Date checkout) {
+	public void setCheckout(String checkout) {
 		this.checkout = checkout;
 	}
 
 
 
 
-//	@Override
-//	public String toString() {
-//		return "Attendance [student=" + student + ", date=" + date + ", present=" + present + ", late=" + late
-//				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Attendance [student=" + student  + ", present=" + present + ", late=" + late
+				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
+	}
 
 
 

@@ -75,6 +75,7 @@
 		  </tr>
 		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
 		<tr>
+<<<<<<< HEAD
 
 		   <form action="modifyAttendanceRecord.do" method="POST">
 
@@ -83,29 +84,38 @@
 		    <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
 		   
 		    <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
+=======
+		    <form action="deleteAttendanceRecord.do" method="POST">
+		   <form action="modifyAttendanceRecord.do" method="POST">
+		    <td><input type="hidden" name="studentId" value="${attendance.student.id}">${attendance.student.id}</td>
+            <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
+            <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
+>>>>>>> 6a647b1e55e2e95cedcbb92ed7800961851323e6
 		    <td>
 		  		<select name="present">
-	            	<option selected="${attendance.present}">Y</option>
-	            	<option selected="${! attendance.present}">N</option>
+	            	<option selected="${attendance.present}">${attendance.present}</option>
+	            	<option value="${! attendance.present}">${! attendance.present}</option>
    			 	</select>
    			</td>	
 		    <td>
 		  		<select name="late">
-	            	<option selected="${attendance.late}">Y</option>
-	            	<option selected="${! attendance.late}">N</option>
+	            	<option selected="${attendance.late}">${attendance.late}</option>
+	            	<option value="${! attendance.late}">${! attendance.late}</option>
    			 	</select>
    			</td>	
 		    <td>
 		  		<select name="excused">
 	            	<option selected="${attendance.excused}">Y</option>
-	            	<option selected="${! attendance.excused}">N</option>
+	            	<option value="${! attendance.excused}">N</option>
    			 	</select>
    			</td>	
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
-		    <td><input type="submit" value="Edit Record"></form></td>
-		    <td><form action="deleteAttendanceRecord.do" method="POST"><input type="submit" value="Delete Record"></form></td>
+		    <td><input type="submit" value="Edit Record"></td>
 		   </form>
+		   <td><input type="submit" value="Delete Record"></td>
+		   </form>
+		   </tr>
 		</c:forEach>
 	</table>
 	
