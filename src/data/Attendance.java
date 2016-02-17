@@ -17,7 +17,8 @@ import javax.persistence.Table;
 
 
 @NamedQueries({
-	@NamedQuery(name="Attendance.getAttendancebyId", query="select a from Attendance a where a.student = :sessionUser"),
+	@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendances from Student s where s.student.id = :id"),
+	@NamedQuery(name="Attendance.getAttendancebyStudent", query="select a from Attendance a where a.student = :sessionUser"),
 	@NamedQuery(name="Attendance.getAttendancebyUsername", query="select a from Account a where a.username = :username"),
 	@NamedQuery(name="Attendance.getAttendancebyDates", query="select a from Attendance a where a.date between  ?1 and ?2 and a.student.id = ?3"),
 	@NamedQuery(name="Attendance.getAttendancebyCohort", query="select a from Attendance a inner join a.student s inner join s.cohort c where c.name = :cohortname"),
@@ -37,9 +38,9 @@ public class Attendance {
 	@Id
 	Date date;
 	
-	int present;
-	int late;
-	int excused;
+	String present;
+	String late;
+	String excused;
 	
 	Date checkin;
 	Date checkout;
@@ -50,6 +51,8 @@ public class Attendance {
 	public Attendance () {}
 
 
+	
+	
 
 
 	public Student getStudent() {
@@ -66,21 +69,21 @@ public class Attendance {
 
 
 
-	public int getPresent() {
+	public String getPresent() {
 		return present;
 	}
 
 
 
 
-	public int getLate() {
+	public String getLate() {
 		return late;
 	}
 
 
 
 
-	public int getExcused() {
+	public String getExcused() {
 		return excused;
 	}
 
@@ -115,21 +118,21 @@ public class Attendance {
 
 
 
-	public void setPresent(int present) {
+	public void setPresent(String present) {
 		this.present = present;
 	}
 
 
 
 
-	public void setLate(int late) {
+	public void setLate(String late) {
 		this.late = late;
 	}
 
 
 
 
-	public void setExcused(int excused) {
+	public void setExcused(String excused) {
 		this.excused = excused;
 	}
 
