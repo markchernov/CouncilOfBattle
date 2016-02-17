@@ -17,13 +17,13 @@ public class HelperDAO {
 
 	private EntityManager em;
 
-	public void init() {
+	/*public void init() {
 
 		User stu = new User();
 
 		System.out.println(stu);
 
-	}
+	}*/
 
 	/*---------------------- USER METHODS -----------------------*/
 
@@ -141,24 +141,37 @@ public class HelperDAO {
 
 	}
 
-	public List<Attendance> createDailyAttendance(String cohort) {
+	public List<Attendance> createDailyAttendance(String cohort) throws ParseException {
 
+		System.out.println(cohort);
+		
 		List<Student> currentStudents = getStudentsByCohort(cohort);
+		
+		System.out.println(currentStudents);
 
-		List<Attendance> dailyAttendance = new ArrayList();
+		List<Attendance> dailyAttendance = new ArrayList<Attendance>();
 
 		for (Student student : currentStudents) {
 
 			Attendance attendance = new Attendance();
+			
+			System.out.println(attendance);
+			System.out.println("createDailyAttendance" );
 
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date startDate = formatter.parse("2016-02-17");
+			
+			
+			
 			attendance.setStudent(student);
-			attendance.setDate(new Date());
+			attendance.setDate(startDate);
 			attendance.setPresent("Y");
 			attendance.setLate("N");
-			attendance.setExcused("N/A");
-			attendance.setCheckin(new Date());
+			attendance.setExcused("N");
+			/*attendance.setCheckin(new Date());
 			attendance.setCheckout(new Date());
-
+*/
 			dailyAttendance.add(attendance);
 			
 			System.out.println(attendance);

@@ -115,7 +115,7 @@ public class HelperController {
 //		
 		
 	@RequestMapping(path="createClassAttendances.do", method=RequestMethod.POST)
-	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort)
+	public ModelAndView adminCreateClassAttendances (@RequestParam("cohort") String cohort) throws ParseException
 	{
 		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", todaysAttendancelist);
