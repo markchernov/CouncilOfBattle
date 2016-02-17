@@ -17,14 +17,6 @@ public class HelperDAO {
 
 	private EntityManager em;
 
-	/*public void init() {
-
-		User stu = new User();
-
-		System.out.println(stu);
-
-	}*/
-
 	/*---------------------- USER METHODS -----------------------*/
 
 	public User getUser(int id) {
@@ -74,8 +66,7 @@ public class HelperDAO {
 
 		System.out.println(cohort);
 
-		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
-				.setParameter("cohort", cohort).getResultList();
+		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort").setParameter("cohort", cohort).getResultList();
 
 		return studentsByCohort;
 
@@ -149,10 +140,17 @@ public class HelperDAO {
 		
 		System.out.println(currentStudents);
 
-		List<Attendance> dailyAttendance = new ArrayList<Attendance>();
+
+
+
+		List<Attendance> dailyAttendance = new ArrayList<>();
+		System.out.println(cohort);
 
 		for (Student student : currentStudents) {
-
+			System.out.println(student.getFirstname());
+		}
+		for (Student student : currentStudents) {
+		
 			Attendance attendance = new Attendance();
 			
 			System.out.println(attendance);
@@ -169,14 +167,16 @@ public class HelperDAO {
 			attendance.setPresent("Y");
 			attendance.setLate("N");
 			attendance.setExcused("N");
-			/*attendance.setCheckin(new Date());
+
+			attendance.setCheckin(new Date());
+
 			attendance.setCheckout(new Date());
-*/
+
 			dailyAttendance.add(attendance);
 			
 			System.out.println(attendance);
 			
-			/*em.persist(attendance);*/
+			
 		}
 
 		return dailyAttendance;
