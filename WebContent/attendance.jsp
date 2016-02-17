@@ -12,9 +12,6 @@
 		<input type="submit" value="Search Dates" />
 	</form>
 	
-	<form action="createClassAttendances.do" method="POST">
-		<input type="text" name="cohort">
-	</form>
 	
 	<table>
 		<tr>			 	
@@ -26,17 +23,15 @@
 		    <th>Check-Out Time</th>
 		</tr>
 		  <tr>
-		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop"><tr>
-		    <form action="modifyAttendanceRecord.do" modelAttribute="sessionUser" method="POST">
+		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop"><tr> 
+		  <tr>
 		    <td>${attendance.date}</td>
-		    <td><form:input path="${attendance.present}"/></td>		    
-		    <td><form:input path="${attendance.late}"/></td>		    
-		    <td><form:input path="${attendance.excused}"/></td>		    
+		    <td>${attendance.present}</td>
+		    <td>${attendance.late}</td>
+		    <td>${attendance.excused}</td>
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
-		    <td><input type="submit" value="Edit Record"></form></td>
-		    <td><form action="deleteAttendanceRecord.do" modelAttribute="sessionUser" method="POST"><input type="submit" value="Delete Record"></form></td>
-		    </form>
+		  </tr>
 		</c:forEach>
 		  </tr>
 	</table>
@@ -45,6 +40,13 @@
 <c:when test="${accessLevel == '2' || accessLevel == '3'}">
 <div id="instructorTable">
 	<!--search attendance date function -->
+	
+	<p>Create a New Attendance Record</p>
+	<form action="createClassAttendances.do" method="POST">
+		Cohort: <input type="text" name="cohort">
+		<input type="submit" value="GO!">
+	</form>
+	
 	<form action= "attendanceAdminAndTA.do", method="GET">
 	<select name="lastname">
 		<c:if test="${! empty studentLastnameList}">
@@ -69,15 +71,18 @@
 		    <th>Check-in Time</th>
 		    <th>Check-Out Time</th>
 		  </tr>
-		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop"><tr> 
-		  <tr>
+		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
+		<tr>
+		   <form action="modifyAttendanceRecord.do" method="POST">
 		    <td>${attendance.date}</td>
-		    <td>${attendance.present}</td>
-		    <td>${attendance.late}</td>
-		    <td>${attendance.excused}</td>
+		    <td><form:input path="${attendance.present}"/></td>		    
+		    <td><form:input path="${attendance.late}"/></td>		    
+		    <td><form:input path="${attendance.excused}"/></td>		    
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
-		  </tr>
+		    <td><input type="submit" value="Edit Record"></form></td>
+		    <td><form action="deleteAttendanceRecord.do" method="POST"><input type="submit" value="Delete Record"></form></td>
+		   </form>
 		</c:forEach>
 	</table>
 	
