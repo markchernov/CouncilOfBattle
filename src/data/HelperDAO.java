@@ -329,7 +329,7 @@ public class HelperDAO {
 
 	public List<Project> getAllProjects() {
 
-		List<Project> allProjects = em.createNamedQuery("Subject.getAllProjects").getResultList();
+		List<Project> allProjects = em.createNamedQuery("Project.getAllProjects").getResultList();
 
 		return allProjects;
 

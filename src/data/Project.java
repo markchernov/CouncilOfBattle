@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "projects")
 
-@NamedQueries({ @NamedQuery(name = "Subject.getAllProjects", query = "select p from Project p ")})
+@NamedQueries({ @NamedQuery(name = "Project.getAllProjects", query = "select p from Project p ")})
 
 public class Project {
 
