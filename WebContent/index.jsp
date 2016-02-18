@@ -25,5 +25,8 @@
 		Username:<input type="text" name="username"><br/> 
 		Password:<input type="password" name="password"><br/> 
 		<input type="submit" value="GO!" />
+		<c:if test="${! empty errorString}">
+		<p>${errorString}</p>
+		</c:if>
 	</form>
 	Powered by coffee and lack of sleep. Council of Battle @Copyright 2016 </footer>
