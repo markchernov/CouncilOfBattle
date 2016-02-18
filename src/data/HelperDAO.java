@@ -462,8 +462,8 @@ public class HelperDAO {
 	
 	
 	public List<Ticket> getAllTickets() {
-
-		List<Ticket> allTickets = em.createNamedQuery("Subject.getAllTickets").getResultList();
+		List<Ticket> allTickets = new ArrayList<>();
+		allTickets = em.createNamedQuery("Ticket.getAllTickets").getResultList();
 
 		return allTickets;
 

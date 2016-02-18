@@ -1,6 +1,7 @@
 package controllers;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import data.Attendance;
 import data.Grade;
 import data.HelperDAO;
-import data.Project;
-import data.SchoolWeek;
 import data.Student;
+import data.Ticket;
 import data.User;
 
 @Controller
@@ -233,40 +233,49 @@ public class HelperController {
 		mv.addObject("sessionUser", "");
 		return mv;
 	}
+	
 
-	
+//	@RequestMapping (path = "ticketing.do", method = RequestMethod.GET)
+//	public ModelAndView showTickets(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser) {
+//	ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+//
+//	return mv;
+//	}
+
+
 	@RequestMapping(path = "ticketing.do", method = RequestMethod.GET)
-    public ModelAndView ticketForm(@ModelAttribute("sessionUser") User sessionUser,
-            @RequestParam("ticketChoice") String choice, @RequestParam("subject") String subject)
+    public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser)
     {
-        SchoolWeek weekOne = new SchoolWeek();
-        weekOne.setSchoolWeek(weekOne);
         
-        if (choice.contains("New"))
-        {
+//        if (choice.contains("New"))
+//        {
+//            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
+//            mv.addObject("choice", choice);
+//            mv.addObject("subject", subject);
+//            mv.addObject("week", weekOne);
+//            return mv;
+//        } else if (choice.contains("Open"))
+//        {
+		
+			List<Ticket> allTickets = new ArrayList<>();
+			allTickets = helperDAO.getAllTickets();
             ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-            mv.addObject("choice", choice);
-            mv.addObject("subject", subject);
-            mv.addObject("week", weekOne);
+            mv.addObject("jspString", "ticketForm.jsp");
+            mv.addObject("sessionUser", sessionUser);
+            mv.addObject("accessLevel", accessLevel);
+            mv.addObject("tickets", allTickets);
             return mv;
-        } else if (choice.contains("Open"))
-        {
-            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-            mv.addObject("choice", choice);
-            mv.addObject("subject", subject);
-            mv.addObject("week", weekOne);
-            return mv;
-        } else if (choice.contains("Closed"))
-        {
-            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-            mv.addObject("choice", choice);
-            mv.addObject("subject", subject);
-            mv.addObject("week", weekOne);
-            return mv;
-        } else
-            return new ModelAndView("logout.jsp", "user", sessionUser);        
+//        } else if (choice.contains("Closed"))
+//        {
+//            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
+//            mv.addObject("choice", choice);
+//            mv.addObject("subject", subject);
+//            mv.addObject("week", weekOne);
+//            return mv;
+//        } else
+//            return new ModelAndView("UserDesktop.jsp", "user", sessionUser);        
     }
-	
+
 	
 	
 	

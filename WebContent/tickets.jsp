@@ -10,19 +10,15 @@
 </head>
 <body>
 <table>
-<caption>${choice} Ticket(s)</caption>
-<th>Monday</th>
-<th>Tuesday</th>
-<th>Wednesday</th>
-<th>Thursday</th>
-<th>Friday</th>
-</th>
-<td>${week.monday}</td>
-<td>${week.tuesday}</td>
-<td>${week.wednesday}</td>
-<td>${week.thursday}</td>
-<td>${week.friday}</td>
-</table>
+<caption>Open Ticket(s)</caption>
+<c:forEach var="ticket" items="${tickets}">
+	<p>${ticket.id}</p>	
+	<p>${ticket.subject.name}</p>
+	
+		
+
+
+</c:forEach>
 	
 </body>
 </html>

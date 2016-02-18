@@ -13,11 +13,11 @@
 
 <body>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
-
+ -->
 <!--TODO: ^^ Choose CSS styling  -->
 </head>
 
@@ -46,7 +46,7 @@
                 <li><a href=UserDesktop.jsp>Home</a></li>
                 <li><a href="attendance.do">Attendance</a></li>
                 <li><a href="grades.do">Grades</a></li>
-                <li><a href="tickets.do">Help Ticket</a></li>
+                <li><a href="ticketing.do">Help Ticket</a></li>
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
             </ul>
