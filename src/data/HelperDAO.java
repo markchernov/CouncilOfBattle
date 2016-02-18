@@ -277,11 +277,11 @@ public class HelperDAO {
 
 	}
 
-	public List<Grade> getGradeByUserId(String id) {
+	public List<Grade> getGradeByUserId(Student sessionUserId) {
 		
-		int studentId = Integer.parseInt(id);
+		/*int studentId = Integer.parseInt(Student sessionUserId);*/
 
-		Student student = em.find(Student.class, studentId);
+		Student student = em.find(Student.class, sessionUserId);
 		
 		
 		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getAttendancebyStudent").setParameter("student", student).getResultList();
