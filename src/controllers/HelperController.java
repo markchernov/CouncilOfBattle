@@ -195,5 +195,13 @@ public class HelperController {
 		mv.addObject("sessionUser", currentUser);
 		return mv;
 	}
+	@RequestMapping(path="logout.do")
+	public ModelAndView logoutUser()
+	{
+		ModelAndView mv = new ModelAndView("index.jsp");
+		mv.addObject("accessLevel", "");
+		mv.addObject("sessionUser", "");
+		return mv;
+	}
 
 }

@@ -45,7 +45,7 @@
 	          </c:forEach>
 	    </c:if>      
     </select>
-		<input type="submit" value="Search Dates" />
+		<input type="submit" value="Search Grades" />
 	</form>
 	<table>
 		<tr>			 	
@@ -63,11 +63,9 @@
 		  <tr>
 		  <form action="modifyGradesRecord.do" method="POST">
 		    <td><input type="hidden" name="studentId" value="${grade.student.id}">${grade.student.id}</td>
-            <td><input type="hidden" name="projectId" value="${grade.project.id}">${grade.project.id}</td>
-		    <td>${grade.student.id}</td>		    
-		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>
+		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>	    
 		    <td>${grade.project.name}</td>
-		    <td><select name="grade">
+		    <td><input type="hidden" name="projectId" value="${grade.project.id}"><select name="grade">
 		    <option selected="${grade.grade}">${grade.grade}</option>
 		    <c:forEach begin="0" end="100" var="val">
    			 <option value="${val}">${val}</option>
