@@ -16,8 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subjects")
 
-/*@NamedQueries({ @NamedQuery(name = "Subject.getSubjectsByStudent", query = "select s from Subject s where  student.id = :id ")})
-*/
+@NamedQueries({ @NamedQuery(name = "Subject.getAllSubjects", query = "select s from Subject s ")})
+
 
 
 public class Subject {

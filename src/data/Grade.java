@@ -34,18 +34,18 @@ public class Grade {
 
 	int grade;
 	
-//	String comments;
+	String comments;
 
 	public Grade() {
 	}
 
-//	public String getComments() {
-//		return comments;
-//	}
-//
-//	public void setComments(String comments) {
-//		this.comments = comments;
-//	}
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 
 	public Student getStudent() {
 		return student;

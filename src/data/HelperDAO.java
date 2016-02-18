@@ -246,14 +246,14 @@ public class HelperDAO {
 		return dailyAttendance;
 	}
 
-	public void updateDailyAttendance(String userId, String date, String present, String late, String excused)
+	public String updateDailyAttendance(String userId, String date, String present, String late, String excused)
 			throws ParseException {
 
 		String presentChar = present.trim();
 		String lateChar = late.trim();
 		String excusedChar = excused.trim();
 
-		System.out.println("insid updateAttendance");
+		System.out.println("inside updateAttendance");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
@@ -273,7 +273,9 @@ public class HelperDAO {
 
 		em.persist(tempAttendance);
 
-		System.out.println(tempAttendance);
+		String confirmation = "Attendance record: " + tempAttendance + " was updated";
+
+		return confirmation;
 
 	}
 
@@ -317,29 +319,50 @@ public class HelperDAO {
 
 	/*---------------------- GRADES METHODS -----------------------*/
 
-	public Grade createGrade(Student student, Project project, int grade) {
+	public List<Subject> getAllSubjects() {
 
-		Grade gradeObject = new Grade();
+		List<Subject> allSubjects = em.createNamedQuery("Subject.getAllSubjects").getResultList();
 
-		gradeObject.setStudent(student);
-		gradeObject.setProject(project);
-		gradeObject.setGrade(grade);
-
-		em.persist(gradeObject);
-
-		return gradeObject;
+		return allSubjects;
 
 	}
 
-	public Grade updateGrade(Grade gradeObject, Student student, Project project, int grade) {
+	public List<Project> getAllProjectss() {
 
-		gradeObject.setStudent(student);
-		gradeObject.setProject(project);
-		gradeObject.setGrade(grade);
+		List<Project> allProjects = em.createNamedQuery("Subject.getAllProjects").getResultList();
+
+		return allProjects;
+
+	}
+
+	public String createGrade(String lastname, String projectId, String grade, String comments) {
+
+		Grade gradeObject = new Grade();
+
+		String lastName = lastname.trim();
+		String project = projectId.trim();
+		String gradeString = grade.trim();
+
+		Student tempStudent = (Student) em.createNamedQuery("Student.getOneStudentByLastName")
+				.setParameter("lastname", lastName).getSingleResult();
+
+		int projectInt = Integer.parseInt(project);
+		int gradeInt = Integer.parseInt(gradeString);
+
+		Project tempProject = em.find(Project.class, projectInt);
+
+		gradeObject.setStudent(tempStudent);
+		gradeObject.setProject(tempProject);
+		gradeObject.setGrade(gradeInt);
+		gradeObject.setComments(comments);
+
+		em.merge(gradeObject);
 
 		em.persist(gradeObject);
 
-		return gradeObject;
+		String confirmation = "Grade record: " + gradeObject + " was created";
+
+		return confirmation;
 
 	}
 
@@ -388,7 +411,7 @@ public class HelperDAO {
 
 		em.persist(tempGrade);
 
-		String confirmation = "Attendance record: " + tempGrade + " was updated";
+		String confirmation = "Grade record: " + tempGrade + " was updated";
 
 		return confirmation;
 
@@ -408,9 +431,11 @@ public class HelperDAO {
 
 		em.remove(tempGrade);
 
-		String confirmation = "Attendance record: " + tempGrade + " was deleted";
+		String confirmation = "Grade record: " + tempGrade + " was deleted";
 
 		return confirmation;
 	}
+
+	/*---------------------- TICKET METHODS -----------------------*/
 
 }
