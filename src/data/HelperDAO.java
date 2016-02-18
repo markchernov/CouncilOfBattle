@@ -450,6 +450,24 @@ public class HelperDAO {
 	
 	
 	
+	public List<Ticket> getAllTickets() {
+
+		List<Ticket> allTickets = em.createNamedQuery("Subject.getAllTickets").getResultList();
+
+		return allTickets;
+
+	}
+
+	public List<Ticket> getTicketByUserId(Student sessionUserId) {
+
+		Student student = em.find(Student.class, sessionUserId.getId());
+
+		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent").setParameter("student", student)
+				.getResultList();
+
+		
+		return ticketsByStudent;
+	}
 	
 	
 }
