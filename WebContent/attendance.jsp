@@ -82,7 +82,7 @@
 		    <td>
 		  		<select name="present">
 		  			<c:choose> 
-        				<c:when test="${attendance.present == true}"> 
+        				<c:when test="${attendance.present == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
         					<option value="N">N</option>
        					</c:when>
@@ -96,7 +96,7 @@
 		    <td>
 		  		<select name="late">
 		  			<c:choose> 
-        				<c:when test="${attendance.late == true}"> 
+        				<c:when test="${attendance.late == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
         					<option value="N">N</option>
        					</c:when>
@@ -110,7 +110,7 @@
 		    <td>
 		  		<select name="excused">
 		  			<c:choose> 
-        				<c:when test="${attendance.excused == true}"> 
+        				<c:when test="${attendance.excused == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
         					<option value="N">N</option>
        					</c:when>
