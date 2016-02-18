@@ -137,6 +137,7 @@ public class HelperDAO {
 
 		List<Student> currentStudents = getStudentsByCohort(cohort);
 
+
 		List<Attendance> dailyAttendance = new ArrayList<>();
 
 		for (Student student : currentStudents) {
