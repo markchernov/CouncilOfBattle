@@ -294,9 +294,10 @@ public class HelperController {
 			return mv;
 		} catch (Exception e) {
 			mv.addObject("reportString", "An error in creating your ticket may have occured.");
+			return mv;
 		}
 	}
-	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
-	
-	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
+//	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
+//	
+//	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
 }
