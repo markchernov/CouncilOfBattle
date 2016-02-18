@@ -1,76 +1,137 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
 
-<!--conditional test for access level 1-->
+
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
-<!--TODO:verify .do name-->
-	<form action="???attendanceStudent.do" method="GET">
+	<form action="attendanceStudent.do" method="GET">
+		Enter Start Date: <input type="date" name="startDate">YYYY-MM-DD
+		<br />
+		Enter End Date: <input type="date" name="endDate" />YYYY-MM-DD
+		<input type="submit" value="Search Dates" />
+	</form>
+	
+	
+	<table>
+		<tr>			 	
+		    <th>Project Name</th>
+		    <th>Grade</th>
+		</tr>
+		  <tr>
+		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
+		  <tr>
+		    <td>${grade.project.name}</td>
+		    <td>${grade.grade}</td>
+		  </tr>
+		</c:forEach>
+		  </tr>
+	</table>
+</c:when>
+
+<c:when test="${accessLevel == '2' || accessLevel == '3'}">
+<div id="instructorTable">
+	<!--search attendance date function -->
+	
+	<p>Create a New Attendance Record</p>
+	<form action="createClassAttendances.do" method="POST">
+		Cohort: <input type="text" name="cohort">
+		<input type="submit" value="GO!">
+	</form>
+	
+	<form action= "attendanceAdminAndTA.do", method="GET">
+	<select name="lastname">
+		<c:if test="${! empty studentLastnameList}">
+	          <c:forEach var="lastName" items="${studentLastnameList}">
+	            <option value="${lastName}">${lastName}</option>
+	          </c:forEach>
+	    </c:if>      
+    </select>
 		Enter Start Date: <input type="date" name="startDate">
 		<br />
 		Enter End Date: <input type="date" name="endDate" />
-		<input type="submit" value="Search Grades" />
-	</form>
-	<table>
-		 <tr>
-		    <th>User Id</th>
-		    <th>Project Id</th>
-		    <th>Grade</th>
-		  </tr>
-	<c:forEach var="grades" items="${usergrades}" varStatus="loop"><tr> 
-		  <tr>
-		    <td>${grades.user_id}</td>
-		    <td>${grades.project_id}</td>
-		    <td>${grades.grade}</td>
-		  </tr>
-	</c:forEach>
-	</table>
-</div>
-</c:when>
-
-<!--conditional test for access level 2 & 3-->
-<c:when test="${accessLevel == '2' || accessLevel == '3'}">
-<div id="instructorTable">
-
-<!--form for Instructor/Admin to select students by last name, from a drop down menu-->
-	<form action= "gradesAdminAndTA.do", method="GET">
-	<!--TODO: ^^ Verify .do name-->
-		<select name="lastname">
-			<c:if test="${! empty lastname}">
-	        	<c:forEach var="lastName" items="${lastname}">
-	            	<option value="${lastname}">${lastname}</option>
-	          </c:forEach>
-	    	</c:if>
-    	</select>
-		<input type="submit" value="Search Grades" />
+		<input type="submit" value="Search Dates" />
 	</form>
 	
 	<table>
+		 <tr>			 	
+
+		    <th>ID</th>
+			<th>Name</th>
+		    <th>Date</th>
+		    <th>Present</th>
+		    <th>Late</th>
+		    <th>Excused</th>
+		    <th>Check-in Time</th>
+		    <th>Check-Out Time</th>
+		  </tr>
+		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
 		<tr>
-			<th>User Id</th>
-		    <th>Project Id</th>
-		    <th>Grade</th>
-		</tr>
-	<c:forEach var="grades" items="${usergrades}" varStatus="loop"><tr> 
-		<tr>
-			<td>${grades.user_id}</td>
-		    <td>${grades.project_id}</td>
-		    <td>${grades.grade}</td>
-		</tr>
-	</c:forEach>
+		   <form action="modifyAttendanceRecord.do" method="POST">
+		    <td><input type="hidden" name="studentId" value="${attendance.student.id}">${attendance.student.id}</td>
+            <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
+            <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
+		    <td>
+		  		<select name="present">
+		  			<c:choose> 
+        				<c:when test="${attendance.present == 'Y'}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
+   			 	</select>
+   			</td>
+		    <td>
+		  		<select name="late">
+		  			<c:choose> 
+        				<c:when test="${attendance.late == 'Y'}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
+   			 	</select>
+   			</td>
+		    <td>
+		  		<select name="excused">
+		  			<c:choose> 
+        				<c:when test="${attendance.excused == 'Y'}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
+   			 	</select>
+   			</td>
+
+		    <td>${attendance.checkin}</td>
+		    <td>${attendance.checkout}</td>
+		    <td><input type="submit" value="Edit Record"></td>
+		   </form>
+		  <td>  <form action="deleteAttendanceRecord.do" method="POST">
+		   <input type="submit" value="Delete Record">
+		   <input type="hidden" name="date" value="${attendance.date}"/>
+		   <input type="hidden" name="studentId" value="${attendance.student.id}"/>
+		   </form>
+		   <td>
+		   </tr>
+		</c:forEach>
 	</table>
+	
 </div>
 </c:when>
-
-<!--in the interest of keeping it simple for launch, we combining the lvl 2 & lvl 3 permissions into one for now  -->
-<%-- <c:when test="${accessLevel == '3'}">
-	<div id="adminTable">
-
-	</div>
-</c:when> --%>
 
 <c:otherwise>
 	<p>You need to be logged in fool!</p>
 </c:otherwise>
-
 </c:choose>
