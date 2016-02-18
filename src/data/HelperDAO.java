@@ -450,13 +450,33 @@ public class HelperDAO {
 
 	/*---------------------- TICKET METHODS -----------------------*/
 
-	public List<HelpTicket> schoolDay() {
-		List<HelpTicket> schoolDay = new ArrayList<>();
-		for (int i = 0; i < 7; i++) {
-			HelpTicket helpMe = new HelpTicket();
-			schoolDay.add(helpMe);
-		}
-		return schoolDay;
+	
+	public List<HelpTicket> schoolDay(){
+        List<HelpTicket> schoolDay = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            HelpTicket helpMe = new HelpTicket();
+            schoolDay.add(helpMe);
+        }return schoolDay;
+    }
+	
+	
+	
+	public List<Ticket> getAllTickets() {
+
+		List<Ticket> allTickets = em.createNamedQuery("Subject.getAllTickets").getResultList();
+
+		return allTickets;
+
 	}
 
+	public List<Ticket> getTicketByUserId(Student sessionUserId) {
+
+		Student student = em.find(Student.class, sessionUserId.getId());
+
+		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent").setParameter("student", student)
+				.getResultList();
+
+		
+		return ticketsByStudent;
+	}
 }
