@@ -8,6 +8,7 @@
 		<tr>			 	
 		    <th>Project Name</th>
 		    <th>Grade</th>
+		    <th>Commments</th>
 		    <th>Subject(s)</th>
 		    <th></th>
 		    <th></th>
@@ -18,6 +19,7 @@
 		  <tr>
 		    <td>${grade.project.name}</td>
 		    <td>${grade.grade}</td>
+		    <td>${grade.comments}</td>
 		    <c:forEach var="subjects" items="${grade.project.subjects}">
 		    <td>${subjects.name}</td>
 		    </c:forEach>
@@ -33,7 +35,7 @@
 	
 	<p>Create a New Attendance Record</p>
 	<form action="createGrades.do" method="Get">
-	<select name="lastname">
+	<select name="lastName">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
 	            <option value="${lastName}">${lastName}</option>
@@ -73,6 +75,7 @@
 		    <th>Name</th>
 		    <th>Project Name</th>
 		    <th>Grade</th>
+		    <th>Comments</th>
 		    <th>Subject(s)</th>
 		    <th></th>
 		    <th></th>
@@ -91,6 +94,7 @@
    			 <option value="${val}">${val}</option>
 			</c:forEach>
 			</select>
+		   <td><input type="text" name="comment" value="${grade.comments}"></td>
 			</td>
 		    <c:forEach var="subjects" items="${grade.project.subjects}">
 		    <td>${subjects.name}</td>

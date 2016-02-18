@@ -1,7 +1,6 @@
 package controllers;
 
 import java.text.ParseException;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
 import data.Attendance;
 import data.Grade;
 import data.HelperDAO;
+import data.Project;
 import data.Student;
 import data.User;
 
@@ -134,6 +135,7 @@ public class HelperController {
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", accessLevel);
+		mv.addObject("projectList", helperDAO.getAllProjects());
 		if (accessLevel.equals("1")) {
 
 			Student currentStudent = (Student) sessionUser;
@@ -152,16 +154,18 @@ public class HelperController {
 		List<Grade> studentGrades = helperDAO.getGradeByLastName(lastname);
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userGrades", studentGrades);
 		mv.addObject("jspString", "grades.jsp");
+		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
 
 	@RequestMapping(path = "modifyGradesRecord.do", method = RequestMethod.POST)
 	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId,
-			@RequestParam("projectId") String projectId, @RequestParam("grade") String grade) throws ParseException {
+			@RequestParam("projectId") String projectId, @RequestParam("grade") String grade, @RequestParam("comment") String comment) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		helperDAO.updateGrade(studentId, projectId, grade);
+		helperDAO.updateGrade(studentId, projectId, grade, comment);
 		mv.addObject("jspString", "grades.jsp");
+		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
