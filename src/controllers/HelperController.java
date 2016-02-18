@@ -165,7 +165,17 @@ public class HelperController {
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
-
+	@RequestMapping(path="createGrades.do", method = RequestMethod.GET)
+	public ModelAndView createGradeForStudent(@RequestParam("lastName") String lastName, @RequestParam("project") String project, @RequestParam("grade") String grade, @RequestParam("comments") String comment)
+	{
+		String result = helperDAO.createGrade(lastName, project, grade, comment);
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString", "grades.jsp");
+		mv.addObject("projectList", helperDAO.getAllProjects());
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		mv.addObject("result", result);
+		return mv;
+	}
 	@RequestMapping(path = "deleteGrade.do", method = RequestMethod.POST)
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
 			@RequestParam("projectId") String projectId) throws ParseException {

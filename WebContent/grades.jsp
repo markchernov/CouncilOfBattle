@@ -32,8 +32,28 @@
 	<!--search attendance date function -->
 	
 	<p>Create a New Attendance Record</p>
-	<form action="createClassAttendances.do" method="POST">
-		Cohort: <input type="text" name="cohort">
+	<form action="createGrades.do" method="Get">
+	<select name="lastname">
+		<c:if test="${! empty studentLastnameList}">
+	          <c:forEach var="lastName" items="${studentLastnameList}">
+	            <option value="${lastName}">${lastName}</option>
+	          </c:forEach>
+	    </c:if>      
+    </select>
+    <select name="project">
+		<c:if test="${! empty projectList}">
+	          <c:forEach var="project" items="${projectList}">
+	            <option value="${lastName}">${lastName}</option>
+	          </c:forEach>
+	    </c:if>      
+    </select>
+    <select name="grade">
+		    <option selected="0"></option>
+		    <c:forEach begin="0" end="100" var="val">
+   			 <option value="${val}">${val}</option>
+			</c:forEach>
+			</select>
+		Comment: <input type="text" name="comments">
 		<input type="submit" value="GO!">
 	</form>
 	
