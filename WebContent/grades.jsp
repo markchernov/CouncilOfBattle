@@ -49,6 +49,8 @@
 	</form>
 	<table>
 		<tr>			 	
+		    <th>ID</th>
+		    <th>Name</th>
 		    <th>Project Name</th>
 		    <th>Grade</th>
 		    <th>Subject(s)</th>
@@ -59,11 +61,28 @@
 		  <tr>
 		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
 		  <tr>
+		  <form action="modifyGradesRecord.do" method="POST">
+		    <td><input type="hidden" name="studentId" value="${grade.student.id}">${grade.student.id}</td>
+            <td><input type="hidden" name="projectId" value="${grade.project.id}">${grade.project.id}</td>
+		    <td>${grade.student.id}</td>		    
+		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>
 		    <td>${grade.project.name}</td>
-		    <td>${grade.grade}</td>
+		    <select name="grade">
+		    <option selected="${grade.grade}">${grade.grade}</option>
+		    <c:forEach begin="0" end="100" var="val">
+   			 <option value="${val}">${val}</option>
+			</c:forEach>
+			</select>
 		    <c:forEach var="subjects" items="${grade.project.subjects}">
 		    <td>${subjects.name}</td>
 		    </c:forEach>
+		     <td><input type="submit" value="Edit Grade"></td>
+		    </form>
+		    <form action="deleteGrade.do" method="POST">
+		   <input type="submit" value="Delete Record">
+		   <input type="hidden" name="projectId" value="${grade.project.id}"/>
+		   <input type="hidden" name="studentId" value="${grade.student.id}"/>
+		   </form>
 		  </tr>
 		</c:forEach>
 		  </tr>

@@ -158,6 +158,25 @@ public class HelperController {
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
+	@RequestMapping(path="modifyGradesRecord.do", method=RequestMethod.POST)
+	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId, @RequestParam("grade") String grade )
+	{
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		helperDAO.updateGrade(studentId, projectId, grade);
+		mv.addObject("jspString","grades.jsp");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		return mv;
+	}
+	@RequestMapping(path="deleteGrade.do", method = RequestMethod.POST)
+	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId)
+	{
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		helperDAO.deleteStudentGradeRecord(studentId, projectId);
+		mv.addObject("jspString","grades.jsp");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		
+		return null;
+	}
 	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
 	public ModelAndView setUser() {
 

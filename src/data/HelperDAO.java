@@ -276,7 +276,7 @@ public class HelperDAO {
 
 		Student student = em.find(Student.class, sessionUserId.getId());
 
-		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesbyStudent").setParameter("student", student)
+		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesByStudent").setParameter("student", student)
 				.getResultList();
 
 		return gradesByStudent;
