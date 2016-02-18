@@ -129,7 +129,7 @@
 		  <td>  <form action="deleteAttendanceRecord.do" method="POST">
 		   <input type="submit" value="Delete Record">
 		   <input type="hidden" name="date" value="${attendance.date}"/>
-		   <input type="hidden" name="id" value="${attendance.student.id}"/>
+		   <input type="hidden" name="studentId" value="${attendance.student.id}"/>
 		   </form>
 		   <td>
 		   </tr>
