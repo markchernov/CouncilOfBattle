@@ -451,14 +451,14 @@ public class HelperDAO {
 	/*---------------------- TICKET METHODS -----------------------*/
 
 	
-	public List<HelpTicket> schoolDay(){
+	/*public List<HelpTicket> schoolDay(){
         List<HelpTicket> schoolDay = new ArrayList<>();
         for (int i = 0; i < 7; i++){
             HelpTicket helpMe = new HelpTicket();
             schoolDay.add(helpMe);
         }return schoolDay;
     }
-	
+	*/
 	
 	
 	public List<Ticket> getAllTickets() {
