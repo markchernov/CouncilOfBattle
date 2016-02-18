@@ -368,8 +368,6 @@ public class HelperDAO {
 
 	public List<Grade> getGradeByUserId(Student sessionUserId) {
 
-		/* int studentId = Integer.parseInt(Student sessionUserId); */
-
 		Student student = em.find(Student.class, sessionUserId.getId());
 
 		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesByStudent").setParameter("student", student)
@@ -393,7 +391,7 @@ public class HelperDAO {
 		return gradesByStudent;
 	}
 
-	public String updateGrade(String userId, String projectId, String grade) throws ParseException {
+	public String updateGrade(String userId, String projectId, String grade, String comments) throws ParseException {
 
 		String user = userId.trim();
 		String project = projectId.trim();
@@ -408,6 +406,7 @@ public class HelperDAO {
 		Grade tempGrade = em.find(Grade.class, compositeKeyId);
 
 		tempGrade.setGrade(gradeInt);
+		tempGrade.setComments(comments);
 
 		em.persist(tempGrade);
 
