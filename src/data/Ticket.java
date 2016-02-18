@@ -101,12 +101,12 @@ public class Ticket {
 		this.description = description;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", student=" + student + ", subject=" + subject + ", instructor=" + instructor
 				+ ", description=" + description  + ", submitTime=" + submitTime + ", closeTime="
 				+ closeTime + "]";
-	}
+	}*/
 
 	
 

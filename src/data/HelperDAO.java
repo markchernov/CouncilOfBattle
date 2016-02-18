@@ -26,18 +26,91 @@ public class HelperDAO {
 		return us;
 	}
 
-	public User setUser() {
+	public User createUser(String firstname, String lastname, String email, String usertype) {
 
-		User user = new User();
+		User user = null;
 
-		user.setFirstname("Ben");
-		user.setLastname("K");
-		user.setEmail("bk@gmail.com");
+		if (usertype.equalsIgnoreCase("student")) {
 
-		em.persist(user);
+			Student newUser = new Student();
 
-		System.out.println(user);
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setCohort(new Cohort());
+
+			newUser.setUsertype(usertype);
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setUser(user);
+
+			newAccount.setAccessLevel("1");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+		}
+
+		else if (usertype.equalsIgnoreCase("instructor")) {
+
+			Instructor newUser = new Instructor();
+
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setLevel(" ");
+
+			newUser.setUsertype(usertype);
+
+			newUser.setSubjects(new ArrayList<Subject>());
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setAccessLevel("2");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+
+		}
+
+		else if (usertype.equalsIgnoreCase("admin")) {
+
+			Admin newUser = new Admin();
+
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setDepartment(" ");
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setAccessLevel("3");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+
+		}
+
 		return user;
+
 	}
 
 	public User loginUser(String username, String password) {
@@ -296,38 +369,31 @@ public class HelperDAO {
 
 		return gradesByStudent;
 	}
-	
-	public String updateGrade(String userId, String projectId, String grade)
-			throws ParseException {
+
+	public String updateGrade(String userId, String projectId, String grade) throws ParseException {
 
 		String user = userId.trim();
 		String project = projectId.trim();
 		String gradeString = grade.trim();
-		
-		
+
 		int userInt = Integer.parseInt(user);
 		int projectInt = Integer.parseInt(project);
-		int gradeInt = Integer.parseInt(gradeString); 
-	
-	
+		int gradeInt = Integer.parseInt(gradeString);
+
 		GradeId compositeKeyId = new GradeId(userInt, projectInt);
-		
-		
 
 		Grade tempGrade = em.find(Grade.class, compositeKeyId);
-		
+
 		tempGrade.setGrade(gradeInt);
-		
+
 		em.persist(tempGrade);
 
 		String confirmation = "Attendance record: " + tempGrade + " was updated";
 
 		return confirmation;
-		
-		
+
 	}
-	
-	
+
 	public String deleteStudentGradeRecord(String userId, String projectId) throws ParseException {
 
 		String user = userId.trim();
@@ -335,12 +401,10 @@ public class HelperDAO {
 
 		int userInt = Integer.parseInt(user);
 		int projectInt = Integer.parseInt(project);
-		
+
 		GradeId compositeKeyId = new GradeId(userInt, projectInt);
 
 		Grade tempGrade = em.find(Grade.class, compositeKeyId);
-		
-		
 
 		em.remove(tempGrade);
 
@@ -348,9 +412,5 @@ public class HelperDAO {
 
 		return confirmation;
 	}
-	
-	
-	
-	
-	
+
 }
