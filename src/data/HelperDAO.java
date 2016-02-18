@@ -296,5 +296,58 @@ public class HelperDAO {
 
 		return gradesByStudent;
 	}
+	
+	public String updateGrade(String userId, String projectId, String grade)
+			throws ParseException {
 
+		String user = userId.trim();
+		String project = projectId.trim();
+		String gradeString = grade.trim();
+		
+		
+		int userInt = Integer.parseInt(user);
+		int projectInt = Integer.parseInt(project);
+		int gradeInt = Integer.parseInt(gradeString); 
+	
+	
+		GradeId compositeKeyId = new GradeId(userInt, projectInt);
+
+		Grade tempGrade = em.find(Grade.class, compositeKeyId);
+		
+		
+		em.persist(tempGrade);
+
+		String confirmation = "Attendance record: " + tempGrade + " was updated";
+
+		return confirmation;
+		
+		
+	}
+	
+	
+	public String deleteStudentGradeRecord(String userId, String projectId) throws ParseException {
+
+		String user = userId.trim();
+		String project = projectId.trim();
+
+		int userInt = Integer.parseInt(user);
+		int projectInt = Integer.parseInt(project);
+		
+		GradeId compositeKeyId = new GradeId(userInt, projectInt);
+
+		Grade tempGrade = em.find(Grade.class, compositeKeyId);
+		
+		
+
+		em.remove(tempGrade);
+
+		String confirmation = "Attendance record: " + tempGrade + " was deleted";
+
+		return confirmation;
+	}
+	
+	
+	
+	
+	
 }
