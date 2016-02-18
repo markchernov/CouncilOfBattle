@@ -16,6 +16,7 @@ import data.Attendance;
 import data.Grade;
 import data.HelperDAO;
 import data.Project;
+import data.SchoolWeek;
 import data.Student;
 import data.User;
 
@@ -221,4 +222,40 @@ public class HelperController {
 		return mv;
 	}
 
+	
+	@RequestMapping(path = "ticketing.do", method = RequestMethod.GET)
+    public ModelAndView ticketForm(@ModelAttribute("sessionUser") User sessionUser,
+            @RequestParam("ticketChoice") String choice, @RequestParam("subject") String subject)
+    {
+        SchoolWeek weekOne = new SchoolWeek();
+        weekOne.setSchoolWeek(weekOne);
+        
+        if (choice.contains("New"))
+        {
+            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
+            mv.addObject("choice", choice);
+            mv.addObject("subject", subject);
+            mv.addObject("week", weekOne);
+            return mv;
+        } else if (choice.contains("Open"))
+        {
+            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
+            mv.addObject("choice", choice);
+            mv.addObject("subject", subject);
+            mv.addObject("week", weekOne);
+            return mv;
+        } else if (choice.contains("Closed"))
+        {
+            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
+            mv.addObject("choice", choice);
+            mv.addObject("subject", subject);
+            mv.addObject("week", weekOne);
+            return mv;
+        } else
+            return new ModelAndView("logout.jsp", "user", sessionUser);        
+    }
+	
+	
+	
+	
 }

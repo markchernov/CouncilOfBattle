@@ -246,7 +246,7 @@ public class HelperDAO {
 		return dailyAttendance;
 	}
 
-	public String updateDailyAttendance(String userId, String date, String present, String late, String excused)
+	public String updateDailyAttendance(String userId, String date, String present, String late, String excused, String checkin, String checkout)
 			throws ParseException {
 
 		String presentChar = present.trim();
@@ -270,6 +270,8 @@ public class HelperDAO {
 		tempAttendance.setPresent(presentChar);
 		tempAttendance.setLate(lateChar);
 		tempAttendance.setExcused(excusedChar);
+		tempAttendance.setCheckin(checkin);
+		tempAttendance.setCheckout(checkout);
 
 		em.persist(tempAttendance);
 
@@ -437,4 +439,17 @@ public class HelperDAO {
 
 	/*---------------------- TICKET METHODS -----------------------*/
 
+	
+	public List<HelpTicket> schoolDay(){
+        List<HelpTicket> schoolDay = new ArrayList<>();
+        for (int i = 0; i < 7; i++){
+            HelpTicket helpMe = new HelpTicket();
+            schoolDay.add(helpMe);
+        }return schoolDay;
+    }
+	
+	
+	
+	
+	
 }
