@@ -82,22 +82,47 @@
             <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
 		    <td>
 		  		<select name="present">
-	            	<option selected="${attendance.present}">${attendance.present}</option>
-	            	<option value="${! attendance.present}">${! attendance.present}</option>
+		  			<c:choose> 
+        				<c:when test="${attendance.present == true}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
    			 	</select>
-   			</td>	
+   			</td>
 		    <td>
 		  		<select name="late">
-	            	<option selected="${attendance.late}">${attendance.late}</option>
-	            	<option value="${! attendance.late}">${! attendance.late}</option>
+		  			<c:choose> 
+        				<c:when test="${attendance.late == true}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
    			 	</select>
-   			</td>	
+   			</td>
 		    <td>
 		  		<select name="excused">
-	            	<option selected="${attendance.excused}">Y</option>
-	            	<option value="${! attendance.excused}">N</option>
+		  			<c:choose> 
+        				<c:when test="${attendance.excused == true}"> 
+        					<option selected="true" value="Y">Y</option>
+        					<option value="N">N</option>
+       					</c:when>
+        				<c:otherwise>
+        				    <option value="Y">Y</option>
+        					<option selected="true" value="N">N</option>
+        				</c:otherwise>
+    				</c:choose>
    			 	</select>
-   			</td>	
+   			</td>
+
 		    <td>${attendance.checkin}</td>
 		    <td>${attendance.checkout}</td>
 		    <td><input type="submit" value="Edit Record"></td>
