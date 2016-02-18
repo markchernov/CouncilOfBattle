@@ -4,25 +4,23 @@
 
 
 <c:when test="${accessLevel == '1'}">
-<div id ="studentTable">
-	<form action="attendanceStudent.do" method="GET">
-		Enter Start Date: <input type="date" name="startDate">YYYY-MM-DD
-		<br />
-		Enter End Date: <input type="date" name="endDate" />YYYY-MM-DD
-		<input type="submit" value="Search Dates" />
-	</form>
-	
-	
 	<table>
 		<tr>			 	
 		    <th>Project Name</th>
 		    <th>Grade</th>
+		    <th>Subject(s)</th>
+		    <th></th>
+		    <th></th>
+		    <th></th>
 		</tr>
 		  <tr>
 		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
 		  <tr>
 		    <td>${grade.project.name}</td>
 		    <td>${grade.grade}</td>
+		    <c:forEach var="subjects" items="${grade.project.subjects}">
+		    <td>${subjects.name}</td>
+		    </c:forEach>
 		  </tr>
 		</c:forEach>
 		  </tr>
@@ -39,7 +37,7 @@
 		<input type="submit" value="GO!">
 	</form>
 	
-	<form action= "attendanceAdminAndTA.do", method="GET">
+	<form action= "gradesByLastNameAdminAndTA.do", method="GET">
 	<select name="lastname">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
@@ -47,87 +45,29 @@
 	          </c:forEach>
 	    </c:if>      
     </select>
-		Enter Start Date: <input type="date" name="startDate">
-		<br />
-		Enter End Date: <input type="date" name="endDate" />
 		<input type="submit" value="Search Dates" />
 	</form>
-	
 	<table>
-		 <tr>			 	
-
-		    <th>ID</th>
-			<th>Name</th>
-		    <th>Date</th>
-		    <th>Present</th>
-		    <th>Late</th>
-		    <th>Excused</th>
-		    <th>Check-in Time</th>
-		    <th>Check-Out Time</th>
+		<tr>			 	
+		    <th>Project Name</th>
+		    <th>Grade</th>
+		    <th>Subject(s)</th>
+		    <th></th>
+		    <th></th>
+		    <th></th>
+		</tr>
+		  <tr>
+		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
+		  <tr>
+		    <td>${grade.project.name}</td>
+		    <td>${grade.grade}</td>
+		    <c:forEach var="subjects" items="${grade.project.subjects}">
+		    <td>${subjects.name}</td>
+		    </c:forEach>
 		  </tr>
-		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
-		<tr>
-		   <form action="modifyAttendanceRecord.do" method="POST">
-		    <td><input type="hidden" name="studentId" value="${attendance.student.id}">${attendance.student.id}</td>
-            <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
-            <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
-		    <td>
-		  		<select name="present">
-		  			<c:choose> 
-        				<c:when test="${attendance.present == 'Y'}"> 
-        					<option selected="true" value="Y">Y</option>
-        					<option value="N">N</option>
-       					</c:when>
-        				<c:otherwise>
-        				    <option value="Y">Y</option>
-        					<option selected="true" value="N">N</option>
-        				</c:otherwise>
-    				</c:choose>
-   			 	</select>
-   			</td>
-		    <td>
-		  		<select name="late">
-		  			<c:choose> 
-        				<c:when test="${attendance.late == 'Y'}"> 
-        					<option selected="true" value="Y">Y</option>
-        					<option value="N">N</option>
-       					</c:when>
-        				<c:otherwise>
-        				    <option value="Y">Y</option>
-        					<option selected="true" value="N">N</option>
-        				</c:otherwise>
-    				</c:choose>
-   			 	</select>
-   			</td>
-		    <td>
-		  		<select name="excused">
-		  			<c:choose> 
-        				<c:when test="${attendance.excused == 'Y'}"> 
-        					<option selected="true" value="Y">Y</option>
-        					<option value="N">N</option>
-       					</c:when>
-        				<c:otherwise>
-        				    <option value="Y">Y</option>
-        					<option selected="true" value="N">N</option>
-        				</c:otherwise>
-    				</c:choose>
-   			 	</select>
-   			</td>
-
-		    <td>${attendance.checkin}</td>
-		    <td>${attendance.checkout}</td>
-		    <td><input type="submit" value="Edit Record"></td>
-		   </form>
-		  <td>  <form action="deleteAttendanceRecord.do" method="POST">
-		   <input type="submit" value="Delete Record">
-		   <input type="hidden" name="date" value="${attendance.date}"/>
-		   <input type="hidden" name="studentId" value="${attendance.student.id}"/>
-		   </form>
-		   <td>
-		   </tr>
 		</c:forEach>
+		  </tr>
 	</table>
-	
 </div>
 </c:when>
 

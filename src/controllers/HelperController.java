@@ -58,7 +58,6 @@ public class HelperController {
 			List<Attendance> userAttendance = helperDAO.getUserAttendanceByStudent((Student)sessionUser);
 			
 			mv.addObject("userAttendance", userAttendance);
-			System.out.println("in student");
 			return mv;
 		}
 		else if(accessLevel.equals("2") || accessLevel.equals("3"))
@@ -103,7 +102,6 @@ public class HelperController {
 	public ModelAndView modifyAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,  @RequestParam("present") String present,@RequestParam("late") String late,@RequestParam("excused") String excused) throws ParseException{
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		helperDAO.updateDailyAttendance(id, date, present, late, excused);
-		System.out.println("i made it through marks thing");
 		mv.addObject("jspString","attendance.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
@@ -130,11 +128,35 @@ public class HelperController {
 	}
 	
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
-	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
+	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel)
 	{
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString","grades.jsp");
+		mv.addObject("sessionUser", sessionUser);
+		mv.addObject("accessLevel", accessLevel);
+		if(accessLevel.equals("1"))
+		{		
+			
 		Student currentStudent = (Student)sessionUser;
 		List<Grade> usergrades = helperDAO.getGradeByUserId((Student)sessionUser);
-		return new ModelAndView("UserDesktop.jsp", "userGrades", usergrades);
+		mv.addObject("userGrades", usergrades);
+		return mv;
+		}
+		else if(accessLevel.equals("2") || accessLevel.equals("3"))
+		{
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		}
+		
+		return mv;
+	}
+	@RequestMapping(path="gradesByLastNameAdminAndTA.do", method=RequestMethod.GET)
+	public ModelAndView adminShowGradesByLastName( @RequestParam("lastname") String lastname )
+	{
+		List<Grade> studentGrades = helperDAO.getGradeByLastName(lastname);
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userGrades", studentGrades);
+		mv.addObject("jspString","grades.jsp");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+		return mv;
 	}
 	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
 	public ModelAndView setUser() {
