@@ -99,9 +99,12 @@ public class HelperController {
 	@RequestMapping(path = "modifyAttendanceRecord.do", method = RequestMethod.POST)
 	public ModelAndView modifyAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,
 			@RequestParam("present") String present, @RequestParam("late") String late,
-			@RequestParam("excused") String excused) throws ParseException {
+			@RequestParam("excused") String excused,@RequestParam("startHour") String startHour, @RequestParam("startMinute") String startMinute, @RequestParam("endHour") String endHour, @RequestParam("endMinute") String endMinute ) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		helperDAO.updateDailyAttendance(id, date, present, late, excused);
+		String checkin = startHour + ":" + startMinute;
+		String checkout = endHour + ":" + endMinute;
+		
+		helperDAO.updateDailyAttendance(id, date, present, late, excused, checkin, checkout);
 		mv.addObject("jspString", "attendance.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:choose>
 
 
@@ -121,9 +123,38 @@
     				</c:choose>
    			 	</select>
    			</td>
-
-		    <td>${attendance.checkin}</td>
-		    <td>${attendance.checkout}</td>
+			<c:set var="startParts" value="${fn:split(attendance.checkin, ':')}" />
+			<td>
+			<select name="startHour">
+		    <option selected="${startParts[0]}">${startParts[0]}</option>
+		    <c:forEach begin="0" end="23" var="val">
+   			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
+			</c:forEach>
+			</select>
+			:
+			<select name="startMinute">
+		    <option selected="${startParts[1]}">${startParts[1]}</option>
+		    <c:forEach begin="0" end="59" var="val">
+   			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
+			</c:forEach>
+			</select>
+			</td>
+			<c:set var="endParts" value="${fn:split(attendance.checkout, ':')}" />
+			<td>
+			<select name="endHour">
+		    <option selected="${endParts[0]}">${endParts[0]}</option>
+		    <c:forEach begin="0" end="23" var="val">
+   			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
+			</c:forEach>
+			</select>
+			:
+			<select name="endMinute">
+		    <option selected="${endParts[1]}">${endParts[1]}</option>
+		    <c:forEach begin="0" end="59" var="val">
+   			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
+			</c:forEach>
+			</select>
+			</td>
 		    <td><input type="submit" value="Edit Record"></td>
 		   </form>
 		  <td>  <form action="deleteAttendanceRecord.do" method="POST">
