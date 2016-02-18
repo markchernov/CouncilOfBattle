@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @NamedQueries({
 	/*@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendance from Student s where s.student.id = :id"),*/
-	@NamedQuery(name="Grade.getAttendancebyStudent", query="select g from Grade a where a.student = :student")})
+	@NamedQuery(name="Grade.getAttendancebyStudent", query="select g from Grade g where g.student = :student")})
 
 
 
