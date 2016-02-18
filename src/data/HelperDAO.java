@@ -311,9 +311,12 @@ public class HelperDAO {
 	
 	
 		GradeId compositeKeyId = new GradeId(userInt, projectInt);
+		
+		
 
 		Grade tempGrade = em.find(Grade.class, compositeKeyId);
 		
+		tempGrade.setGrade(gradeInt);
 		
 		em.persist(tempGrade);
 
