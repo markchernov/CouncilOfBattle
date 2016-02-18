@@ -137,7 +137,6 @@ public class HelperDAO {
 
 		List<Student> currentStudents = getStudentsByCohort(cohort);
 
-
 		List<Attendance> dailyAttendance = new ArrayList<>();
 
 		for (Student student : currentStudents) {
@@ -195,15 +194,9 @@ public class HelperDAO {
 
 		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId);
 
-		/* tempAttendance.setStudent(tempUser); */
-		/* tempAttendance.setDate(dailyDate); */
 		tempAttendance.setPresent(presentChar);
 		tempAttendance.setLate(lateChar);
 		tempAttendance.setExcused(excusedChar);
-		/*
-		 * tempAttendance.setCheckin(checkin);
-		 * tempAttendance.setCheckout(checkout);
-		 */
 
 		em.persist(tempAttendance);
 
@@ -278,14 +271,28 @@ public class HelperDAO {
 	}
 
 	public List<Grade> getGradeByUserId(Student sessionUserId) {
-		
-		/*int studentId = Integer.parseInt(Student sessionUserId);*/
+
+		/* int studentId = Integer.parseInt(Student sessionUserId); */
 
 		Student student = em.find(Student.class, sessionUserId.getId());
-		
-		
-		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getAttendancebyStudent").setParameter("student", student).getResultList();
-		
+
+		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesbyStudent").setParameter("student", student)
+				.getResultList();
+
+		return gradesByStudent;
+	}
+
+	public List<Grade> getGradeByLastName(String lastname) {
+
+		String studentLastname = lastname.trim();
+
+		Student stu = (Student) em.createNamedQuery("Student.getStudentsByLastName")
+				.setParameter("lastname", studentLastname).getSingleResult();
+
+		Student student = em.find(Student.class, stu.getId());
+
+		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesByStudent").setParameter("student", student)
+				.getResultList();
 
 		return gradesByStudent;
 	}
