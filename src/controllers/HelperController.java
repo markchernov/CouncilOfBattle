@@ -175,7 +175,7 @@ public class HelperController {
 		mv.addObject("jspString","grades.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		
-		return null;
+		return mv;
 	}
 	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
 	public ModelAndView setUser() {
