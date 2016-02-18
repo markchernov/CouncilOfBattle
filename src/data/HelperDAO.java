@@ -216,12 +216,12 @@ public class HelperDAO {
 
 			Attendance attendance = new Attendance();
 
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			/*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-			Date startDate = formatter.parse("2016-02-17");
+			Date startDate = formatter.parse("2016-02-17");*/
 
 			attendance.setStudent(student);
-			attendance.setDate(startDate);
+			attendance.setDate(new Date());
 			attendance.setPresent("Y");
 			attendance.setLate("N");
 			attendance.setExcused("N");
