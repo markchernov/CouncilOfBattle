@@ -67,22 +67,24 @@
 		    <td>${grade.student.id}</td>		    
 		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>
 		    <td>${grade.project.name}</td>
-		    <select name="grade">
+		    <td><select name="grade">
 		    <option selected="${grade.grade}">${grade.grade}</option>
 		    <c:forEach begin="0" end="100" var="val">
    			 <option value="${val}">${val}</option>
 			</c:forEach>
 			</select>
+			</td>
 		    <c:forEach var="subjects" items="${grade.project.subjects}">
 		    <td>${subjects.name}</td>
 		    </c:forEach>
 		     <td><input type="submit" value="Edit Grade"></td>
 		    </form>
-		    <form action="deleteGrade.do" method="POST">
+		    <td><form action="deleteGrade.do" method="POST">
 		   <input type="submit" value="Delete Record">
 		   <input type="hidden" name="projectId" value="${grade.project.id}"/>
 		   <input type="hidden" name="studentId" value="${grade.student.id}"/>
 		   </form>
+		   </td>
 		  </tr>
 		</c:forEach>
 		  </tr>
