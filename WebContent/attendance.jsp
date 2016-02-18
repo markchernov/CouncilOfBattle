@@ -75,7 +75,6 @@
 		  </tr>
 		<c:forEach var="attendance" items="${userAttendance}" varStatus="loop">
 		<tr>
-		    <form action="deleteAttendanceRecord.do" method="POST">
 		   <form action="modifyAttendanceRecord.do" method="POST">
 		    <td><input type="hidden" name="studentId" value="${attendance.student.id}">${attendance.student.id}</td>
             <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
@@ -127,8 +126,12 @@
 		    <td>${attendance.checkout}</td>
 		    <td><input type="submit" value="Edit Record"></td>
 		   </form>
-		   <td><input type="submit" value="Delete Record"></td>
+		  <td>  <form action="deleteAttendanceRecord.do" method="POST">
+		   <input type="submit" value="Delete Record">
+		   <input type="hidden" name="date" value="${attendance.date}"/>
+		   <input type="hidden" name="id" value="${attendance.student.id}"/>
 		   </form>
+		   <td>
 		   </tr>
 		</c:forEach>
 	</table>
