@@ -43,7 +43,7 @@
     <select name="project">
 		<c:if test="${! empty projectList}">
 	          <c:forEach var="project" items="${projectList}">
-	            <option value="${lastName}">${lastName}</option>
+	            <option value="${project.id}">${project.name}</option>
 	          </c:forEach>
 	    </c:if>      
     </select>
