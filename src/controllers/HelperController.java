@@ -124,12 +124,21 @@ public class HelperController {
 	}
 
 	@RequestMapping(path = "createClassAttendances.do", method = RequestMethod.POST)
-	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort) throws ParseException {
+	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort){
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		try{
 		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
-		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", todaysAttendancelist);
+		 mv.addObject("userAttendance", todaysAttendancelist);
 		mv.addObject("jspString", "attendance.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
+		}
+		catch(Exception e)
+		{
+			mv.addObject("errorString", "Today's record might have already been entered.");
+			mv.addObject("jspString", "attendance.jsp");
+			return mv;
+		}
 	}
 
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
@@ -201,17 +210,20 @@ public class HelperController {
 
 		ModelAndView mv = new ModelAndView();
 		User currentUser = helperDAO.loginUser(username, password);
-		String accessLevel = currentUser.getAccount().getAccessLevel();
 		// User currentUser = helperDAO.loginUser("inst", "54321");
 		if (currentUser == null) {
 			mv.setViewName("index.jsp");
+			mv.addObject("errorString", "Invalid Login, Eat more burritos");
 			return mv;
 		}
-		mv.setViewName("UserDesktop.jsp");
-		mv.addObject("jspString", null);
-		mv.addObject("accessLevel", accessLevel);
-		mv.addObject("sessionUser", currentUser);
-		return mv;
+		else{	
+			String accessLevel = currentUser.getAccount().getAccessLevel();
+			mv.setViewName("UserDesktop.jsp");
+			mv.addObject("jspString", null);
+			mv.addObject("accessLevel", accessLevel);
+			mv.addObject("sessionUser", currentUser);
+			return mv;
+		}
 	}
 	@RequestMapping(path="logout.do")
 	public ModelAndView logoutUser()

@@ -34,6 +34,10 @@ public class Ticket {
 	private Instructor instructor;
 
 	private String description;
+	
+	private String available;
+
+	
 
 	private Date date;
 	@Column(name = "submit_time")
@@ -99,6 +103,14 @@ public class Ticket {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(String available) {
+		this.available = available;
 	}
 
 	/*@Override

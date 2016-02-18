@@ -5,8 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -114,11 +118,16 @@ public class HelperDAO {
 	}
 
 	public User loginUser(String username, String password) {
-		Account account = em.createNamedQuery("Account.getAccountbyUserAndPass", Account.class)
-				.setParameter("username", username).setParameter("password", password).getSingleResult();
-		if (account == null) {
+		Account account;
+		try {
+
+			account = em.createNamedQuery("Account.getAccountbyUserAndPass", Account.class)
+					.setParameter("username", username).setParameter("password", password).getSingleResult();
+		} catch (NoResultException | NullPointerException nre) {
+
 			return null;
 		}
+
 		User user = account.getUser();
 		return user;
 	}
@@ -208,46 +217,48 @@ public class HelperDAO {
 
 	public List<Attendance> createDailyAttendance(String cohort) throws ParseException {
 
-		List<Student> currentStudents = getStudentsByCohort(cohort);
 
-		List<Attendance> dailyAttendance = new ArrayList<>();
+			List<Student> currentStudents = getStudentsByCohort(cohort);
 
-		for (Student student : currentStudents) {
+			List<Attendance> dailyAttendance = new ArrayList<>();
 
-			Attendance attendance = new Attendance();
+			for (Student student : currentStudents) {
 
-			/*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				Attendance attendance = new Attendance();
 
-			Date startDate = formatter.parse("2016-02-17");*/
+				/*
+				 * SimpleDateFormat formatter = new
+				 * SimpleDateFormat("yyyy-MM-dd");
+				 * 
+				 * Date startDate = formatter.parse("2016-02-17");
+				 */
 
-			attendance.setStudent(student);
-			attendance.setDate(new Date());
-			attendance.setPresent("Y");
-			attendance.setLate("N");
-			attendance.setExcused("N");
+				attendance.setStudent(student);
+				attendance.setDate(new Date());
+				attendance.setPresent("Y");
+				attendance.setLate("N");
+				attendance.setExcused("N");
 
-			attendance.setCheckin("08:00");
+				attendance.setCheckin("08:00");
 
-			attendance.setCheckout("18:00");
+				attendance.setCheckout("18:00");
 
-			dailyAttendance.add(attendance);
+				dailyAttendance.add(attendance);
 
-			System.out.println(attendance);
-
-		}
-
-		for (Attendance attendance : dailyAttendance) {
-
-			em.merge(attendance);
-			em.persist(attendance);
-
-		}
-
-		return dailyAttendance;
+				System.out.println(attendance);
+			}
+			for (Attendance attendance : dailyAttendance) {
+				
+				em.merge(attendance);
+				em.persist(attendance);
+				
+			}
+			
+			return dailyAttendance;
 	}
 
-	public String updateDailyAttendance(String userId, String date, String present, String late, String excused, String checkin, String checkout)
-			throws ParseException {
+	public String updateDailyAttendance(String userId, String date, String present, String late, String excused,
+			String checkin, String checkout) throws ParseException {
 
 		String presentChar = present.trim();
 		String lateChar = late.trim();
@@ -439,17 +450,13 @@ public class HelperDAO {
 
 	/*---------------------- TICKET METHODS -----------------------*/
 
-	
-	public List<HelpTicket> schoolDay(){
-        List<HelpTicket> schoolDay = new ArrayList<>();
-        for (int i = 0; i < 7; i++){
-            HelpTicket helpMe = new HelpTicket();
-            schoolDay.add(helpMe);
-        }return schoolDay;
-    }
-	
-	
-	
-	
-	
+	public List<HelpTicket> schoolDay() {
+		List<HelpTicket> schoolDay = new ArrayList<>();
+		for (int i = 0; i < 7; i++) {
+			HelpTicket helpMe = new HelpTicket();
+			schoolDay.add(helpMe);
+		}
+		return schoolDay;
+	}
+
 }

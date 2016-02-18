@@ -48,7 +48,9 @@
 		Cohort: <input type="text" name="cohort">
 		<input type="submit" value="GO!">
 	</form>
-	
+	<c:if test="${! empty errorString}">
+	<p> ${errorString} </p>
+	</c:if>
 	<form action= "attendanceAdminAndTA.do", method="GET">
 	<select name="lastname">
 		<c:if test="${! empty studentLastnameList}">
@@ -63,6 +65,7 @@
 		<input type="submit" value="Search Dates" />
 	</form>
 	
+	<c:if test="${! empty userAttendance}">
 	<table>
 		 <tr>			 	
 
@@ -166,7 +169,7 @@
 		   </tr>
 		</c:forEach>
 	</table>
-	
+	</c:if>
 </div>
 </c:when>
 
