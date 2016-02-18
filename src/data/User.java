@@ -168,11 +168,11 @@ public class User {
 
 
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", addresses=" + addresses + ", accounts=" + account + "]";
-	}
+	}*/
 
 
 

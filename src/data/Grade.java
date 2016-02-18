@@ -70,10 +70,10 @@ public class Grade {
 	}
 
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Grade [student=" + student + ", project=" + project + ", grade=" + grade + "]";
-	};
+	};*/
 	
 	
 	

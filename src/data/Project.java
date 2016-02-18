@@ -105,10 +105,10 @@ public class Project {
 	}
 
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects  + "]";
-	}
+	}*/
 
 
 

@@ -159,7 +159,7 @@ public class HelperController {
 		return mv;
 	}
 	@RequestMapping(path="modifyGradesRecord.do", method=RequestMethod.POST)
-	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId, @RequestParam("grade") String grade )
+	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId, @RequestParam("grade") String grade ) throws ParseException
 	{
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		helperDAO.updateGrade(studentId, projectId, grade);
@@ -168,7 +168,7 @@ public class HelperController {
 		return mv;
 	}
 	@RequestMapping(path="deleteGrade.do", method = RequestMethod.POST)
-	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId)
+	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId , @RequestParam("projectId") String projectId) throws ParseException
 	{
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		helperDAO.deleteStudentGradeRecord(studentId, projectId);
