@@ -65,6 +65,11 @@
 			<artifactId>spring-orm</artifactId>
 			<version>4.2.4.RELEASE</version>
 		</dependency>
-     
+     <dependency>
+        <groupId>javax.servlet.jsp</groupId>
+        <artifactId>jsp-api</artifactId>
+        <version>2.1</version>
+        <scope>provided</scope>
+    </dependency>
 	</dependencies>
 </project>

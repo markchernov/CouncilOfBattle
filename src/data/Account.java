@@ -7,26 +7,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Account.getAccountbyUsername", query="select a from Account a where a.username = :username"),
 	@NamedQuery(name="Account.getAccountbyPassword", query="select a from Account a where a.password = :password"),
-	@NamedQuery(name="Account.getAccountbyUserAndPass", query="select a from Account a where a.username = :username and a.password = :password")
+	@NamedQuery(name="Account.getAccountbyUserAndPass", query="select a from Account a where a.username = :username and a.password = :password"),
+	@NamedQuery(name="Account.getAccountLeveByUserIdAndAccessLevel", query="select a.accessLevel from Account a where a.username = :username and a.password = :password")
 })
 @Table(name = "user_accounts")
 
 public class Account {
 
 	@Column(name = "access_level")
-	String accessLevel;
+	private String accessLevel;
 
-	String password;
+	private String password;
 	
-	String username;
+	private String username;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id")
 	@Id
 	private User user;
@@ -36,6 +38,8 @@ public class Account {
 	public Account() {}
 
 
+	
+	
 
 	public String getAccessLevel() {
 		return accessLevel;

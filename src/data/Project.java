@@ -11,13 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "projects")
 
-
+@NamedQueries({ @NamedQuery(name = "Project.getAllProjects", query = "select p from Project p ")})
 
 public class Project {
 
@@ -105,11 +107,10 @@ public class Project {
 	}
 
 
-	@Override
+	/*@Override
 	public String toString() {
-		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects + ", startdate="
-				+ startdate + ", enddate=" + enddate + "]";
-	}
+		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects  + "]";
+	}*/
 
 
 
