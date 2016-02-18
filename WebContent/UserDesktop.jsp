@@ -12,12 +12,12 @@
 </head>
 
 <body>
-<!-- 
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
--->
+
 <!--TODO: ^^ Choose CSS styling  -->
 </head>
 
@@ -27,7 +27,7 @@
     <div class="logo">Classroom Helper</div><br/>
     <c:choose> 
         <c:when test="${accessLevel == '1'}"> 
-             Welcome ${sessionUser.firstname}, you are signed in as a student
+             Welcome ${sessionUser.firstname}, you are signed in as a Student
         </c:when>
         <c:when test="${accessLevel == '2'}"> 
              Welcome ${sessionUser.firstname}, you are signed in as a Instructor.
