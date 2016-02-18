@@ -133,7 +133,7 @@ public class HelperController {
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser)
 	{
 		Student currentStudent = (Student)sessionUser;
-		List<Grade> usergrades = (List)currentStudent.getGrades();
+		List<Grade> usergrades = helperDAO.getGradeByUserId(sessionUser.getId());
 		return new ModelAndView("UserDesktop.jsp", "userGrades", usergrades);
 	}
 	@RequestMapping(path = "SetUser.do", method = RequestMethod.GET)
