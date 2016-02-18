@@ -23,9 +23,7 @@ import javax.persistence.Table;
 	 * "select s.attendance from Student s where s.student.id = :id"),
 	 */
 	@NamedQuery(name = "Ticket.getAllTickets", query = "select t from Ticket t "),
-	@NamedQuery(name = "Ticket.getTicketsByStudent", query = "select t from Ticket t where t.student = :student") })
-
-
+	@NamedQuery(name = "Ticket.getTicketsByStudent", query = "select t from Ticket t where t.student = :student"),})
 
 
 public class Ticket {
@@ -50,8 +48,20 @@ public class Ticket {
 	private String description;
 	
 	private String available;
+	
+	//TODO: make sure user can only select "Y or "N"
+	@Column(name = "status_open")
+	public String statusOpen;
 
 	
+	
+	public String getStatus() {
+		return statusOpen;
+	}
+
+	public void setStatus(String statusOpen) {
+		this.statusOpen = statusOpen;
+	}
 
 	private Date date;
 	@Column(name = "submit_time")

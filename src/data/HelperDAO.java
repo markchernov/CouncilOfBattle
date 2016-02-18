@@ -451,13 +451,13 @@ public class HelperDAO {
 	/*---------------------- TICKET METHODS -----------------------*/
 
 	
-	public List<HelpTicket> schoolDay(){
-        List<HelpTicket> schoolDay = new ArrayList<>();
-        for (int i = 0; i < 7; i++){
-            HelpTicket helpMe = new HelpTicket();
-            schoolDay.add(helpMe);
-        }return schoolDay;
-    }
+//	public List<HelpTicket> schoolDay(){
+//        List<HelpTicket> schoolDay = new ArrayList<>();
+//        for (int i = 0; i < 7; i++){
+//            HelpTicket helpMe = new HelpTicket();
+//            schoolDay.add(helpMe);
+//        }return schoolDay;
+//    }
 	
 	
 	
@@ -476,7 +476,49 @@ public class HelperDAO {
 		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent").setParameter("student", student)
 				.getResultList();
 
-		
 		return ticketsByStudent;
+	}
+
+	//create new ticket method
+	public String createNewTicket(User user, String subject, String description) {
+		Ticket t = new Ticket();
+		t.setStudent((Student)(user));
+		t.setDate(new Date());
+		t.setDescription(description);
+		
+		//convert string subject into a subject object
+		
+		Subject tempSubject = (Subject) em.createNamedQuery("Subject.getSubjectByName").setParameter("name", subject).getSingleResult();
+		
+		
+		
+		
+		//assign values to new ticket object
+		t.setSubject(tempSubject);
+		t.setAvailable("Available");
+		em.merge(t);
+		em.persist(t);
+		
+		String confirmation = "Ticket record: " + t + " was createdd";
+
+		return confirmation;	
+	}
+	
+	//update ticket method
+	public Ticket updateTicket(Ticket t){
+		int id = t.getId(); 
+		Ticket tempTicket = em.find(Ticket.class, id);
+		tempTicket.statusOpen="Y";
+		em.persist(tempTicket);
+
+		return t;
+	}
+	
+	//delete ticket method
+	public void deleteTicket(Ticket t){
+		int id = t.getId();
+		Ticket tempTicket = em.find(Ticket.class, id);
+		em.remove(tempTicket);
+		
 	}
 }

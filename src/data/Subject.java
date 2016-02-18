@@ -16,7 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subjects")
 
-@NamedQueries({ @NamedQuery(name = "Subject.getAllSubjects", query = "select s from Subject s ")})
+@NamedQueries({ @NamedQuery(name = "Subject.getAllSubjects", query = "select s from Subject s "),
+	@NamedQuery(name = "Subject.getSubjectByName", query = "select s from Subject s where s.name = :name ")})
 
 
 

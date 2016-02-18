@@ -233,31 +233,11 @@ public class HelperController {
 		mv.addObject("sessionUser", "");
 		return mv;
 	}
-	
 
-//	@RequestMapping (path = "ticketing.do", method = RequestMethod.GET)
-//	public ModelAndView showTickets(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser) {
-//	ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-//
-//	return mv;
-//	}
-
-
-	@RequestMapping(path = "ticketing.do", method = RequestMethod.GET)
+	@RequestMapping(path = "displayTickets.do", method = RequestMethod.GET)
     public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser)
     {
-        
-//        if (choice.contains("New"))
-//        {
-//            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-//            mv.addObject("choice", choice);
-//            mv.addObject("subject", subject);
-//            mv.addObject("week", weekOne);
-//            return mv;
-//        } else if (choice.contains("Open"))
-//        {
-		
-			List<Ticket> allTickets = new ArrayList<>();
+   			List<Ticket> allTickets = new ArrayList<>();
 			allTickets = helperDAO.getAllTickets();
             ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
             mv.addObject("jspString", "ticketForm.jsp");
@@ -265,18 +245,15 @@ public class HelperController {
             mv.addObject("accessLevel", accessLevel);
             mv.addObject("tickets", allTickets);
             return mv;
-//        } else if (choice.contains("Closed"))
-//        {
-//            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-//            mv.addObject("choice", choice);
-//            mv.addObject("subject", subject);
-//            mv.addObject("week", weekOne);
-//            return mv;
-//        } else
-//            return new ModelAndView("UserDesktop.jsp", "user", sessionUser);        
     }
-
 	
-	
-	
+	@RequestMapping (path = "newTicket.do", method = RequestMethod.POST)
+	public ModelAndView createTicket(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser, 
+			@RequestParam("subjects") String subjects) {
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject(helperDAO.createNewTicket(sessionUser, subjects, accessLevel));
+		mv.addObject("confirmationString", "Your ticket has been submitted. We suggest you get a burrito while you wait.");
+		//TODO: add this ^^ to the TicketForm.jsp after you've merged branches
+	return mv;
+	}	
 }
