@@ -137,6 +137,7 @@ public class HelperDAO {
 
 		List<Student> currentStudents = getStudentsByCohort(cohort);
 
+
 		List<Attendance> dailyAttendance = new ArrayList<>();
 
 		for (Student student : currentStudents) {
@@ -162,51 +163,47 @@ public class HelperDAO {
 			System.out.println(attendance);
 
 		}
-		
+
 		for (Attendance attendance : dailyAttendance) {
-			
+
 			em.merge(attendance);
 			em.persist(attendance);
-			
-		} 
-		
+
+		}
+
 		return dailyAttendance;
 	}
 
-	
-	
-	
-	public void updateDailyAttendance(String userId, String date, String present,
-			String late, String excused) throws ParseException {
+	public void updateDailyAttendance(String userId, String date, String present, String late, String excused)
+			throws ParseException {
 
-		
 		String presentChar = present.trim();
 		String lateChar = late.trim();
 		String excusedChar = excused.trim();
-		
+
 		System.out.println("insid updateAttendance");
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
 		Date dailyDate = formatter.parse(date);
-		
-		
+
 		int id = Integer.parseInt(userId);
-		
+
 		Student tempUser = em.find(Student.class, id);
-		
-		
-		AttendanceId compositeKeyId = new AttendanceId(dailyDate,id);
-		
-		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
-		
-		/*tempAttendance.setStudent(tempUser);*/
-/*		tempAttendance.setDate(dailyDate);*/
+
+		AttendanceId compositeKeyId = new AttendanceId(dailyDate, id);
+
+		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId);
+
+		/* tempAttendance.setStudent(tempUser); */
+		/* tempAttendance.setDate(dailyDate); */
 		tempAttendance.setPresent(presentChar);
 		tempAttendance.setLate(lateChar);
 		tempAttendance.setExcused(excusedChar);
-		/*tempAttendance.setCheckin(checkin);
-		tempAttendance.setCheckout(checkout);*/
+		/*
+		 * tempAttendance.setCheckin(checkin);
+		 * tempAttendance.setCheckout(checkout);
+		 */
 
 		em.persist(tempAttendance);
 
@@ -215,20 +212,16 @@ public class HelperDAO {
 	}
 
 	public String deleteDailyStudentAttendanceRecord(String userId, String date) throws ParseException {
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
 		Date dailyDate = formatter.parse(date);
-		
-		
+
 		int id = Integer.parseInt(userId);
-		
-		Student tempUser = em.find(Student.class, id);
-		
-        AttendanceId compositeKeyId = new AttendanceId(dailyDate,id);
-		
-		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId );
-		
+
+		AttendanceId compositeKeyId = new AttendanceId(dailyDate, id);
+
+		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId);
 
 		em.remove(tempAttendance);
 
