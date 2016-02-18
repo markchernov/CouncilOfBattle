@@ -5,11 +5,21 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "grades")
+
+@NamedQueries({
+	/*@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendance from Student s where s.student.id = :id"),*/
+	@NamedQuery(name="Grade.getAttendancebyStudent", query="select g from Grade a where a.student = :student")})
+
+
+
+
 
 @IdClass(GradeId.class)
 public class Grade {

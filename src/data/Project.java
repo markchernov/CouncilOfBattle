@@ -107,8 +107,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects + ", startdate="
-				+ startdate + ", enddate=" + enddate + "]";
+		return "Project [id=" + id + ", name=" + name + ", grades=" + grades + ", subjects=" + subjects  + "]";
 	}
 
 

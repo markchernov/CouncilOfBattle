@@ -43,15 +43,15 @@ public class User {
 	private Instructor instructor;*/
 
 	@OneToMany(mappedBy = "user")
-	Collection<Address> addresses;
+	protected Collection<Address> addresses;
 	
-	@OneToMany(mappedBy = "user")
-	Collection<Account> accounts;
+	@OneToOne(mappedBy = "user")
+	protected Account account;
 	
 	
 	
 
-	public User() {};
+	/*public User() {};*/
 
 
 
@@ -105,8 +105,8 @@ public class User {
 
 
 
-	public Collection<Account> getAccounts() {
-		return accounts;
+	public Account getAccount() {
+		return account;
 	}
 
 
@@ -161,8 +161,8 @@ public class User {
 
 
 
-	public void setAccounts(Collection<Account> accounts) {
-		this.accounts = accounts;
+	public void setAccounts(Account account) {
+		this.account = account;
 	}
 
 
@@ -171,7 +171,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", addresses=" + addresses + ", accounts=" + accounts + "]";
+				+ ", addresses=" + addresses + ", accounts=" + account + "]";
 	}
 
 

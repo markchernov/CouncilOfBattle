@@ -1,40 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE>
 <html>
 <head>
-<%-- <jsp:include page=”./headAfterLogin.jsp”/> --%>
-<%@include file="./headAfterLogin.jsp"%>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user.level} Portal</title>
+<title>${accessLevel} Portal</title>
 </head>
+
 <body>
-<h2>Welcome ${user.firstname}</h2>
-<form>
-<form action= "grades.do", method="GET">
-<input type="submit", value="View Grades"/>
-</form>
-<form action="ticketing.do", method="GET"/>
-<input type="submit", value="TA Help Ticket"/>
-</form>
-<form action= "home.do", method="GET">
-<input type= "submit", value="Home"/>
-</form>
+<!-- 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<link href="css/animate.css" type="text/css" rel="stylesheet" /> 
+-->
+<!--TODO: ^^ Choose CSS styling  -->
+</head>
 
-<Div id="1.Student">
-userId, date, present, late, excused, checkin, checkout
-</Div>
-<Div id="2.Instructor">
-userId, date, present, late, excused, checkin, checkout
-</Div>
-<Div id="3.Admin">
-userId, date, present, late, excused, checkin, checkout
-</Div>
+<body>
+<header>
+<div id="sign-in">
+    <div class="logo">Classroom Helper</div><br/>
+    <c:choose> 
+        <c:when test="${accessLevel == '1'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a student
+        </c:when>
+        <c:when test="${accessLevel == '2'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Instructor.
+        </c:when>
+        <c:when test="${accessLevel == '3'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Administrator.
+        </c:when>
+        <c:otherwise>
+      		<c:redirect url="index.jsp"/>
+        </c:otherwise>
+    </c:choose>
+
+		<h4>Welcome ${sessionUser.firstname}</h4>
+        <nav>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href=UserDesktop.jsp>Home</a></li>
+                <li><a href="attendance.do">Attendance</a></li>
+                <li><a href="grades.do">Grades</a></li>
+                <li><a href="tickets.do">Help Ticket</a></li>
+                <li><a href="logout.do">Logout</a></li>
+                <!--TODO: ^^ create logout.do in the controller-->
+            </ul>
+        </nav>
+</div>
+</header>
 
 
-
-</body>
-</html>
+<!--We are calling the specific .jsp segement by the buttons from the header menu-->
+<!--The .do method calls the controller which returns the name of the .jsp segment-->
+<c:choose>
+<c:when test="${! empty jspString}">
+<jsp:include page="${jspString}"></jsp:include>
+</c:when>
+</c:choose>
 
 </body>
 </html>

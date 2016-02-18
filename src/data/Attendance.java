@@ -16,7 +16,17 @@ import javax.persistence.Table;
 @Table(name = "daily_attendance")
 
 
-
+@NamedQueries({
+	/*@NamedQuery(name="Attendance.getAttendancebyId", query="select s.attendance from Student s where s.student.id = :id"),*/
+	@NamedQuery(name="Attendance.getAttendancebyStudent", query="select a from Attendance a where a.student = :sessionUser"),
+	@NamedQuery(name="Attendance.getAttendancebyUsername", query="select a from Account a where a.username = :username"),
+	@NamedQuery(name="Attendance.getAttendancebyDates", query="select a from Attendance a where a.date between  ?1 and ?2 and a.student.id = ?3"),
+	@NamedQuery(name="Attendance.getAttendancebyCohort", query="select a from Attendance a inner join a.student s inner join s.cohort c where c.name = :cohortname"),
+	@NamedQuery(name="Attendance.getAttendancebyDatesAndLastName", query="select a from Attendance a where a.date between  ?1 and ?2 and a.student.lastname = ?3"),
+			
+			
+})
+	
 
 public class Attendance {
 
@@ -28,12 +38,13 @@ public class Attendance {
 	@Id
 	Date date;
 	
-	int present;
-	int late;
-	int excused;
+	String present;
+	String late;  
 	
-	Date checkin;
-	Date checkout;
+	String excused;
+	
+	String checkin;
+	String checkout;
 	
 	
 	
@@ -41,6 +52,8 @@ public class Attendance {
 	public Attendance () {}
 
 
+	
+	
 
 
 	public Student getStudent() {
@@ -57,35 +70,35 @@ public class Attendance {
 
 
 
-	public int getPresent() {
+	public String getPresent() {
 		return present;
 	}
 
 
 
 
-	public int getLate() {
+	public String getLate() {
 		return late;
 	}
 
 
 
 
-	public int getExcused() {
+	public String getExcused() {
 		return excused;
 	}
 
 
 
 
-	public Date getCheckin() {
+	public String getCheckin() {
 		return checkin;
 	}
 
 
 
 
-	public Date getCheckout() {
+	public String getCheckout() {
 		return checkout;
 	}
 
@@ -106,46 +119,46 @@ public class Attendance {
 
 
 
-	public void setPresent(int present) {
+	public void setPresent(String present) {
 		this.present = present;
 	}
 
 
 
 
-	public void setLate(int late) {
+	public void setLate(String late) {
 		this.late = late;
 	}
 
 
 
 
-	public void setExcused(int excused) {
+	public void setExcused(String excused) {
 		this.excused = excused;
 	}
 
 
 
 
-	public void setCheckin(Date checkin) {
+	public void setCheckin(String checkin) {
 		this.checkin = checkin;
 	}
 
 
 
 
-	public void setCheckout(Date checkout) {
+	public void setCheckout(String checkout) {
 		this.checkout = checkout;
 	}
 
 
 
 
-	@Override
+/*	@Override
 	public String toString() {
-		return "Attendance [student=" + student + ", date=" + date + ", present=" + present + ", late=" + late
+		return "Attendance [student=" + student  + ", present=" + present + ", late=" + late
 				+ ", excused=" + excused + ", checkin=" + checkin + ", checkout=" + checkout + "]";
-	}
+	}*/
 
 
 
