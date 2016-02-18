@@ -327,7 +327,7 @@ public class HelperDAO {
 
 	}
 
-	public List<Project> getAllProjectss() {
+	public List<Project> getAllProjects() {
 
 		List<Project> allProjects = em.createNamedQuery("Subject.getAllProjects").getResultList();
 
