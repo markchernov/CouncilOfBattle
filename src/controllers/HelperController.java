@@ -100,11 +100,13 @@ public class HelperController {
 	@RequestMapping(path = "modifyAttendanceRecord.do", method = RequestMethod.POST)
 	public ModelAndView modifyAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,
 			@RequestParam("present") String present, @RequestParam("late") String late,
-			@RequestParam("excused") String excused,@RequestParam("startHour") String startHour, @RequestParam("startMinute") String startMinute, @RequestParam("endHour") String endHour, @RequestParam("endMinute") String endMinute ) throws ParseException {
+			@RequestParam("excused") String excused, @RequestParam("startHour") String startHour,
+			@RequestParam("startMinute") String startMinute, @RequestParam("endHour") String endHour,
+			@RequestParam("endMinute") String endMinute) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		String checkin = startHour + ":" + startMinute;
 		String checkout = endHour + ":" + endMinute;
-		
+
 		helperDAO.updateDailyAttendance(id, date, present, late, excused, checkin, checkout);
 		mv.addObject("jspString", "attendance.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
@@ -124,17 +126,15 @@ public class HelperController {
 	}
 
 	@RequestMapping(path = "createClassAttendances.do", method = RequestMethod.POST)
-	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort){
+	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort) {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		try{
-		List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
-		 mv.addObject("userAttendance", todaysAttendancelist);
-		mv.addObject("jspString", "attendance.jsp");
-		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
-		return mv;
-		}
-		catch(Exception e)
-		{
+		try {
+			List<Attendance> todaysAttendancelist = helperDAO.createDailyAttendance(cohort);
+			mv.addObject("userAttendance", todaysAttendancelist);
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			return mv;
+		} catch (Exception e) {
 			mv.addObject("errorString", "Today's record might have already been entered.");
 			mv.addObject("jspString", "attendance.jsp");
 			return mv;
@@ -174,7 +174,8 @@ public class HelperController {
 
 	@RequestMapping(path = "modifyGradesRecord.do", method = RequestMethod.POST)
 	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId,
-			@RequestParam("projectId") String projectId, @RequestParam("grade") String grade, @RequestParam("comment") String comment) throws ParseException {
+			@RequestParam("projectId") String projectId, @RequestParam("grade") String grade,
+			@RequestParam("comment") String comment) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		helperDAO.updateGrade(studentId, projectId, grade, comment);
 		mv.addObject("jspString", "grades.jsp");
@@ -182,9 +183,11 @@ public class HelperController {
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
 	}
-	@RequestMapping(path="createGrades.do", method = RequestMethod.GET)
-	public ModelAndView createGradeForStudent(@RequestParam("lastName") String lastName, @RequestParam("project") String project, @RequestParam("grade") String grade, @RequestParam("comments") String comment)
-	{
+
+	@RequestMapping(path = "createGrades.do", method = RequestMethod.GET)
+	public ModelAndView createGradeForStudent(@RequestParam("lastName") String lastName,
+			@RequestParam("project") String project, @RequestParam("grade") String grade,
+			@RequestParam("comments") String comment) {
 		String result = helperDAO.createGrade(lastName, project, grade, comment);
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "grades.jsp");
@@ -193,6 +196,7 @@ public class HelperController {
 		mv.addObject("result", result);
 		return mv;
 	}
+
 	@RequestMapping(path = "deleteGrade.do", method = RequestMethod.POST)
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
 			@RequestParam("projectId") String projectId) throws ParseException {
@@ -215,8 +219,7 @@ public class HelperController {
 			mv.setViewName("index.jsp");
 			mv.addObject("errorString", "Invalid Login, Eat more burritos");
 			return mv;
-		}
-		else{	
+		} else {
 			String accessLevel = currentUser.getAccount().getAccessLevel();
 			mv.setViewName("UserDesktop.jsp");
 			mv.addObject("jspString", null);
@@ -225,27 +228,15 @@ public class HelperController {
 			return mv;
 		}
 	}
-	@RequestMapping(path="logout.do")
-	public ModelAndView logoutUser()
-	{
+
+	@RequestMapping(path = "logout.do")
+	public ModelAndView logoutUser() {
 		ModelAndView mv = new ModelAndView("index.jsp");
 		mv.addObject("accessLevel", "");
 		mv.addObject("sessionUser", "");
 		return mv;
 	}
 
-	@RequestMapping(path = "displayTickets.do", method = RequestMethod.GET)
-    public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser)
-    {
-   			List<Ticket> allTickets = new ArrayList<>();
-			allTickets = helperDAO.getAllTickets();
-            ModelAndView mv = new ModelAndView("tickets.jsp", "user", sessionUser);
-            mv.addObject("jspString", "ticketForm.jsp");
-            mv.addObject("sessionUser", sessionUser);
-            mv.addObject("accessLevel", accessLevel);
-            mv.addObject("tickets", allTickets);
-            return mv;
-    }
 	
 	@RequestMapping (path = "newTicket.do", method = RequestMethod.POST)
 	public ModelAndView createTicket(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser, 
@@ -256,4 +247,56 @@ public class HelperController {
 		//TODO: add this ^^ to the TicketForm.jsp after you've merged branches
 	return mv;
 	}	
+
+	@RequestMapping(path = "ticketing.do", method = RequestMethod.GET)
+	public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser) {
+
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString", "ticketForm.jsp");
+		mv.addObject("sessionUser", sessionUser);
+		mv.addObject("accessLevel", accessLevel);
+
+		if (accessLevel.equals("1")) {
+
+			List<Ticket> allTickets = new ArrayList<>();
+			allTickets = helperDAO.getAllTickets();
+			mv.addObject("tickets", allTickets);
+			mv.addObject("subjects", helperDAO.getAllSubjects());
+
+			return mv;
+
+		}
+
+		else if (accessLevel.equals("2") || (accessLevel.equals("3"))) {
+
+			return mv;
+
+		} else {
+			return new ModelAndView("index.jsp");
+		}
+
+	}
+
+	@RequestMapping(path = "createTicket.do", method = RequestMethod.GET)
+	public ModelAndView studentCreateTicket(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("subjects") String subject,
+			@RequestParam("studentId") String studentId, @RequestParam("description") String description) {
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		try {
+
+			mv.addObject("jspString", "ticketForm.jsp");
+			mv.addObject("sessionUser", sessionUser);
+			mv.addObject("accessLevel", accessLevel);
+			mv.addObject("subjects", helperDAO.getAllSubjects());
+			mv.addObject("reportString", helperDAO.createNewTicket(sessionUser, subject, description));
+
+			return mv;
+		} catch (Exception e) {
+			mv.addObject("reportString", "An error in creating your ticket may have occured.");
+		}
+	}
+	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
+	
+	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
 }

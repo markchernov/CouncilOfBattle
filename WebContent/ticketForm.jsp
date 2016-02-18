@@ -1,66 +1,99 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- <link type="text/css" rel="stylesheet" href="ticket.css"/>
- -->
-<title>Help Ticket Database for ${user.lastName},
-	${user.firstName}</title>
-</head>
-<body>
-	<div class="dropDown">
-		<h3>Enter a new request for T/A Assistance</h3>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+
+
+
+
+<c:choose>
+	<c:when test="${accessLevel == '1'}">
+
+
+
+		<p>Create a New Ticket Record</p>
 		<form action="createTicket.do" , method="POST">
-			<div id ="dropdown-content_left">
+			<div id="dropdown-content_left">
+			
 				<select name="subjects">
-					<option value="All">File Ticket</option>
-					<option value="All"></option>
-					<option value="HTML">HTML</option>
-					<option value="JPA Exam">JPA Exam</option>
-					<option value="Java">Java</option>
-				</select> <input type="hidden" value="${user.userID}" name="userID" /> 
-				<input	type="hidden" value="${user.cohortID}" name="cohortID" />
-				Comments: 
-				<input type="text" value="blah blah">
-				<input	type="submit" value="Submit New Ticket, Right Meow!" />
 				
+					<c:forEach var="subject" items="${subjects}">
+						<option value = "${subject.name}">${subject.name}</option>
+					</c:forEach>
+	
+				</select> <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
+					
+					<input type = "text" name = "description"/> 
+	
+					<input type="submit" value="Submit New Ticket, Right Meow!" />
+
 			</div>
 		</form>
-		<div class="dropDown">
-			<form action="ticketing.do">
-				<div id ="dropdown-content_Center">
-				<p>Choose All open tickets***insert button here*** or choose by Subject ***drop down menu***:</p>
-					<select name="subjects">
-						<option value="All">View All Open Tickets</option>
-						<option value="All">Or</option>
-						<option value="All">By Subject:</option>
-						<option value="HTML">HTML</option>
-						<option value="JPA Exam">JPA Exam</option>
-						<option value="Java">Java</option>
-					</select> 
-						<input type="hidden" value="${user.userID}" name="userID"/> 
-						<input type="hidden" value="${user.cohortID}" name="cohortID"/> 
-						<input type="submit" value="Go!"/>
-				</div>
-			</form>
-		</div>
-		<div class="dropDown">
-			<form action="ticketing.do" , method="GET">
-				<div id ="dropdown-content_right">
-					<select name="subjects">
-						<option value="ALL">View All Closed Tickets</option>
-						<option value="HTML">HTML</option>
-						<option value="JPA Exam">JPA Exam</option>
-						<option value="Java">Java</option>
-					</select> 
-						<input type="hidden" value="${user.userID}" name="userID"/> 
-						<input type="hidden" value="${user.cohortID}" name="cohortID"/> 
-						<input type="submit" value="Go!"/>
-				</div>
-			</form>
-		</div>
-</body>
-</html>
+	<from action="showMyTickets", method="POST">
+	<input type="submit" value="Show my Tickets"/>
+	</from>
+
+
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Subject Name</th>
+				<th>Student</th>
+				<th>Instructor</th>
+				<th>Date</th>
+				<th>Submit Time</th>
+				<th>Closed Time</th>
+				<th>Available</th>
+				<th>Description</th>
+
+
+
+			</tr>
+			<tr>
+				<c:forEach var="ticket" items="${tickets}" varStatus="loop">
+					<tr>
+					<tr>
+						<td>${ticket.id}</td>
+						<td>${ticket.subject.name}</td>
+						<td>${ticket.student.firstname} ${ticket.student.lastname}</td>
+						<td>${ticket.instructor.firstname}</td>
+						<td>${ticket.date}</td>
+						<td>${ticket.submitTime}</td>
+						<td>${ticket.closeTime}</td>
+						<td>${ticket.available}</td>
+						<td>${ticket.description}</td>
+
+
+					</tr>
+				</c:forEach>
+			</tr>
+		</table>
+	</c:when>
+
+
+</c:choose>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
