@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -291,9 +293,9 @@ public class HelperController {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+
 		String gradeDconfirm = helperDAO.deleteStudentGradeRecord(studentId, projectId);
 		mv.addObject("gradeDconfirm", gradeDconfirm);
-		// TODO: ^^ use this confirmation string in the grades.jsp
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
@@ -307,7 +309,6 @@ public class HelperController {
 
 		ModelAndView mv = new ModelAndView();
 		User currentUser = helperDAO.loginUser(username, password);
-		// User currentUser = helperDAO.loginUser("inst", "54321");
 		if (currentUser == null) {
 			mv.setViewName("index.jsp");
 			mv.addObject("errorString", "Invalid Login, Eat more burritos");
@@ -323,10 +324,11 @@ public class HelperController {
 	}
 
 	@RequestMapping(path = "logout.do")
-	public ModelAndView logoutUser() {
+	public ModelAndView logoutUser(HttpSession session) {
 		ModelAndView mv = new ModelAndView("index.jsp");
 		mv.addObject("accessLevel", "");
 		mv.addObject("sessionUser", "");
+		session.invalidate();
 		return mv;
 	}
 
@@ -339,7 +341,6 @@ public class HelperController {
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("ticketCconfirm", helperDAO.createNewTicket(sessionUser, subjects, accessLevel));
-		// TODO: add this ^^ to the TicketForm.jsp after you've merged branches
 		return mv;
 	}
 
@@ -459,13 +460,10 @@ public class HelperController {
 		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
+		System.out.println(sessionUser.getFirstname());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "users.jsp");
-
-		/*
-		 * mv.addObject("studentLastnameList",
-		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
-		 */
+		mv.addObject("sessionUser", sessionUser);
 		return mv;
 	}
 
@@ -478,17 +476,13 @@ public class HelperController {
 		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
-		User result = helperDAO.createUser(firstName, lastName, email, usertype);
 
-		System.out.println(result);
-
+		String confirmation = helperDAO.createUser(firstName, lastName, email, usertype);
+		
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		mv.addObject("jspString", "users.jsp");
+		
+		mv.addObject("confirmationString", confirmation);
 
-		/*
-		 * mv.addObject("studentLastnameList",
-		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
-		 */
 		return mv;
 	}
 }

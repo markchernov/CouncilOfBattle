@@ -5,12 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -22,22 +19,17 @@ public class HelperDAO {
 	private EntityManager em;
 
 	/*---------------------- USER METHODS -----------------------*/
-	public boolean userLoginCheck(User sessionUser, String accessLevel)
-	{
-		if (sessionUser == null || accessLevel =="")
-		{
+	public boolean userLoginCheck(User sessionUser, String accessLevel) {
+		if (sessionUser == null || accessLevel == "") {
 			return false;
-		}
-		else if(sessionUser != null || accessLevel !="")
-		{
+		} else if (sessionUser != null || accessLevel != "") {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
-	public User createUser(String firstname, String lastname, String email, String usertype) {
+
+	public String createUser(String firstname, String lastname, String email, String usertype) {
 
 		User user = null;
 
@@ -74,6 +66,9 @@ public class HelperDAO {
 			em.merge(newUser);
 			em.persist(newUser);
 
+			String confirmation = "New Student " + newUser.getFirstname() + " has been created";
+			return confirmation;
+
 		}
 
 		else if (usertype.equalsIgnoreCase("instructor")) {
@@ -109,6 +104,9 @@ public class HelperDAO {
 			em.merge(newUser);
 			em.persist(newUser);
 
+			String confirmation = "New Instructor " + newUser.getFirstname() + " has been created";
+			return confirmation;
+
 		}
 
 		else if (usertype.equalsIgnoreCase("admin")) {
@@ -140,9 +138,11 @@ public class HelperDAO {
 			em.merge(newUser);
 			em.persist(newUser);
 
-		}
+			String confirmation = "New Admin " + newUser.getFirstname() + " has been created";
+			return confirmation;
 
-		return user;
+		}
+		return "User was created";
 
 	}
 
@@ -376,17 +376,17 @@ public class HelperDAO {
 		List<Grade> grades = (List<Grade>) student.getGrades();
 
 		double total = 0;
-		double size = grades.size();
+		double size = (double)grades.size();
 
 		for (Grade grade : grades) {
 
-			total = total + grade.getGrade();
+			total+=grade.getGrade();
 
 		}
 
 		double averageGrade = total / size;
 
-		String average = total + "";
+		String average = averageGrade + "";
 
 		return average;
 
@@ -535,32 +535,28 @@ public class HelperDAO {
 		return confirmation;
 	}
 
-	
-	//update ticket method
-	public String updateTicket(User sessionUser, String ticketId, String statusOpen){
-		
+	// update ticket method
+	public String updateTicket(User sessionUser, String ticketId, String statusOpen) {
+
 		int tId = Integer.parseInt(ticketId);
 		Ticket tempTicket = em.find(Ticket.class, tId);
 		tempTicket.setStatusOpen(statusOpen);
 
 		em.persist(tempTicket);
-		
-		String confirmation ="Ticket number " + tempTicket.getId() + " has been updated";
+
+		String confirmation = "Ticket number " + tempTicket.getId() + " has been updated";
 		return confirmation;
 	}
-	
-	
-	public String deleteTicket(User sessionUser, String ticketId){
+
+	public String deleteTicket(User sessionUser, String ticketId) {
 		int tId = Integer.parseInt(ticketId);
 		Ticket tempTicket = em.find(Ticket.class, tId);
-		
+
 		em.remove(tempTicket);
-		
-		String confirmation ="Ticket number " + tempTicket.getId() + " has been deleted";
+
+		String confirmation = "Ticket number " + tempTicket.getId() + " has been deleted";
 		return confirmation;
-		
+
 	}
-
-
 
 }

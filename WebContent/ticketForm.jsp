@@ -35,9 +35,6 @@
 				<th>Student</th>
 				<th>Instructor</th>
 				<th>Date</th>
-				<th>Submit Time</th>
-				<th>Closed Time</th>
-				<th>Available</th>
 			</tr>
 			<tr>
 				<c:forEach var="ticket" items="${tickets}" varStatus="loop">
@@ -47,9 +44,6 @@
 						<td>${ticket.student.firstname} ${ticket.student.lastname}</td>
 						<td>${ticket.instructor.firstname}</td>
 						<td>${ticket.date}</td>
-						<td>${ticket.submitTime}</td>
-						<td>${ticket.closeTime}</td>
-						<td>${ticket.available}</td>
 					</tr>
 				</c:forEach>
 			</tr>
@@ -86,9 +80,6 @@
 				<th>Student</th>
 				<th>Instructor</th>
 				<th>Date</th>
-				<th>Submit Time</th>
-				<th>Closed Time</th>
-				<th>Available</th>
 				<th>Description</th>
 				<th>Close Ticket</th>
 			</tr>
@@ -101,9 +92,6 @@
 							<td>${ticket.student.firstname} ${ticket.student.lastname}</td>
 							<td>${ticket.instructor.firstname}</td>
 							<td>${ticket.date}</td>
-							<td>${ticket.submitTime}</td>
-							<td>${ticket.closeTime}</td>
-							<td>${ticket.available}</td>
 							<td>${ticket.description}</td>
 							<td>
 									<select name="statusOpen" class="browser-default">
