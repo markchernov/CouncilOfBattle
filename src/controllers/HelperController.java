@@ -268,11 +268,15 @@ public class HelperController {
 			mv.addObject("subjects", helperDAO.getAllSubjects());
 
 			return mv;
-
 		}
 
 		else if (accessLevel.equals("2") || (accessLevel.equals("3"))) {
 
+			List<Ticket> allTickets = new ArrayList<>();
+			allTickets = helperDAO.getAllTickets();
+			mv.addObject("tickets", allTickets);
+			mv.addObject("subjects", helperDAO.getAllSubjects());
+			
 			return mv;
 
 		} else {
@@ -312,7 +316,7 @@ public class HelperController {
 				
 				String confirmation = helperDAO.updateTicket(sessionUser, ticketId, statusOpen);
 				mv.addObject("confirmationString", confirmation);
-				mv.addObject("jspString", "attendance.jsp");
+				mv.addObject("jspString", "ticketForm.jsp");
 				
 				return mv;
 
@@ -323,8 +327,29 @@ public class HelperController {
 				return mv;
 			}
 	}
+	@RequestMapping(path="deleteTicket.do", method=RequestMethod.POST)
+	public ModelAndView intsructorDeleteTicket(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId) {
+		
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		
+		try{
+			
+			String confirmation = helperDAO.deleteTicket(sessionUser, ticketId);
+			mv.addObject("confirmationString", confirmation);
+			//TODO: ^^ remember to add string to jsp
+			mv.addObject("jspString", "ticketForm.jsp");
+			
+			return mv;
+			
+		}
+		catch(Exception e){
+			System.out.println("TEST in the modifyTicket catch block: "+e);
+			//TODO: ^^ validation test needed for more precise exception
+			return mv;
+		}
+	}
 
-//	@RequestMapping create a delete ticket method
 
 
 

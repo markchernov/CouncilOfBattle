@@ -17,7 +17,7 @@
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
-
+ 
 <!--TODO: ^^ Choose CSS styling  -->
 </head>
 
