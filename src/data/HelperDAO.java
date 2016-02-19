@@ -22,7 +22,21 @@ public class HelperDAO {
 	private EntityManager em;
 
 	/*---------------------- USER METHODS -----------------------*/
-
+	public boolean userLoginCheck(User sessionUser, String accessLevel)
+	{
+		if (sessionUser == null || accessLevel =="")
+		{
+			return false;
+		}
+		else if(sessionUser != null || accessLevel !="")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	public User createUser(String firstname, String lastname, String email, String usertype) {
 
 		User user = null;
