@@ -4,7 +4,6 @@
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:choose>
 
-
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
 <div  class="container" class="row">
