@@ -42,15 +42,19 @@
 
 <c:when test="${accessLevel == '2' || accessLevel == '3'}">
 <div id="instructorTable">
-	<!--search attendance date function -->
 	
-	<p>Create a New Attendance Record</p>
+	<h4>Create an attendance record for today</h4>
 	<form action="createClassAttendances.do" method="POST">
-		Cohort: <input type="text" name="cohort">
-		<input type="submit" value="GO!">
+		Enter in the cohort number: <input type="text" name="cohort">
+		<input type="submit" value="Create today's attendance record">
 	</form>
+	
+	<c:if test="${! empty attendCconfirm}">
+		<h4>${attendCconfirm}</h4>		
+	</c:if>
+
 	<c:if test="${! empty errorString}">
-	<p> ${errorString} </p>
+		<h4> ${errorString} </h4>
 	</c:if>
 	<form action= "attendanceAdminAndTA.do", method="GET">
 	<select class="browser-default" name="lastname">
@@ -170,6 +174,13 @@
 		   </tr>
 		</c:forEach>
 	</table>
+	</c:if>
+
+	<c:if test="${! empty attendMconfirm}">
+		<h4>${attendMconfirm}</h4>		
+	</c:if>
+	<c:if test="${! empty attendDconfirm}">
+		<h4>${attendDconfirm}</h4>		
 	</c:if>
 </div>
 </c:when>

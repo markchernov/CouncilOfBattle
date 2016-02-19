@@ -38,7 +38,6 @@
 				<th>Submit Time</th>
 				<th>Closed Time</th>
 				<th>Available</th>
-				<div>
 			</tr>
 			<tr>
 				<c:forEach var="ticket" items="${tickets}" varStatus="loop">
@@ -134,8 +133,8 @@
 				</c:forEach>
 			</tr>
 		</table>
-		<c:if test="${! empty confirmationString}">
-			<h3>${confirmationString}</h3>		
+		<c:if test="${! empty ticketCconfirm}">
+			<h3>${ticketCconfirm}</h3>		
 		</c:if>
 	</c:when>
 	

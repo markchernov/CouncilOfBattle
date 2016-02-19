@@ -6,7 +6,6 @@
 
 <c:choose>
 
-
 <c:when test="${accessLevel == '1'}">
 	<table>
 		<tr>			 	
@@ -18,55 +17,62 @@
 		    <th></th>
 		    <th></th>
 		</tr>
-		  <tr>
-		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
-		  <tr>
-		    <td>${grade.project.name}</td>
-		    <td>${grade.grade}</td>
-		    <td>${grade.comments}</td>
-		    <c:forEach var="subjects" items="${grade.project.subjects}">
-		    <td>${subjects.name}</td>
-		    </c:forEach>
-		    <td>${averageGrade}</td>
-		  </tr>
-		</c:forEach>
-		  </tr>
+		<tr>
+			<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
+			  <tr>
+			    <td>${grade.project.name}</td>
+			    <td>${grade.grade}</td>
+			    <td>${grade.comments}</td>
+			    <c:forEach var="subjects" items="${grade.project.subjects}">
+			    <td>${subjects.name}</td>
+			    </c:forEach>
+			    <td>${averageGrade}</td>
+			  </tr>
+			</c:forEach>
+		</tr>
 	</table>
 </c:when>
 
 <c:when test="${accessLevel == '2' || accessLevel == '3'}">
 <div id="instructorTable">
-	<!--search attendance date function -->
 	
-	<p>Create a New Attendance Record</p>
+	<p>Enter in a new grade:</p>
 	<form action="createGrades.do" method="Get">
-	<select class="browser-default" name="lastName">
-		<c:if test="${! empty studentLastnameList}">
-	          <c:forEach var="lastName" items="${studentLastnameList}">
-	            <option value="${lastName}">${lastName}</option>
-	          </c:forEach>
-	    </c:if>      
-    </select>
-    <select class="browser-default" name="project">
-		<c:if test="${! empty projectList}">
-	          <c:forEach var="project" items="${projectList}">
-	            <option value="${project.id}">${project.name}</option>
-	          </c:forEach>
-	    </c:if>      
-    </select>
-    <select class="browser-default" name="grade">
+		<select class="browser-default" name="lastName">
+			<c:if test="${! empty studentLastnameList}">
+		          <c:forEach var="lastName" items="${studentLastnameList}">
+		            <option value="${lastName}">${lastName}</option>
+		          </c:forEach>
+		    </c:if>      
+    	</select>
+    
+    	<select class="browser-default" name="project">
+			<c:if test="${! empty projectList}">
+		          <c:forEach var="project" items="${projectList}">
+		            <option value="${project.id}">${project.name}</option>
+		          </c:forEach>
+		    </c:if>      
+		</select>
+    
+		<select class="browser-default" name="grade">
 		    <option selected="0">0</option>
 		    <c:forEach begin="0" end="100" var="val">
-   			 <option value="${val}">${val}</option>
+   			<option value="${val}">${val}</option>
 			</c:forEach>
-			</select>
-		Comment: <input type="text" name="comments">
-		<input type="submit" value="GO!">
+		</select>
+	Comment:<input type="text" name="comments">
+			<input type="submit" value="GO!">
 	</form>
-	<c:if test="${! empty errorString}">
-	<p> ${errorString} </p>
+	
+	<c:if test="${! empty gradeCconfirm}">
+		<p> ${gradeCconfirm} </p>	
 	</c:if>
-	<form action= "gradesByLastNameAdminAndTA.do", method="GET">
+	
+	<c:if test="${! empty errorString}">
+		<p> ${errorString} </p>
+	</c:if>
+	
+	<form action= "gradesByLastNameAdminAndTA.do" method="GET">
 	<select class="browser-default" name="lastname">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
@@ -89,42 +95,56 @@
 		    <th></th>
 		</tr>
 		  <tr>
-		<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
-		  <tr>
-		  <form action="modifyGradesRecord.do" method="POST">
-		    <td><input type="hidden" name="studentId" value="${grade.student.id}">${grade.student.id}</td>
-		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>	    
-		    <td>${grade.project.name}</td>
-		    <td><input type="hidden" name="projectId" value="${grade.project.id}"><select class="browser-default" name="grade">
-		    <option selected="${grade.grade}">${grade.grade}</option>
-		    
-		    <c:forEach begin="0" end="100" var="val">
-   			 <option value="${val}">${val}</option>
+			<c:forEach var="grade" items="${userGrades}" varStatus="loop"><tr> 
+			  <tr>
+			  <form action="modifyGradesRecord.do" method="POST">
+			    <td><input type="hidden" name="studentId" value="${grade.student.id}">${grade.student.id}</td>
+			    <td>${grade.student.firstname}  ${grade.student.lastname}</td>	    
+			    <td>${grade.project.name}</td>
+			    <td>
+			    	<input type="hidden" name="projectId" value="${grade.project.id}">
+				    <select class="browser-default" name="grade">
+				    	<option selected="${grade.grade}">${grade.grade}</option>
+				    	<c:forEach begin="0" end="100" var="val">
+		   			 	<option value="${val}">${val}</option>
+						</c:forEach>
+					</select>
+				</td>
+				<td>
+			   		<input type="text" name="comment" value="${grade.comments}">
+				</td>
+			    	<c:forEach var="subjects" items="${grade.project.subjects}">
+				<td>${subjects.name}</td>
+			   		 </c:forEach>
+			    <td>
+			    	<input type="submit" value="Edit Grade">
+			    </td>
+			    </form>
+			    <td>
+				   <form action="deleteGrade.do" method="POST">
+					   <input type="submit" value="Delete Record">
+					   <input type="hidden" name="projectId" value="${grade.project.id}"/>
+					   <input type="hidden" name="studentId" value="${grade.student.id}"/>
+				   </form>
+				 </td>
+			  </tr>
 			</c:forEach>
-			
-			</select>
-			</td>
-		   <td><input type="text" name="comment" value="${grade.comments}"></td>
-			</td>
-		    <c:forEach var="subjects" items="${grade.project.subjects}">
-		    <td>${subjects.name}</td>
-		    </c:forEach>
-		     <td><input type="submit" value="Edit Grade"></td>
-		    </form>
-		    <td><form action="deleteGrade.do" method="POST">
-		   <input type="submit" value="Delete Record">
-		   <input type="hidden" name="projectId" value="${grade.project.id}"/>
-		   <input type="hidden" name="studentId" value="${grade.student.id}"/>
-		   </form>
-		   </td>
-		  </tr>
-		</c:forEach>
 		  </tr>
 	</table>
 </div>
+
+	<c:if test="${! empty gradeMconfirm}">
+		<h4> ${gradeMconfirm} </h4>	
+	</c:if>
+		
+	<c:if test="${! empty gradeDconfirm}">
+		<h4> ${gradeDconfirm} </h4>	
+	</c:if>
+
 </c:when>
 
 <c:otherwise>
-	<p>You need to be logged in fool!</p>
+	<h4>You need to be logged in fool!</h4>
 </c:otherwise>
+
 </c:choose>

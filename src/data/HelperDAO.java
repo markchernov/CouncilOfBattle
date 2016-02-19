@@ -530,7 +530,7 @@ public class HelperDAO {
 		em.merge(t);
 		em.persist(t);
 
-		String confirmation = "Ticket record for " + t.getStudent().getFirstname() + " was created";
+		String confirmation = "Ticket record for " + t.getStudent().getFirstname() + " was created. We suggest you get a burrito while you wait";
 
 		return confirmation;
 	}

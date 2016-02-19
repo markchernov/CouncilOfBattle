@@ -59,7 +59,7 @@
                 <li><a href="createUserView.do">Create User</a></li>
                 </c:when>
                  </c:choose> 
-                <li><a href="index.jsp">About</a></li>
+                <li><a href="skillDistillery.jsp">About</a></li>
 				<li><a href="index.jsp">Help</a></li>
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
@@ -69,8 +69,6 @@
 </header>
 
 
-<!--We are calling the specific .jsp segement by the buttons from the header menu-->
-<!--The .do method calls the controller which returns the name of the .jsp segment-->
 <c:choose>
 <c:when test="${! empty jspString}">
 <jsp:include page="${jspString}"></jsp:include>
