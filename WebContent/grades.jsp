@@ -12,9 +12,9 @@
 		<tr>			 	
 		    <th>Project Name</th>
 		    <th>Grade</th>
-		    <th>Commments</th>
+		    <th>Comments</th>
 		    <th>Subject(s)</th>
-		    <th></th>
+		    <th>Average Grade</th>
 		    <th></th>
 		    <th></th>
 		</tr>
@@ -27,6 +27,7 @@
 		    <c:forEach var="subjects" items="${grade.project.subjects}">
 		    <td>${subjects.name}</td>
 		    </c:forEach>
+		    <td>${averageGrade}</td>
 		  </tr>
 		</c:forEach>
 		  </tr>

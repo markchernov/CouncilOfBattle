@@ -188,6 +188,7 @@ public class HelperController {
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("projectList", helperDAO.getAllProjects());
+		mv.addObject("averageGrade", helperDAO.getAverageGrade((Student) sessionUser));
 		if (accessLevel.equals("1")) {
 
 			Student currentStudent = (Student) sessionUser;
@@ -254,7 +255,9 @@ public class HelperController {
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
 			@RequestParam("projectId") String projectId) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		helperDAO.deleteStudentGradeRecord(studentId, projectId);
+		String confirmation = helperDAO.deleteStudentGradeRecord(studentId, projectId);
+		mv.addObject(confirmation);
+		//TODO: ^^ use this confirmation string in the grades.jsp
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
@@ -291,16 +294,16 @@ public class HelperController {
 		return mv;
 	}
 
-	
-	@RequestMapping (path = "newTicket.do", method = RequestMethod.POST)
-	public ModelAndView createTicket(@ModelAttribute("accessLevel") String accessLevel, @ModelAttribute("sessionUser") User sessionUser, 
-			@RequestParam("subjects") String subjects) {
+	@RequestMapping(path = "newTicket.do", method = RequestMethod.POST)
+	public ModelAndView createTicket(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("subjects") String subjects) {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject(helperDAO.createNewTicket(sessionUser, subjects, accessLevel));
-		mv.addObject("confirmationString", "Your ticket has been submitted. We suggest you get a burrito while you wait.");
-		//TODO: add this ^^ to the TicketForm.jsp after you've merged branches
-	return mv;
-	}	
+		mv.addObject("confirmationString",
+				"Your ticket has been submitted. We suggest you get a burrito while you wait.");
+		// TODO: add this ^^ to the TicketForm.jsp after you've merged branches
+		return mv;
+	}
 
 	@RequestMapping(path = "ticketing.do", method = RequestMethod.GET)
 	public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel,
@@ -351,9 +354,63 @@ public class HelperController {
 			return mv;
 		}
 	}
-//	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST){
-//	public ModelAndView intsructor
-//	}
 
-//	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
+	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
+	public ModelAndView intsructorUpdateTicket(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId, 
+			@RequestParam("statusOpen") String statusOpen) {
+			
+			ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+			
+			try{
+				
+				String confirmation = helperDAO.updateTicket(sessionUser, ticketId, statusOpen);
+				mv.addObject("confirmationString", confirmation);
+				mv.addObject("jspString", "attendance.jsp");
+				
+				return mv;
+
+			}
+			catch(Exception e){
+				System.out.println("TEST in the modifyTicket catch block: "+e);
+				//TODO: ^^ validation test needed for more precise exception
+				return mv;
+			}
+	}
+
+//	@RequestMapping create a delete ticket method
+
+
+
+	@RequestMapping(path = "createUserView.do")
+	public ModelAndView createUserView() {
+
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString", "users.jsp");
+
+		/*
+		 * mv.addObject("studentLastnameList",
+		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
+		 */
+		return mv;
+	}
+
+	@RequestMapping(path = "createUser.do")
+	public ModelAndView createUser(@RequestParam("firstname") String firstName,
+			@RequestParam("lastname") String lastName, @RequestParam("email") String email,
+			@RequestParam("usertype") String usertype) {
+
+		User result = helperDAO.createUser(firstName, lastName, email, usertype);
+
+		System.out.println(result);
+
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString", "users.jsp");
+
+		/*
+		 * mv.addObject("studentLastnameList",
+		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
+		 */
+		return mv;
+	}
 }
