@@ -12,7 +12,7 @@
 </head>
 
 <body>
-
+<link style="text" rel="stylesheet" href="extra.css"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -23,11 +23,11 @@
 
 </head>
 
-<body>
+<body class="body blue lighten-5">
 	<header>
 
 		<nav>
-			<div class="nav-wrapper deep-purple">
+			<div class="nav-wrapper blue darken-3">
     <c:choose> 
         <c:when test="${accessLevel == '1'}"> 
              Welcome ${sessionUser.firstname}, you are signed in as a Student
@@ -48,8 +48,8 @@
 
 <div id="sign-in">
 
-        <nav>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <nav id="nav-wrapper" class="left hide-on-med-and-down green">
+            <ul>
                 <li><a href=UserDesktop.jsp>Home</a></li>
                 <li><a href="attendance.do">Attendance</a></li>
                 <li><a href="grades.do">Grades</a></li>
@@ -60,11 +60,14 @@
                 </c:when>
                  </c:choose> 
                 <li><a href="skillDistillery.jsp">About</a></li>
-				<li><a href="http://www.lmgtfy.com">Help</a></li>
+				<li><a href="http://www.lmgtfy.com/?q=what+is+the+internet%3F">Help</a></li>
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
             </ul>
         </nav>
+        <div class="SD-logo">
+ 			<img src="http://dev.skilldistillery.com/wiki/images/thumb/5/51/Skilldistillery_correct_box_trans.png/208px-Skilldistillery_correct_box_trans.png"/>
+        </div>
 </div>
 </header>
 
@@ -74,23 +77,16 @@
 <jsp:include page="${jspString}"></jsp:include>
 </c:when>
 </c:choose>
-	<footer class="page-footer deep-purple">
+	<footer class="page-footer blue darken-3">
 		<div class="container">
 			<div class="row">
 				<div class="col l6 s12">
 					<h5 class="white-text">Classroom Helper Application</h5>
 					<p class="grey-text text-lighten-4">This is the application to
-						Create, Read ,Update and Delete information.  Powered by coffee, burritos, and 
-						lack of sleep. Council of Battle @Copyright 2016</p>
+						Create, Read ,Update and Delete information while keeping it real.  Hey, hey, parse data every day.</p>
+					<p class="grey-text text-lighten-4">	Powered by coffee, burritos, and lack of sleep. Council of Battle @Copyright 2016</p>
 				</div>
-				<div class="col l4 offset-l2 s12">
-					<h5 class="white-text">Links</h5>
-					<ul>
-						<li><a class="grey-text text-lighten-3" href="index.jsp">
-								Home</a></li>
 
-					</ul>
-				</div>
 			</div>
 		</div>
 		<div class="footer-copyright">

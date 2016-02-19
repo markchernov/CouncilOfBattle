@@ -10,33 +10,20 @@
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
 <title>Skill Distillery</title>
 </head>
-<body>
+<body class="body blue lighten-5">
+
 
 	<header>
 
 		<nav>
-			<div class="nav-wrapper deep-purple">
-    <c:choose> 
-        <c:when test="${accessLevel == '1'}"> 
-             Welcome ${sessionUser.firstname}, you are signed in as a Student
-        </c:when>
-        <c:when test="${accessLevel == '2'}"> 
-             Welcome ${sessionUser.firstname}, you are signed in as a Instructor.
-        </c:when>
-        <c:when test="${accessLevel == '3'}"> 
-             Welcome ${sessionUser.firstname}, you are signed in as a Administrator.
-        </c:when>
-        <c:otherwise>
-      		<c:redirect url="index.jsp"/>
-        </c:otherwise>
-    </c:choose>
+			<div class="nav-wrapper blue darken-3">
 				<a href="#" class="brand-logo center">Classroom Helper </a>
 			</div>
 		</nav>
 
 <div id="sign-in">
 
-        <nav>
+        <nav class="nav-wrapper deep-purple accent-4">
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href=UserDesktop.jsp>Home</a></li>
                 <li><a href="attendance.do">Attendance</a></li>
@@ -48,14 +35,15 @@
                 </c:when>
                  </c:choose> 
                 <li><a href="skillDistillery.jsp">About</a></li>
-				<li><a href="http://www.lmgtfy.com">Help</a></li>
+				<li><a href="http://www.lmgtfy.com/?q=what+is+the+internet%3F">Help</a></li>
                 <li><a href="logout.do">Logout</a></li>
-                <!--TODO: ^^ create logout.do in the controller-->
             </ul>
         </nav>
 </div>
 </header>
-
+<div class="SD-logo">
+		<img src="http://dev.skilldistillery.com/wiki/images/thumb/5/51/Skilldistillery_correct_box_trans.png/208px-Skilldistillery_correct_box_trans.png"/>
+	</div>
 <div class="bio">
 <p>What began as a plot by former Green Berets to import heroin into the United States illegally 
 following the Vietnam conflict has, over the years, evolved into the greatest Java Development Bootcamp in the entire 
@@ -67,12 +55,38 @@ senior-most goons.</p>
 the country.  In terms of elevation with respect to sea-level, these students often find themselves
 higher than they've ever been in their entire lives.</p>
 <br>
-View Staff Bios:
-<a href="Cole.jsp">Cole Frock</a>
-<a href="rob.jsp">Rob Roselius</a>
-<a href="jamie.jsp">Jamie Romero</a>
-<a href="Andrew.jsp">Andrew Conlin</a>
-<a href="Kris.jsp">Kris Kane</a>
+<h5>Meet our staff:</h5>
+<div class="aboutme-box">
+	<div class="staff">
+		<ul>
+			<li><a href="Cole.jsp">Cole Frock</a></li>
+			<li><a href="rob.jsp">Rob Roselius</a></li>
+			<li><a href="jamie.jsp">Jamie Romero</a></li>
+			<li><a href="Andrew.jsp">Andrew Conlin</a></li>
+			<li><a href="Kris.jsp">Kris Kane</a></li>
+		</ul>
+	</div>
+	
 </div>
+</div>
+	<footer class="page-footer blue darken-3">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">Classroom Helper Application</h5>
+					<p class="grey-text text-lighten-4">This is the application to
+						Create, Read ,Update and Delete information while keeping it real.  Hey, hey, parse data every day.</p>
+					<p class="grey-text text-lighten-4">	Powered by coffee, burritos, and lack of sleep. Council of Battle @Copyright 2016</p>
+				</div>
+
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2016 Copyright Text <a class="grey-text text-lighten-4 right"
+					href="index.jsp">MY HELPER APP</a>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
