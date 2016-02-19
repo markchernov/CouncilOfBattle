@@ -11,6 +11,51 @@
 <title>Skill Distillery</title>
 </head>
 <body>
+
+	<header>
+
+		<nav>
+			<div class="nav-wrapper deep-purple">
+    <c:choose> 
+        <c:when test="${accessLevel == '1'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Student
+        </c:when>
+        <c:when test="${accessLevel == '2'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Instructor.
+        </c:when>
+        <c:when test="${accessLevel == '3'}"> 
+             Welcome ${sessionUser.firstname}, you are signed in as a Administrator.
+        </c:when>
+        <c:otherwise>
+      		<c:redirect url="index.jsp"/>
+        </c:otherwise>
+    </c:choose>
+				<a href="#" class="brand-logo center">Classroom Helper </a>
+			</div>
+		</nav>
+
+<div id="sign-in">
+
+        <nav>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href=UserDesktop.jsp>Home</a></li>
+                <li><a href="attendance.do">Attendance</a></li>
+                <li><a href="grades.do">Grades</a></li>
+                <li><a href="ticketing.do">Help Ticket</a></li>
+                 <c:choose> 
+                <c:when test="${accessLevel == '3'}"> 
+                <li><a href="createUserView.do">Create User</a></li>
+                </c:when>
+                 </c:choose> 
+                <li><a href="skillDistillery.jsp">About</a></li>
+				<li><a href="http://www.lmgtfy.com">Help</a></li>
+                <li><a href="logout.do">Logout</a></li>
+                <!--TODO: ^^ create logout.do in the controller-->
+            </ul>
+        </nav>
+</div>
+</header>
+
 <div class="bio">
 <p>What began as a plot by former Green Berets to import heroin into the United States illegally 
 following the Vietnam conflict has, over the years, evolved into the greatest Java Development Bootcamp in the entire 

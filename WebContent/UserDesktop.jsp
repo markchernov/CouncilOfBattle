@@ -60,7 +60,7 @@
                 </c:when>
                  </c:choose> 
                 <li><a href="skillDistillery.jsp">About</a></li>
-				<li><a href="index.jsp">Help</a></li>
+				<li><a href="http://www.lmgtfy.com">Help</a></li>
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
             </ul>
