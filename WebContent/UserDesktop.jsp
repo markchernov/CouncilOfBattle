@@ -21,8 +21,6 @@
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 
-
-<!--TODO: ^^ Choose CSS styling  -->
 </head>
 
 <body>
@@ -30,17 +28,6 @@
 
 		<nav>
 			<div class="nav-wrapper deep-purple">
-				<a href="#" class="brand-logo center">Classroom Helper </a>
-				<ul id="nav-mobile" class="left hide-on-med-and-down">
-					<li><a href=index.jsp>Home</a></li>
-					<li><a href="index.jsp">About</a></li>
-					<li><a href="index.jsp">Help</a></li>
-				</ul>
-			</div>
-		</nav>
-
-<div id="sign-in">
-    <div class="logo">Classroom Helper</div><br/>
     <c:choose> 
         <c:when test="${accessLevel == '1'}"> 
              Welcome ${sessionUser.firstname}, you are signed in as a Student
@@ -55,8 +42,12 @@
       		<c:redirect url="index.jsp"/>
         </c:otherwise>
     </c:choose>
+				<a href="#" class="brand-logo center">Classroom Helper </a>
+			</div>
+		</nav>
 
-		<h4>Welcome ${sessionUser.firstname}</h4>
+<div id="sign-in">
+
         <nav>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href=UserDesktop.jsp>Home</a></li>
@@ -68,6 +59,8 @@
                 <li><a href="createUserView.do">Create User</a></li>
                 </c:when>
                  </c:choose> 
+                <li><a href="index.jsp">About</a></li>
+				<li><a href="index.jsp">Help</a></li>
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
             </ul>

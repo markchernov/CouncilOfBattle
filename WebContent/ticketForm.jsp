@@ -12,7 +12,7 @@
 		<form action="createTicket.do" , method="POST">
 			<div id="dropdown-content_left">
 			
-				<select name="subjects">
+				<select name="subjects" class="browser-default">
 				
 					<c:forEach var="subject" items="${subjects}">
 						<option value = "${subject.name}">${subject.name}</option>
@@ -25,11 +25,9 @@
 
 			</div>
 		</form>
-	<from action="showMyTickets", method="POST">
-	<input type="submit" value="Show my Tickets"/>
-	</from>
-
-
+	<form action="ticketing.do", method="GET">
+	<input type="submit" value="Show All Tickets"/>
+	</form>
 		<table>
 			<tr>
 				<th>Id</th>
@@ -59,8 +57,28 @@
 		</table>
 	</c:when>
 	
-	<!--access for intructors or admin -->
 	<c:when test="${accessLevel == '2' || accessLevel == '3' }">
+			<p>Create a New Ticket Record</p>
+		<form action="createTicket.do", method="POST">
+			<div id="dropdown-content_left">
+			
+				<select name="subjects" class="browser-default">
+				
+					<c:forEach var="subject" items="${subjects}">
+						<option value = "${subject.name}">${subject.name}</option>
+					</c:forEach>
+	
+				</select> <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
+					<input type = "text" name = "description" value="enter your comment"/> 
+	
+					<input type="submit" value="Submit New Ticket, Right Meow!" />
+
+			</div>
+		</form>
+	<form action="ticketing.do", method="GET">
+	<input type="submit" value="Show All Tickets"/>
+	</form>
+
 		<p>All Tickets:</p>
 		<table>
 			<tr>
@@ -89,7 +107,7 @@
 							<td>${ticket.available}</td>
 							<td>${ticket.description}</td>
 							<td>
-									<select name="statusOpen">
+									<select name="statusOpen" class="browser-default">
 									<c:choose>
 										<c:when test="${ticket.statusOpen == 'Y'}">
 											<option selected="true" value="Y">Y</option>
@@ -101,17 +119,29 @@
 										</c:otherwise>
 									</c:choose>
 									</select>
-									<input type="submit" value="Update Ticket">
+							</td>
+							<td>
+								<input type="submit" value="Update Ticket">
 							</td>
 						</form>
+							<td>
+								<form action="deleteTicket.do" method="POST">
+									<input type="hidden" name="ticketId" value="${ticket.id}">
+									<input type="submit" value="Delete Ticket">
+								</form>
+							</td>
 					</tr>
 				</c:forEach>
 			</tr>
-		</table>		
+		</table>
+		<c:if test="${! empty confirmationString}">
+			<h3>${confirmationString}</h3>		
+		</c:if>
 	</c:when>
 	
 <c:otherwise>
 	<p>You need to be logged in fool!</p>
 </c:otherwise>
+
 </c:choose>
 

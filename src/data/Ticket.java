@@ -49,17 +49,16 @@ public class Ticket {
 	
 	private String available;
 	
-	//TODO: make sure user can only select "Y or "N"
 	@Column(name = "status_open")
 	public String statusOpen;
 
 	
 	
-	public String getStatus() {
+	public String getStatusOpen() {
 		return statusOpen;
 	}
 
-	public void setStatus(String statusOpen) {
+	public void setStatusOpen(String statusOpen) {
 		this.statusOpen = statusOpen;
 	}
 
