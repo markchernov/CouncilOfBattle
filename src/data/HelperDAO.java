@@ -497,20 +497,27 @@ public class HelperDAO {
 	}
 	
 	//update ticket method
-	public Ticket updateTicket(Ticket t){
-		int id = t.getId(); 
-		Ticket tempTicket = em.find(Ticket.class, id);
-		tempTicket.statusOpen="Y";
+	public String updateTicket(User sessionUser, String ticketId, String statusOpen){
+		
+		int tId = Integer.parseInt(ticketId);
+		Ticket tempTicket = em.find(Ticket.class, tId);
+		tempTicket.setStatus(statusOpen);
 		em.persist(tempTicket);
+		
+		
+		String confirmation ="Ticket number " + tempTicket.getId() + " has been updated";
 
-		return t;
+		return confirmation;
 	}
 	
+	
 	//delete ticket method
-	public void deleteTicket(Ticket t){
-		int id = t.getId();
-		Ticket tempTicket = em.find(Ticket.class, id);
-		em.remove(tempTicket);
-		
-	}
+//	public void deleteTicket(User sessionUser, String ticketId, String statusOpen){
+//		Ticket t;
+//		int id = t.getId();
+//		Ticket tempTicket = em.find(Ticket.class, id);
+//		em.remove(tempTicket);
+//		
+//	}
+
 }

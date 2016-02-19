@@ -201,7 +201,9 @@ public class HelperController {
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
 			@RequestParam("projectId") String projectId) throws ParseException {
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		helperDAO.deleteStudentGradeRecord(studentId, projectId);
+		String confirmation = helperDAO.deleteStudentGradeRecord(studentId, projectId);
+		mv.addObject(confirmation);
+		//TODO: ^^ use this confirmation string in the grades.jsp
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 
@@ -297,9 +299,29 @@ public class HelperController {
 			return mv;
 		}
 	}
-//	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST){
-//	public ModelAndView intsructor
-//	}
 
-//	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
+	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
+	public ModelAndView intsructorUpdateTicket(@ModelAttribute("accessLevel") String accessLevel,
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId, 
+			@RequestParam("statusOpen") String statusOpen) {
+			
+			ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+			
+			try{
+				
+				String confirmation = helperDAO.updateTicket(sessionUser, ticketId, statusOpen);
+				mv.addObject("confirmationString", confirmation);
+				mv.addObject("jspString", "attendance.jsp");
+				
+				return mv;
+
+			}
+			catch(Exception e){
+				System.out.println("TEST in the modifyTicket catch block: "+e);
+				//TODO: ^^ validation test needed for more precise exception
+				return mv;
+			}
+	}
+
+//	@RequestMapping
 }
