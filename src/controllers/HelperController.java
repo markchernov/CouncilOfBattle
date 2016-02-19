@@ -149,6 +149,7 @@ public class HelperController {
 		mv.addObject("sessionUser", sessionUser);
 		mv.addObject("accessLevel", accessLevel);
 		mv.addObject("projectList", helperDAO.getAllProjects());
+		mv.addObject("averageGrade", helperDAO.getAverageGrade((Student) sessionUser));
 		if (accessLevel.equals("1")) {
 
 			Student currentStudent = (Student) sessionUser;
