@@ -448,7 +448,7 @@ public class HelperController {
 			return mv;
 		}
 	}
-
+	
 	@RequestMapping(path = "createUserView.do")
 	public ModelAndView createUserView(@ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
