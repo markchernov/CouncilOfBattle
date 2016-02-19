@@ -278,7 +278,7 @@ public class HelperController {
 
 	}
 
-	@RequestMapping(path = "createTicket.do", method = RequestMethod.GET)
+	@RequestMapping(path = "createTicket.do", method = RequestMethod.POST)
 	public ModelAndView studentCreateTicket(@ModelAttribute("accessLevel") String accessLevel,
 			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("subjects") String subject,
 			@RequestParam("studentId") String studentId, @RequestParam("description") String description) {
@@ -289,7 +289,7 @@ public class HelperController {
 			mv.addObject("sessionUser", sessionUser);
 			mv.addObject("accessLevel", accessLevel);
 			mv.addObject("subjects", helperDAO.getAllSubjects());
-			mv.addObject("reportString", helperDAO.createNewTicket(sessionUser, subject, description));
+			mv.addObject("reportString", helperDAO.createNewTicket(sessionUser, subject, description.concat(" for I am helpless!")));
 
 			return mv;
 		} catch (Exception e) {
@@ -297,9 +297,7 @@ public class HelperController {
 			return mv;
 		}
 	}
-	// @RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
-	//
-	// @RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
+
 
 	@RequestMapping(path = "createUserView.do")
 	public ModelAndView createUserView() {
@@ -332,5 +330,12 @@ public class HelperController {
 		 */
 		return mv;
 	}
+
+
+//	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST){
+//	public ModelAndView intsructor
+//	}
+
+//	@RequestMapping(path="showMyTickets.do", method=RequestMethod.POST)
 
 }

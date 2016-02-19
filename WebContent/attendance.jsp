@@ -8,9 +8,9 @@
 <c:when test="${accessLevel == '1'}">
 <div id ="studentTable">
 	<form action="attendanceStudent.do" method="GET">
-		Enter Start Date: <input type="date" name="startDate">YYYY-MM-DD
+		Enter Start Date: <input type="date" name="startDate" value="">
 		<br />
-		Enter End Date: <input type="date" name="endDate" />YYYY-MM-DD
+		Enter End Date: <input type="date" name="endDate" value=""/>
 		<input type="submit" value="Search Dates" />
 	</form>
 	

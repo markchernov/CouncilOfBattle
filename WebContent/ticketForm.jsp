@@ -26,8 +26,7 @@
 					</c:forEach>
 	
 				</select> <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
-					
-					<input type = "text" name = "description"/> 
+					<input type = "text" name = "description" value="enter your comment"/> 
 	
 					<input type="submit" value="Submit New Ticket, Right Meow!" />
 
