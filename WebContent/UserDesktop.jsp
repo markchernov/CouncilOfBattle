@@ -13,16 +13,28 @@
 
 <body>
 
-<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <link href="css/animate.css" type="text/css" rel="stylesheet" /> 
- -->
+
 <!--TODO: ^^ Choose CSS styling  -->
 </head>
 
 <body>
-<header>
+	<header>
+
+		<nav>
+			<div class="nav-wrapper deep-purple">
+				<a href="#" class="brand-logo center">Classroom Helper </a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href=index.jsp>Home</a></li>
+					<li><a href="index.jsp">About</a></li>
+					<li><a href="index.jsp">Help</a></li>
+				</ul>
+			</div>
+		</nav>
+
 <div id="sign-in">
     <div class="logo">Classroom Helper</div><br/>
     <c:choose> 
@@ -62,6 +74,31 @@
 <jsp:include page="${jspString}"></jsp:include>
 </c:when>
 </c:choose>
+	<footer class="page-footer deep-purple">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">Classroom Helper Application</h5>
+					<p class="grey-text text-lighten-4">This is the application to
+						Create, Read ,Update and Delete information.  Powered by coffee, burritos, and 
+						lack of sleep. Council of Battle @Copyright 2016</p>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5 class="white-text">Links</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="index.jsp">
+								Home</a></li>
 
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2016 Copyright Text <a class="grey-text text-lighten-4 right"
+					href="index.jsp">MY HELPER APP</a>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
