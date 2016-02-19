@@ -47,6 +47,11 @@
                 <li><a href="attendance.do">Attendance</a></li>
                 <li><a href="grades.do">Grades</a></li>
                 <li><a href="ticketing.do">Help Ticket</a></li>
+                 <c:choose> 
+                <c:when test="${accessLevel == '3'}"> 
+                <li><a href="createUserView.do">Create User</a></li>
+                </c:when>
+                 </c:choose> 
                 <li><a href="logout.do">Logout</a></li>
                 <!--TODO: ^^ create logout.do in the controller-->
             </ul>

@@ -59,6 +59,15 @@ public class HelperDAO {
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+			
+			newUser.setAccount(newAccount);
+			
+			newUser.setCohort(em.find(Cohort.class, 1));
+			
+			
+			em.merge(newUser);
+			em.persist(newUser);
+			
 		}
 
 		else if (usertype.equalsIgnoreCase("instructor")) {
@@ -71,7 +80,7 @@ public class HelperDAO {
 
 			newUser.setEmail(email);
 
-			newUser.setLevel(" ");
+			newUser.setLevel("TA");
 
 			newUser.setUsertype(usertype);
 
@@ -80,12 +89,20 @@ public class HelperDAO {
 			user = newUser;
 
 			Account newAccount = new Account();
+			
+			newAccount.setUser(user);
 
 			newAccount.setAccessLevel("2");
 
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+			
+			newUser.setAccount(newAccount);
+			
+			em.merge(newUser);
+			em.persist(newUser);
+			
 
 		}
 
@@ -104,12 +121,21 @@ public class HelperDAO {
 			user = newUser;
 
 			Account newAccount = new Account();
+			
+			newAccount.setUser(user);
 
 			newAccount.setAccessLevel("3");
 
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+			
+			newUser.setAccount(newAccount);
+			
+			
+			
+			em.merge(newUser);
+			em.persist(newUser);
 
 		}
 
