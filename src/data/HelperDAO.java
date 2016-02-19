@@ -23,13 +23,6 @@ public class HelperDAO {
 
 	/*---------------------- USER METHODS -----------------------*/
 
-	public User getUser(int id) {
-		User us = em.find(User.class, id);
-		em.detach(us);
-		System.out.println(us);
-		return us;
-	}
-
 	public User createUser(String firstname, String lastname, String email, String usertype) {
 
 		User user = null;
@@ -59,6 +52,14 @@ public class HelperDAO {
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			newUser.setCohort(em.find(Cohort.class, 1));
+
+			em.merge(newUser);
+			em.persist(newUser);
+
 		}
 
 		else if (usertype.equalsIgnoreCase("instructor")) {
@@ -71,7 +72,7 @@ public class HelperDAO {
 
 			newUser.setEmail(email);
 
-			newUser.setLevel(" ");
+			newUser.setLevel("TA");
 
 			newUser.setUsertype(usertype);
 
@@ -81,11 +82,18 @@ public class HelperDAO {
 
 			Account newAccount = new Account();
 
+			newAccount.setUser(user);
+
 			newAccount.setAccessLevel("2");
 
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			em.merge(newUser);
+			em.persist(newUser);
 
 		}
 
@@ -105,11 +113,18 @@ public class HelperDAO {
 
 			Account newAccount = new Account();
 
+			newAccount.setUser(user);
+
 			newAccount.setAccessLevel("3");
 
 			newAccount.setUsername("user");
 
 			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			em.merge(newUser);
+			em.persist(newUser);
 
 		}
 
@@ -145,8 +160,6 @@ public class HelperDAO {
 		int id = Integer.parseInt(cohortId);
 
 		Cohort cohort = em.find(Cohort.class, id);
-
-		System.out.println(cohort);
 
 		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
 				.setParameter("cohort", cohort).getResultList();
@@ -217,44 +230,36 @@ public class HelperDAO {
 
 	public List<Attendance> createDailyAttendance(String cohort) throws ParseException {
 
+		List<Student> currentStudents = getStudentsByCohort(cohort);
 
-			List<Student> currentStudents = getStudentsByCohort(cohort);
+		List<Attendance> dailyAttendance = new ArrayList<>();
 
-			List<Attendance> dailyAttendance = new ArrayList<>();
+		for (Student student : currentStudents) {
 
-			for (Student student : currentStudents) {
+			Attendance attendance = new Attendance();
 
-				Attendance attendance = new Attendance();
+			attendance.setStudent(student);
+			attendance.setDate(new Date());
+			attendance.setPresent("Y");
+			attendance.setLate("N");
+			attendance.setExcused("N");
 
-				/*
-				 * SimpleDateFormat formatter = new
-				 * SimpleDateFormat("yyyy-MM-dd");
-				 * 
-				 * Date startDate = formatter.parse("2016-02-17");
-				 */
+			attendance.setCheckin("08:00");
 
-				attendance.setStudent(student);
-				attendance.setDate(new Date());
-				attendance.setPresent("Y");
-				attendance.setLate("N");
-				attendance.setExcused("N");
+			attendance.setCheckout("18:00");
 
-				attendance.setCheckin("08:00");
+			dailyAttendance.add(attendance);
 
-				attendance.setCheckout("18:00");
+			System.out.println(attendance);
+		}
+		for (Attendance attendance : dailyAttendance) {
 
-				dailyAttendance.add(attendance);
+			em.merge(attendance);
+			em.persist(attendance);
 
-				System.out.println(attendance);
-			}
-			for (Attendance attendance : dailyAttendance) {
-				
-				em.merge(attendance);
-				em.persist(attendance);
-				
-			}
-			
-			return dailyAttendance;
+		}
+
+		return dailyAttendance;
 	}
 
 	public String updateDailyAttendance(String userId, String date, String present, String late, String excused,
@@ -263,8 +268,6 @@ public class HelperDAO {
 		String presentChar = present.trim();
 		String lateChar = late.trim();
 		String excusedChar = excused.trim();
-
-		System.out.println("inside updateAttendance");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
@@ -306,12 +309,13 @@ public class HelperDAO {
 
 		em.remove(tempAttendance);
 
-		String confirmation = "Attendance record: " + tempAttendance + " was deleted";
+		String confirmation = "Attendance record for " + tempAttendance.getStudent().getFirstname() + " " + "on the "
+				+ tempAttendance.getDate() + " was deleted";
 
 		return confirmation;
 	}
 
-	public Attendance addDailyAttendance(Student student, Date date, String present, String late, String excused,
+	public String addDailyAttendance(Student student, Date date, String present, String late, String excused,
 			String checkin, String checkout) {
 
 		Attendance attendance = new Attendance();
@@ -326,7 +330,10 @@ public class HelperDAO {
 
 		em.persist(attendance);
 
-		return attendance;
+		String confirmation = "Attendance record for " + attendance.getStudent().getFirstname() + " " + "on the "
+				+ attendance.getDate() + " was created";
+
+		return confirmation;
 
 	}
 
@@ -345,6 +352,29 @@ public class HelperDAO {
 		List<Project> allProjects = em.createNamedQuery("Project.getAllProjects").getResultList();
 
 		return allProjects;
+
+	}
+
+	public String getAverageGrade(Student sessionUserId) {
+
+		Student student = em.find(Student.class, sessionUserId.getId());
+
+		List<Grade> grades = (List<Grade>) student.getGrades();
+
+		double total = 0;
+		double size = grades.size();
+
+		for (Grade grade : grades) {
+
+			total = total + grade.getGrade();
+
+		}
+
+		double averageGrade = total / size;
+
+		String average = total + "";
+
+		return average;
 
 	}
 
@@ -373,7 +403,7 @@ public class HelperDAO {
 
 		em.persist(gradeObject);
 
-		String confirmation = "Grade record: " + gradeObject + " was created";
+		String confirmation = "Grade record for " + gradeObject.getStudent().getFirstname() + " was created";
 
 		return confirmation;
 
@@ -423,7 +453,7 @@ public class HelperDAO {
 
 		em.persist(tempGrade);
 
-		String confirmation = "Grade record: " + tempGrade + " was updated";
+		String confirmation = "Grade record for " + tempGrade.getStudent().getFirstname() + " was updated";
 
 		return confirmation;
 
@@ -443,16 +473,13 @@ public class HelperDAO {
 
 		em.remove(tempGrade);
 
-		String confirmation = "Grade record: " + tempGrade + " was deleted";
+		String confirmation = "Grade record for " + tempGrade.getStudent().getFirstname() + " was deleted";
 
 		return confirmation;
 	}
 
 	/*---------------------- TICKET METHODS -----------------------*/
 
-	
-	
-	
 	public List<Ticket> getAllTickets() {
 		List<Ticket> allTickets = new ArrayList<>();
 		allTickets = em.createNamedQuery("Ticket.getAllTickets").getResultList();
@@ -465,36 +492,35 @@ public class HelperDAO {
 
 		Student student = em.find(Student.class, sessionUserId.getId());
 
-		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent").setParameter("student", student)
-				.getResultList();
+		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent")
+				.setParameter("student", student).getResultList();
 
 		return ticketsByStudent;
 	}
 
-	//create new ticket method
+	// create new ticket method
 	public String createNewTicket(User user, String subject, String description) {
 		Ticket t = new Ticket();
-		t.setStudent((Student)(user));
+		t.setStudent((Student) (user));
 		t.setDate(new Date());
 		t.setDescription(description);
-		
-		//convert string subject into a subject object
-		
-		Subject tempSubject = (Subject) em.createNamedQuery("Subject.getSubjectByName").setParameter("name", subject).getSingleResult();
-		
-		
-		
-		
-		//assign values to new ticket object
+
+		// convert string subject into a subject object
+
+		Subject tempSubject = (Subject) em.createNamedQuery("Subject.getSubjectByName").setParameter("name", subject)
+				.getSingleResult();
+
+		// assign values to new ticket object
 		t.setSubject(tempSubject);
 		t.setAvailable("Available");
 		em.merge(t);
 		em.persist(t);
-		
-		String confirmation = "Ticket record: " + t + " was createdd";
 
-		return confirmation;	
+		String confirmation = "Ticket record for " + t.getStudent().getFirstname() + " was created";
+
+		return confirmation;
 	}
+
 	
 	//update ticket method
 	public String updateTicket(User sessionUser, String ticketId, String statusOpen){
@@ -502,8 +528,8 @@ public class HelperDAO {
 		int tId = Integer.parseInt(ticketId);
 		Ticket tempTicket = em.find(Ticket.class, tId);
 		tempTicket.setStatus(statusOpen);
+
 		em.persist(tempTicket);
-		
 		
 		String confirmation ="Ticket number " + tempTicket.getId() + " has been updated";
 
@@ -519,5 +545,7 @@ public class HelperDAO {
 //		em.remove(tempTicket);
 //		
 //	}
+
+
 
 }

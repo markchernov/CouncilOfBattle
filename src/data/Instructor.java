@@ -65,10 +65,10 @@ public class Instructor extends User {
 		this.competencies = competencies;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Instructor [level=" + level + ", subjects=" + subjects + ", competencies=" + competencies + ", tickets="
 				+ tickets + ", addresses=" + addresses + ", account=" + account + "]";
 	}
-
+*/
 }
