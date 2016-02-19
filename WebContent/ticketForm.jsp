@@ -7,27 +7,40 @@
 
 <c:choose>
 	<c:when test="${accessLevel == '1'}">
-
+<div class="container">
+<div class="row">
 		<p>Create a New Ticket Record</p>
 		<form action="createTicket.do" , method="POST">
-			<div id="dropdown-content_left">
+			<div id="dropdown-content_left" class="col s2">
 			
 				<select name="subjects" class="browser-default">
 				
 					<c:forEach var="subject" items="${subjects}">
 						<option value = "${subject.name}">${subject.name}</option>
 					</c:forEach>
-	
 				</select> <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
+	</div>
+	<div class="col s4">
+				</div>
+				<div class="col s4">
 					<input type = "text" name = "description" value="enter your comment"/> 
-	
-					<input type="submit" value="Submit New Ticket, Right Meow!" />
+				</div>
+						    <button  class="btn waves-effect waves-light deep-purple" value="Submit New Ticket, Right Meow!" type="submit" name="action">Submit New Ticket, Right Meow!
+   		 <i class="material-icons right">send</i>
+  		</button>
 
-			</div>
 		</form>
-	<form action="ticketing.do", method="GET">
-	<input type="submit" value="Show All Tickets"/>
+		<div class="col s2">
+			<form action="ticketing.do", method="GET">
+			<button  class="btn waves-effect waves-light deep-purple" value="Show All Tickets" type="submit" name="action">Show All Tickets
+   		 <i class="material-icons right">send</i>
+  		</button>
 	</form>
+		</div>
+	</div>
+</div>	
+	
+	<div class="container">
 		<table>
 			<tr>
 				<th>Id</th>
@@ -48,32 +61,41 @@
 				</c:forEach>
 			</tr>
 		</table>
+		</div>
+		</div>
 	</c:when>
 	
 	<c:when test="${accessLevel == '2' || accessLevel == '3' }">
+	<div class="container">
 			<p>Create a New Ticket Record</p>
 		<form action="createTicket.do", method="POST">
-			<div id="dropdown-content_left">
-			
+			<div id="dropdown-content_left" class="row">
+			<div class="col s2">
 				<select name="subjects" class="browser-default">
 				
 					<c:forEach var="subject" items="${subjects}">
 						<option value = "${subject.name}">${subject.name}</option>
 					</c:forEach>
-	
-				</select> <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
+				</select>
+				</div>
+				<div class="col s5">
+				 <input type="hidden" value="${sessionUser.id}" name="studentId" /> 
 					<input type = "text" name = "description" value="enter your comment"/> 
-	
-					<input type="submit" value="Submit New Ticket, Right Meow!" />
-
+			</div>
+					   <button  class="btn waves-effect waves-light deep-purple" value="Submit New Ticket, Right Meow!" type="submit" name="action">Submit New Ticket, Right Meow!
+   		 <i class="material-icons right">send</i>
+  		</button>
 			</div>
 		</form>
+	
 	<form action="ticketing.do", method="GET">
-	<input type="submit" value="Show All Tickets"/>
+	<button  class="btn waves-effect waves-light deep-purple" value="Show All Tickets" type="submit" name="action">Show All Tickets
+   		 <i class="material-icons right">send</i>
+  		</button>
 	</form>
-
-		<p>All Tickets:</p>
-		<table>
+	</div>
+		<div>
+		<table class="container">
 			<tr>
 				<th>Id</th>
 				<th>Subject Name</th>
@@ -108,19 +130,24 @@
 									</select>
 							</td>
 							<td>
-								<input type="submit" value="Update Ticket">
+								   <button  class="btn waves-effect waves-light deep-purple" value="Update Ticket" type="submit" name="action">Update Ticket
+   		 <i class="material-icons right">send</i>
+  		</button>
 							</td>
 						</form>
 							<td>
 								<form action="deleteTicket.do" method="POST">
 									<input type="hidden" name="ticketId" value="${ticket.id}">
-									<input type="submit" value="Delete Ticket">
+									<button  class="btn waves-effect waves-light deep-purple" value="Delete Ticket" type="submit" name="action">Delete
+   		 <i class="material-icons right">send</i>
+  		</button>
 								</form>
 							</td>
 					</tr>
 				</c:forEach>
 			</tr>
 		</table>
+		</div>
 		<c:if test="${! empty ticketCconfirm}">
 			<h3>${ticketCconfirm}</h3>		
 		</c:if>
