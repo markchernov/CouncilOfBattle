@@ -13,8 +13,9 @@
 		Enter End Date: <input type="date" name="endDate" value=""/>
 		<input type="submit" value="Search Dates" />
 	</form>
-	
-	
+	<c:if test="${! empty errorString}">
+		<p>${errorString}</p>
+		</c:if>
 	<table>
 		<tr>			 	
 		    <th>Date</th>
@@ -52,7 +53,7 @@
 	<p> ${errorString} </p>
 	</c:if>
 	<form action= "attendanceAdminAndTA.do", method="GET">
-	<select name="lastname">
+	<select class="browser-default" name="lastname">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
 	            <option value="${lastName}">${lastName}</option>
@@ -85,7 +86,7 @@
             <td>${attendance.student.firstname} ${ attendance.student.lastname }</td>
             <td><input type="hidden" name="date" value="${attendance.date}">${attendance.date}</td>
 		    <td>
-		  		<select name="present">
+		  		<select class="browser-default" name="present">
 		  			<c:choose> 
         				<c:when test="${attendance.present == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
@@ -99,7 +100,7 @@
    			 	</select>
    			</td>
 		    <td>
-		  		<select name="late">
+		  		<select class="browser-default" name="late">
 		  			<c:choose> 
         				<c:when test="${attendance.late == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
@@ -113,7 +114,7 @@
    			 	</select>
    			</td>
 		    <td>
-		  		<select name="excused">
+		  		<select class="browser-default" name="excused">
 		  			<c:choose> 
         				<c:when test="${attendance.excused == 'Y'}"> 
         					<option selected="true" value="Y">Y</option>
@@ -128,14 +129,14 @@
    			</td>
 			<c:set var="startParts" value="${fn:split(attendance.checkin, ':')}" />
 			<td>
-			<select name="startHour">
+			<select class="browser-default" name="startHour">
 		    <option selected="${startParts[0]}">${startParts[0]}</option>
 		    <c:forEach begin="0" end="23" var="val">
    			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
 			</c:forEach>
 			</select>
 			:
-			<select name="startMinute">
+			<select class="browser-default" name="startMinute">
 		    <option selected="${startParts[1]}">${startParts[1]}</option>
 		    <c:forEach begin="0" end="59" var="val">
    			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
@@ -144,14 +145,14 @@
 			</td>
 			<c:set var="endParts" value="${fn:split(attendance.checkout, ':')}" />
 			<td>
-			<select name="endHour">
+			<select class="browser-default" name="endHour">
 		    <option selected="${endParts[0]}">${endParts[0]}</option>
 		    <c:forEach begin="0" end="23" var="val">
    			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>
 			</c:forEach>
 			</select>
 			:
-			<select name="endMinute">
+			<select class="browser-default" name="endMinute">
 		    <option selected="${endParts[1]}">${endParts[1]}</option>
 		    <c:forEach begin="0" end="59" var="val">
    			 <option><fmt:formatNumber minIntegerDigits="2" value="${val}"/></option>

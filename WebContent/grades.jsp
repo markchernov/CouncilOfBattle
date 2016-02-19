@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
 <c:choose>
 
 
@@ -36,22 +40,22 @@
 	
 	<p>Create a New Attendance Record</p>
 	<form action="createGrades.do" method="Get">
-	<select name="lastName">
+	<select class="browser-default" name="lastName">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
 	            <option value="${lastName}">${lastName}</option>
 	          </c:forEach>
 	    </c:if>      
     </select>
-    <select name="project">
+    <select class="browser-default" name="project">
 		<c:if test="${! empty projectList}">
 	          <c:forEach var="project" items="${projectList}">
 	            <option value="${project.id}">${project.name}</option>
 	          </c:forEach>
 	    </c:if>      
     </select>
-    <select name="grade">
-		    <option selected="0"></option>
+    <select class="browser-default" name="grade">
+		    <option selected="0">0</option>
 		    <c:forEach begin="0" end="100" var="val">
    			 <option value="${val}">${val}</option>
 			</c:forEach>
@@ -59,9 +63,11 @@
 		Comment: <input type="text" name="comments">
 		<input type="submit" value="GO!">
 	</form>
-	
+	<c:if test="${! empty errorString}">
+	<p> ${errorString} </p>
+	</c:if>
 	<form action= "gradesByLastNameAdminAndTA.do", method="GET">
-	<select name="lastname">
+	<select class="browser-default" name="lastname">
 		<c:if test="${! empty studentLastnameList}">
 	          <c:forEach var="lastName" items="${studentLastnameList}">
 	            <option value="${lastName}">${lastName}</option>
@@ -89,12 +95,15 @@
 		    <td><input type="hidden" name="studentId" value="${grade.student.id}">${grade.student.id}</td>
 		    <td>${grade.student.firstname}  ${grade.student.lastname}</td>	    
 		    <td>${grade.project.name}</td>
-		    <td><input type="hidden" name="projectId" value="${grade.project.id}"><select name="grade">
+		    <td><input type="hidden" name="projectId" value="${grade.project.id}"><select class="browser-default" name="grade">
 		    <option selected="${grade.grade}">${grade.grade}</option>
+		    
 		    <c:forEach begin="0" end="100" var="val">
    			 <option value="${val}">${val}</option>
 			</c:forEach>
+			
 			</select>
+			</td>
 		   <td><input type="text" name="comment" value="${grade.comments}"></td>
 			</td>
 		    <c:forEach var="subjects" items="${grade.project.subjects}">

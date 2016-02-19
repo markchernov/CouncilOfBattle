@@ -76,25 +76,62 @@ public class HelperController {
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,
 			@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate)
-					throws ParseException {
-
+					 {
+		ModelAndView mv = null;
+		try{
 		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate,
 				sessionUser.getId());
-		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
+		mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
 		mv.addObject("jspString", "attendance.jsp");
 
 		return mv;
+		}
+		catch(ParseException e)
+		{
+			mv = new ModelAndView("UserDesktop.jsp");
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
+			return mv;
+		}
+		catch(Exception e)
+		{
+			mv = new ModelAndView("UserDesktop.jsp"); 
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
+			return mv;
+		}
 	}
 
 	@RequestMapping(path = "attendanceAdminAndTA.do", method = RequestMethod.GET)
 	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname) throws ParseException {
+		ModelAndView mv = null;
+		try{
 		List<Attendance> adminStudentAttendance = helperDAO.getStudentAttendanceWithDatesByLastName(startDate, endDate,
 				lastname);
-		ModelAndView mv = new ModelAndView("UserDesktop.jsp", "userAttendance", adminStudentAttendance);
+		 mv = new ModelAndView("UserDesktop.jsp", "userAttendance", adminStudentAttendance);
+		
 		mv.addObject("jspString", "attendance.jsp");
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		return mv;
+	}catch(ParseException e)
+		{
+			mv = new ModelAndView("UserDesktop.jsp"); 
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
+			return mv;
+		}
+		catch(Exception e)
+		{
+			mv = new ModelAndView("UserDesktop.jsp"); 
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
+			return mv;
+		}
 	}
 
 	@RequestMapping(path = "modifyAttendanceRecord.do", method = RequestMethod.POST)
@@ -137,6 +174,7 @@ public class HelperController {
 		} catch (Exception e) {
 			mv.addObject("errorString", "Today's record might have already been entered.");
 			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 			return mv;
 		}
 	}
@@ -144,6 +182,7 @@ public class HelperController {
 	@RequestMapping(path = "grades.do", method = RequestMethod.GET)
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
+	
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("sessionUser", sessionUser);
@@ -161,6 +200,7 @@ public class HelperController {
 		}
 
 		return mv;
+	
 	}
 
 	@RequestMapping(path = "gradesByLastNameAdminAndTA.do", method = RequestMethod.GET)
@@ -189,14 +229,27 @@ public class HelperController {
 	public ModelAndView createGradeForStudent(@RequestParam("lastName") String lastName,
 			@RequestParam("project") String project, @RequestParam("grade") String grade,
 			@RequestParam("comments") String comment) {
+		ModelAndView mv = null;
+		try{
 		String result = helperDAO.createGrade(lastName, project, grade, comment);
-		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
+		 mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		mv.addObject("result", result);
 		return mv;
+	}catch(Exception e)
+	{
+		mv = new ModelAndView("UserDesktop.jsp");
+		mv.addObject("jspString", "grades.jsp");
+		mv.addObject("projectList", helperDAO.getAllProjects());
+		mv.addObject("errorString", "That student might already have a grade for that.");
+		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+	
+		return mv;
 	}
+	}
+	
 
 	@RequestMapping(path = "deleteGrade.do", method = RequestMethod.POST)
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
@@ -206,6 +259,7 @@ public class HelperController {
 		mv.addObject(confirmation);
 		//TODO: ^^ use this confirmation string in the grades.jsp
 		mv.addObject("jspString", "grades.jsp");
+		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 
 		return mv;
