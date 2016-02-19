@@ -376,17 +376,17 @@ public class HelperDAO {
 		List<Grade> grades = (List<Grade>) student.getGrades();
 
 		double total = 0;
-		double size = grades.size();
+		double size = (double)grades.size();
 
 		for (Grade grade : grades) {
 
-			total = total + grade.getGrade();
+			total+=grade.getGrade();
 
 		}
 
 		double averageGrade = total / size;
 
-		String average = total + "";
+		String average = averageGrade + "";
 
 		return average;
 
