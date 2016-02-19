@@ -456,25 +456,22 @@ public class HelperController {
 		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
+		System.out.println(sessionUser.getFirstname());
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "users.jsp");
-
+		mv.addObject("sessionUser", sessionUser);
 		return mv;
 	}
 
 	@RequestMapping(path = "createUser.do")
 	public ModelAndView createUser(@RequestParam("firstname") String firstName,
 			@RequestParam("lastname") String lastName, @RequestParam("email") String email,
-			@RequestParam("usertype") String usertype, @ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel) {
-		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if (areYouLoggedIn == false) {
-			return new ModelAndView("logout.do");
-		}
+			@RequestParam("usertype") String usertype) {
+		
 		String confirmation = helperDAO.createUser(firstName, lastName, email, usertype);
-
+		
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-
+		
 		mv.addObject("confirmationString", confirmation);
 
 		return mv;
