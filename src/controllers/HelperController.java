@@ -41,8 +41,7 @@ public class HelperController {
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -60,39 +59,33 @@ public class HelperController {
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 		}
 		return mv;
-	
+
 	}
 
 	@RequestMapping(path = "attendanceStudent.do", method = RequestMethod.GET)
 	public ModelAndView showAttendance(@ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel,
-			@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate)
-					 {
+			@ModelAttribute("accessLevel") String accessLevel, @RequestParam("startDate") String startDate,
+			@RequestParam("endDate") String endDate) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = null;
-		try{
-		List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate,
-				sessionUser.getId());
-		mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
-		mv.addObject("jspString", "attendance.jsp");
+		try {
+			List<Attendance> studentAttendanceByDate = helperDAO.getStudentAttendanceWithDates(startDate, endDate,
+					sessionUser.getId());
+			mv = new ModelAndView("UserDesktop.jsp", "userAttendance", studentAttendanceByDate);
+			mv.addObject("jspString", "attendance.jsp");
 
-		return mv;
-		}
-		catch(ParseException e)
-		{
+			return mv;
+		} catch (ParseException e) {
 			mv = new ModelAndView("UserDesktop.jsp");
 			mv.addObject("jspString", "attendance.jsp");
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
 			return mv;
-		}
-		catch(Exception e)
-		{
-			mv = new ModelAndView("UserDesktop.jsp"); 
+		} catch (Exception e) {
+			mv = new ModelAndView("UserDesktop.jsp");
 			mv.addObject("jspString", "attendance.jsp");
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
@@ -102,34 +95,31 @@ public class HelperController {
 
 	@RequestMapping(path = "attendanceAdminAndTA.do", method = RequestMethod.GET)
 	public ModelAndView adminShowAttendance(@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname,@ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel) throws ParseException {
+			@RequestParam("endDate") String endDate, @RequestParam("lastname") String lastname,
+			@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel)
+					throws ParseException {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = null;
-		
-		try{
-		List<Attendance> adminStudentAttendance = helperDAO.getStudentAttendanceWithDatesByLastName(startDate, endDate,
-				lastname);
-		 mv = new ModelAndView("UserDesktop.jsp", "userAttendance", adminStudentAttendance);
-		
-		mv.addObject("jspString", "attendance.jsp");
-		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
-		return mv;
-	}catch(ParseException e)
-		{
-			mv = new ModelAndView("UserDesktop.jsp"); 
+
+		try {
+			List<Attendance> adminStudentAttendance = helperDAO.getStudentAttendanceWithDatesByLastName(startDate,
+					endDate, lastname);
+			mv = new ModelAndView("UserDesktop.jsp", "userAttendance", adminStudentAttendance);
+
+			mv.addObject("jspString", "attendance.jsp");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			return mv;
+		} catch (ParseException e) {
+			mv = new ModelAndView("UserDesktop.jsp");
 			mv.addObject("jspString", "attendance.jsp");
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
 			return mv;
-		}
-		catch(Exception e)
-		{
-			mv = new ModelAndView("UserDesktop.jsp"); 
+		} catch (Exception e) {
+			mv = new ModelAndView("UserDesktop.jsp");
 			mv.addObject("jspString", "attendance.jsp");
 			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
 			mv.addObject("errorString", "Oh no! It looks like you encountered an error!");
@@ -142,11 +132,10 @@ public class HelperController {
 			@RequestParam("present") String present, @RequestParam("late") String late,
 			@RequestParam("excused") String excused, @RequestParam("startHour") String startHour,
 			@RequestParam("startMinute") String startMinute, @RequestParam("endHour") String endHour,
-			@RequestParam("endMinute") String endMinute,@ModelAttribute("sessionUser") User sessionUser,
+			@RequestParam("endMinute") String endMinute, @ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) throws ParseException {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -160,12 +149,11 @@ public class HelperController {
 	}
 
 	@RequestMapping(path = "deleteAttendanceRecord.do", method = RequestMethod.POST)
-	public ModelAndView deleteAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,@ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel)
-			throws ParseException {
+	public ModelAndView deleteAttendanceRecord(@RequestParam("studentId") String id, @RequestParam("date") String date,
+			@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel)
+					throws ParseException {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -177,11 +165,10 @@ public class HelperController {
 	}
 
 	@RequestMapping(path = "createClassAttendances.do", method = RequestMethod.POST)
-	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort,@ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel) {
+	public ModelAndView adminCreateClassAttendances(@RequestParam("cohort") String cohort,
+			@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -203,8 +190,7 @@ public class HelperController {
 	public ModelAndView showGrades(@ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -224,15 +210,14 @@ public class HelperController {
 		}
 
 		return mv;
-	
+
 	}
 
 	@RequestMapping(path = "gradesByLastNameAdminAndTA.do", method = RequestMethod.GET)
-	public ModelAndView adminShowGradesByLastName(@RequestParam("lastname") String lastname,@ModelAttribute("sessionUser") User sessionUser,
-			@ModelAttribute("accessLevel") String accessLevel) {
+	public ModelAndView adminShowGradesByLastName(@RequestParam("lastname") String lastname,
+			@ModelAttribute("sessionUser") User sessionUser, @ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		List<Grade> studentGrades = helperDAO.getGradeByLastName(lastname);
@@ -246,11 +231,10 @@ public class HelperController {
 	@RequestMapping(path = "modifyGradesRecord.do", method = RequestMethod.POST)
 	public ModelAndView modifyGradesRecord(@RequestParam("studentId") String studentId,
 			@RequestParam("projectId") String projectId, @RequestParam("grade") String grade,
-			@RequestParam("comment") String comment,@ModelAttribute("sessionUser") User sessionUser,
+			@RequestParam("comment") String comment, @ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) throws ParseException {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -264,48 +248,44 @@ public class HelperController {
 	@RequestMapping(path = "createGrades.do", method = RequestMethod.GET)
 	public ModelAndView createGradeForStudent(@RequestParam("lastName") String lastName,
 			@RequestParam("project") String project, @RequestParam("grade") String grade,
-			@RequestParam("comments") String comment,@ModelAttribute("sessionUser") User sessionUser,
+			@RequestParam("comments") String comment, @ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = null;
-		try{
-		String result = helperDAO.createGrade(lastName, project, grade, comment);
-		 mv = new ModelAndView("UserDesktop.jsp");
-		mv.addObject("jspString", "grades.jsp");
-		mv.addObject("projectList", helperDAO.getAllProjects());
-		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
-		mv.addObject("result", result);
-		return mv;
-	}catch(Exception e)
-	{
-		mv = new ModelAndView("UserDesktop.jsp");
-		mv.addObject("jspString", "grades.jsp");
-		mv.addObject("projectList", helperDAO.getAllProjects());
-		mv.addObject("errorString", "That student might already have a grade for that.");
-		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
-	
-		return mv;
+		try {
+			String result = helperDAO.createGrade(lastName, project, grade, comment);
+			mv = new ModelAndView("UserDesktop.jsp");
+			mv.addObject("jspString", "grades.jsp");
+			mv.addObject("projectList", helperDAO.getAllProjects());
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+			mv.addObject("result", result);
+			return mv;
+		} catch (Exception e) {
+			mv = new ModelAndView("UserDesktop.jsp");
+			mv.addObject("jspString", "grades.jsp");
+			mv.addObject("projectList", helperDAO.getAllProjects());
+			mv.addObject("errorString", "That student might already have a grade for that.");
+			mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
+
+			return mv;
+		}
 	}
-	}
-	
 
 	@RequestMapping(path = "deleteGrade.do", method = RequestMethod.POST)
 	public ModelAndView deleteGradesRecord(@RequestParam("studentId") String studentId,
-			@RequestParam("projectId") String projectId,@ModelAttribute("sessionUser") User sessionUser,
+			@RequestParam("projectId") String projectId, @ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) throws ParseException {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		String confirmation = helperDAO.deleteStudentGradeRecord(studentId, projectId);
 		mv.addObject(confirmation);
-		//TODO: ^^ use this confirmation string in the grades.jsp
+		// TODO: ^^ use this confirmation string in the grades.jsp
 		mv.addObject("jspString", "grades.jsp");
 		mv.addObject("projectList", helperDAO.getAllProjects());
 		mv.addObject("studentLastnameList", helperDAO.getStudentsLastNames());
@@ -316,7 +296,7 @@ public class HelperController {
 	@RequestMapping(path = "login.do", method = RequestMethod.POST)
 	public ModelAndView loginUser(@RequestParam("username") String username,
 			@RequestParam("password") String password) {
-		
+
 		ModelAndView mv = new ModelAndView();
 		User currentUser = helperDAO.loginUser(username, password);
 		// User currentUser = helperDAO.loginUser("inst", "54321");
@@ -346,8 +326,7 @@ public class HelperController {
 	public ModelAndView createTicket(@ModelAttribute("accessLevel") String accessLevel,
 			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("subjects") String subjects) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -362,8 +341,7 @@ public class HelperController {
 	public ModelAndView ticketForm(@ModelAttribute("accessLevel") String accessLevel,
 			@ModelAttribute("sessionUser") User sessionUser) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -387,7 +365,7 @@ public class HelperController {
 			allTickets = helperDAO.getAllTickets();
 			mv.addObject("tickets", allTickets);
 			mv.addObject("subjects", helperDAO.getAllSubjects());
-			
+
 			return mv;
 
 		} else {
@@ -401,8 +379,7 @@ public class HelperController {
 			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("subjects") String subject,
 			@RequestParam("studentId") String studentId, @RequestParam("description") String description) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
@@ -412,7 +389,8 @@ public class HelperController {
 			mv.addObject("sessionUser", sessionUser);
 			mv.addObject("accessLevel", accessLevel);
 			mv.addObject("subjects", helperDAO.getAllSubjects());
-			mv.addObject("reportString", helperDAO.createNewTicket(sessionUser, subject, description.concat(" for I am helpless!")));
+			mv.addObject("reportString",
+					helperDAO.createNewTicket(sessionUser, subject, description.concat(" for I am helpless!")));
 
 			return mv;
 		} catch (Exception e) {
@@ -421,73 +399,63 @@ public class HelperController {
 		}
 	}
 
-	@RequestMapping(path="modifyTicket.do", method=RequestMethod.POST)
+	@RequestMapping(path = "modifyTicket.do", method = RequestMethod.POST)
 	public ModelAndView intsructorUpdateTicket(@ModelAttribute("accessLevel") String accessLevel,
-			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId, 
+			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId,
 			@RequestParam("statusOpen") String statusOpen) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
-			ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-			
-			try{
-				
-				String confirmation = helperDAO.updateTicket(sessionUser, ticketId, statusOpen);
-				mv.addObject("confirmationString", confirmation);
-				mv.addObject("jspString", "ticketForm.jsp");
-				
-				return mv;
+		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 
-			}
-			catch(Exception e){
-				System.out.println("TEST in the modifyTicket catch block: "+e);
-				//TODO: ^^ validation test needed for more precise exception
-				return mv;
-			}
+		try {
+
+			String confirmation = helperDAO.updateTicket(sessionUser, ticketId, statusOpen);
+			mv.addObject("confirmationString", confirmation);
+			mv.addObject("jspString", "ticketForm.jsp");
+
+			return mv;
+
+		} catch (Exception e) {
+			System.out.println("TEST in the modifyTicket catch block: " + e);
+			// TODO: ^^ validation test needed for more precise exception
+			return mv;
+		}
 	}
-	@RequestMapping(path="deleteTicket.do", method=RequestMethod.POST)
+
+	@RequestMapping(path = "deleteTicket.do", method = RequestMethod.POST)
 	public ModelAndView intsructorDeleteTicket(@ModelAttribute("accessLevel") String accessLevel,
 			@ModelAttribute("sessionUser") User sessionUser, @RequestParam("ticketId") String ticketId) {
-		
+
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		
-		try{
-			
+
+		try {
+
 			String confirmation = helperDAO.deleteTicket(sessionUser, ticketId);
 			mv.addObject("confirmationString", confirmation);
-			//TODO: ^^ remember to add string to jsp
+			// TODO: ^^ remember to add string to jsp
 			mv.addObject("jspString", "ticketForm.jsp");
-			
+
 			return mv;
-			
-		}
-		catch(Exception e){
-			System.out.println("TEST in the modifyTicket catch block: "+e);
-			//TODO: ^^ validation test needed for more precise exception
+
+		} catch (Exception e) {
+			System.out.println("TEST in the modifyTicket catch block: " + e);
+			// TODO: ^^ validation test needed for more precise exception
 			return mv;
 		}
 	}
-
-
-
 
 	@RequestMapping(path = "createUserView.do")
 	public ModelAndView createUserView(@ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
 		mv.addObject("jspString", "users.jsp");
 
-		/*
-		 * mv.addObject("studentLastnameList",
-		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
-		 */
 		return mv;
 	}
 
@@ -497,21 +465,15 @@ public class HelperController {
 			@RequestParam("usertype") String usertype, @ModelAttribute("sessionUser") User sessionUser,
 			@ModelAttribute("accessLevel") String accessLevel) {
 		boolean areYouLoggedIn = helperDAO.userLoginCheck(sessionUser, accessLevel);
-		if(areYouLoggedIn == false)
-		{
+		if (areYouLoggedIn == false) {
 			return new ModelAndView("logout.do");
 		}
-		User result = helperDAO.createUser(firstName, lastName, email, usertype);
-
-		System.out.println(result);
+		String confirmation = helperDAO.createUser(firstName, lastName, email, usertype);
 
 		ModelAndView mv = new ModelAndView("UserDesktop.jsp");
-		mv.addObject("jspString", "users.jsp");
 
-		/*
-		 * mv.addObject("studentLastnameList",
-		 * helperDAO.getStudentsLastNames()); mv.addObject("result", result);
-		 */
+		mv.addObject("confirmationString", confirmation);
+
 		return mv;
 	}
 }
