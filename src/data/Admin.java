@@ -23,10 +23,10 @@ public class Admin  extends User{
 		this.department = department;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Admin [department=" + department + ", addresses=" + addresses + ", accounts=" + account + super.toString()+"]";
-	}
+	}*/
 	
 	
 	

@@ -8,11 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "subjects")
+
+@NamedQueries({ @NamedQuery(name = "Subject.getAllSubjects", query = "select s from Subject s "),
+	@NamedQuery(name = "Subject.getSubjectByName", query = "select s from Subject s where s.name = :name ")})
+
+
 
 public class Subject {
 

@@ -22,11 +22,11 @@ import javax.persistence.Table;
 public class Account {
 
 	@Column(name = "access_level")
-	String accessLevel;
+	private String accessLevel;
 
-	String password;
+	private String password;
 	
-	String username;
+	private String username;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -38,6 +38,8 @@ public class Account {
 	public Account() {}
 
 
+	
+	
 
 	public String getAccessLevel() {
 		return accessLevel;

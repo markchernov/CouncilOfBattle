@@ -36,11 +36,8 @@ public class User {
 	private String lastname;
 	private String email;
 
-	/*@OneToOne(mappedBy = "user")
-	private Student student;
-
-	@OneToOne(mappedBy = "user")
-	private Instructor instructor;*/
+	@Column(name = "user_type")
+	private String usertype;
 
 	@OneToMany(mappedBy = "user")
 	protected Collection<Address> addresses;
@@ -51,13 +48,34 @@ public class User {
 	
 	
 
-	/*public User() {};*/
+	public User() {};
 
 
 
 
 	public int getId() {
 		return id;
+	}
+
+
+
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+
+
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
+
+
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 
@@ -168,11 +186,11 @@ public class User {
 
 
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", addresses=" + addresses + ", accounts=" + account + "]";
-	}
+	}*/
 
 
 

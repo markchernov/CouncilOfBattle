@@ -9,10 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tickets")
+
+
+@NamedQueries({
+	/*
+	 * @NamedQuery(name="Attendance.getAttendancebyId", query=
+	 * "select s.attendance from Student s where s.student.id = :id"),
+	 */
+	@NamedQuery(name = "Ticket.getAllTickets", query = "select t from Ticket t "),
+	@NamedQuery(name = "Ticket.getTicketsByStudent", query = "select t from Ticket t where t.student = :student"),})
+
 
 public class Ticket {
 
@@ -34,6 +46,21 @@ public class Ticket {
 	private Instructor instructor;
 
 	private String description;
+	
+	private String available;
+	
+	@Column(name = "status_open")
+	public String statusOpen;
+
+	
+	
+	public String getStatusOpen() {
+		return statusOpen;
+	}
+
+	public void setStatusOpen(String statusOpen) {
+		this.statusOpen = statusOpen;
+	}
 
 	private Date date;
 	@Column(name = "submit_time")
@@ -101,12 +128,20 @@ public class Ticket {
 		this.description = description;
 	}
 
-	@Override
+	public String getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(String available) {
+		this.available = available;
+	}
+
+	/*@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", student=" + student + ", subject=" + subject + ", instructor=" + instructor
 				+ ", description=" + description  + ", submitTime=" + submitTime + ", closeTime="
 				+ closeTime + "]";
-	}
+	}*/
 
 	
 

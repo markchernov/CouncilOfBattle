@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,34 +19,144 @@ public class HelperDAO {
 	private EntityManager em;
 
 	/*---------------------- USER METHODS -----------------------*/
-
-	public User getUser(int id) {
-		User us = em.find(User.class, id);
-		em.detach(us);
-		System.out.println(us);
-		return us;
+	public boolean userLoginCheck(User sessionUser, String accessLevel) {
+		if (sessionUser == null || accessLevel == "") {
+			return false;
+		} else if (sessionUser != null || accessLevel != "") {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	public User setUser() {
+	public String createUser(String firstname, String lastname, String email, String usertype) {
 
-		User user = new User();
+		User user = null;
 
-		user.setFirstname("Ben");
-		user.setLastname("K");
-		user.setEmail("bk@gmail.com");
+		if (usertype.equalsIgnoreCase("student")) {
 
-		em.persist(user);
+			Student newUser = new Student();
 
-		System.out.println(user);
-		return user;
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setCohort(new Cohort());
+
+			newUser.setUsertype(usertype);
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setUser(user);
+
+			newAccount.setAccessLevel("1");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			newUser.setCohort(em.find(Cohort.class, 1));
+
+			em.merge(newUser);
+			em.persist(newUser);
+
+			String confirmation = "New Student " + newUser.getFirstname() + " has been created";
+			return confirmation;
+
+		}
+
+		else if (usertype.equalsIgnoreCase("instructor")) {
+
+			Instructor newUser = new Instructor();
+
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setLevel("TA");
+
+			newUser.setUsertype(usertype);
+
+			newUser.setSubjects(new ArrayList<Subject>());
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setUser(user);
+
+			newAccount.setAccessLevel("2");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			em.merge(newUser);
+			em.persist(newUser);
+
+			String confirmation = "New Instructor " + newUser.getFirstname() + " has been created";
+			return confirmation;
+
+		}
+
+		else if (usertype.equalsIgnoreCase("admin")) {
+
+			Admin newUser = new Admin();
+
+			newUser.setFirstname(firstname);
+
+			newUser.setLastname(lastname);
+
+			newUser.setEmail(email);
+
+			newUser.setDepartment(" ");
+
+			user = newUser;
+
+			Account newAccount = new Account();
+
+			newAccount.setUser(user);
+
+			newAccount.setAccessLevel("3");
+
+			newAccount.setUsername("user");
+
+			newAccount.setPassword("user");
+
+			newUser.setAccount(newAccount);
+
+			em.merge(newUser);
+			em.persist(newUser);
+
+			String confirmation = "New Admin " + newUser.getFirstname() + " has been created";
+			return confirmation;
+
+		}
+		return "User was created";
+
 	}
 
 	public User loginUser(String username, String password) {
-		Account account = em.createNamedQuery("Account.getAccountbyUserAndPass", Account.class)
-				.setParameter("username", username).setParameter("password", password).getSingleResult();
-		if (account == null) {
+		Account account;
+		try {
+
+			account = em.createNamedQuery("Account.getAccountbyUserAndPass", Account.class)
+					.setParameter("username", username).setParameter("password", password).getSingleResult();
+		} catch (NoResultException | NullPointerException nre) {
+
 			return null;
 		}
+
 		User user = account.getUser();
 		return user;
 	}
@@ -63,8 +174,6 @@ public class HelperDAO {
 		int id = Integer.parseInt(cohortId);
 
 		Cohort cohort = em.find(Cohort.class, id);
-
-		System.out.println(cohort);
 
 		List<Student> studentsByCohort = em.createNamedQuery("Student.getStudentsByCohort")
 				.setParameter("cohort", cohort).getResultList();
@@ -137,19 +246,14 @@ public class HelperDAO {
 
 		List<Student> currentStudents = getStudentsByCohort(cohort);
 
-
 		List<Attendance> dailyAttendance = new ArrayList<>();
 
 		for (Student student : currentStudents) {
 
 			Attendance attendance = new Attendance();
 
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-			Date startDate = formatter.parse("2016-02-17");
-
 			attendance.setStudent(student);
-			attendance.setDate(startDate);
+			attendance.setDate(new Date());
 			attendance.setPresent("Y");
 			attendance.setLate("N");
 			attendance.setExcused("N");
@@ -161,9 +265,7 @@ public class HelperDAO {
 			dailyAttendance.add(attendance);
 
 			System.out.println(attendance);
-
 		}
-
 		for (Attendance attendance : dailyAttendance) {
 
 			em.merge(attendance);
@@ -174,14 +276,12 @@ public class HelperDAO {
 		return dailyAttendance;
 	}
 
-	public void updateDailyAttendance(String userId, String date, String present, String late, String excused)
-			throws ParseException {
+	public String updateDailyAttendance(String userId, String date, String present, String late, String excused,
+			String checkin, String checkout) throws ParseException {
 
 		String presentChar = present.trim();
 		String lateChar = late.trim();
 		String excusedChar = excused.trim();
-
-		System.out.println("insid updateAttendance");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 
@@ -195,19 +295,17 @@ public class HelperDAO {
 
 		Attendance tempAttendance = em.find(Attendance.class, compositeKeyId);
 
-		/* tempAttendance.setStudent(tempUser); */
-		/* tempAttendance.setDate(dailyDate); */
 		tempAttendance.setPresent(presentChar);
 		tempAttendance.setLate(lateChar);
 		tempAttendance.setExcused(excusedChar);
-		/*
-		 * tempAttendance.setCheckin(checkin);
-		 * tempAttendance.setCheckout(checkout);
-		 */
+		tempAttendance.setCheckin(checkin);
+		tempAttendance.setCheckout(checkout);
 
 		em.persist(tempAttendance);
 
-		System.out.println(tempAttendance);
+		String confirmation = "Attendance record: " + tempAttendance + " was updated";
+
+		return confirmation;
 
 	}
 
@@ -225,12 +323,13 @@ public class HelperDAO {
 
 		em.remove(tempAttendance);
 
-		String confirmation = "Attendance record: " + tempAttendance + " was deleted";
+		String confirmation = "Attendance record for " + tempAttendance.getStudent().getFirstname() + " " + "on the "
+				+ tempAttendance.getDate() + " was deleted";
 
 		return confirmation;
 	}
 
-	public Attendance addDailyAttendance(Student student, Date date, String present, String late, String excused,
+	public String addDailyAttendance(Student student, Date date, String present, String late, String excused,
 			String checkin, String checkout) {
 
 		Attendance attendance = new Attendance();
@@ -245,49 +344,219 @@ public class HelperDAO {
 
 		em.persist(attendance);
 
-		return attendance;
+		String confirmation = "Attendance record for " + attendance.getStudent().getFirstname() + " " + "on the "
+				+ attendance.getDate() + " was created";
+
+		return confirmation;
 
 	}
 
 	/*---------------------- GRADES METHODS -----------------------*/
 
-	public Grade createGrade(Student student, Project project, int grade) {
+	public List<Subject> getAllSubjects() {
+
+		List<Subject> allSubjects = em.createNamedQuery("Subject.getAllSubjects").getResultList();
+
+		return allSubjects;
+
+	}
+
+	public List<Project> getAllProjects() {
+
+		List<Project> allProjects = em.createNamedQuery("Project.getAllProjects").getResultList();
+
+		return allProjects;
+
+	}
+
+	public String getAverageGrade(Student sessionUserId) {
+
+		Student student = em.find(Student.class, sessionUserId.getId());
+
+		List<Grade> grades = (List<Grade>) student.getGrades();
+
+		double total = 0;
+		double size = (double)grades.size();
+
+		for (Grade grade : grades) {
+
+			total+=grade.getGrade();
+
+		}
+
+		double averageGrade = total / size;
+
+		String average = averageGrade + "";
+
+		return average;
+
+	}
+
+	public String createGrade(String lastname, String projectId, String grade, String comments) {
 
 		Grade gradeObject = new Grade();
 
-		gradeObject.setStudent(student);
-		gradeObject.setProject(project);
-		gradeObject.setGrade(grade);
+		String lastName = lastname.trim();
+		String project = projectId.trim();
+		String gradeString = grade.trim();
+
+		Student tempStudent = (Student) em.createNamedQuery("Student.getOneStudentByLastName")
+				.setParameter("lastname", lastName).getSingleResult();
+
+		int projectInt = Integer.parseInt(project);
+		int gradeInt = Integer.parseInt(gradeString);
+
+		Project tempProject = em.find(Project.class, projectInt);
+
+		gradeObject.setStudent(tempStudent);
+		gradeObject.setProject(tempProject);
+		gradeObject.setGrade(gradeInt);
+		gradeObject.setComments(comments);
+
+		em.merge(gradeObject);
 
 		em.persist(gradeObject);
 
-		return gradeObject;
+		String confirmation = "Grade record for " + gradeObject.getStudent().getFirstname() + " was created";
+
+		return confirmation;
 
 	}
 
-	public Grade updateGrade(Grade gradeObject, Student student, Project project, int grade) {
+	public List<Grade> getGradeByUserId(Student sessionUserId) {
 
-		gradeObject.setStudent(student);
-		gradeObject.setProject(project);
-		gradeObject.setGrade(grade);
+		Student student = em.find(Student.class, sessionUserId.getId());
 
-		em.persist(gradeObject);
-
-		return gradeObject;
-
-	}
-
-	public List<Grade> getGradeByUserId(String id) {
-		
-		int studentId = Integer.parseInt(id);
-
-		Student student = em.find(Student.class, studentId);
-		
-		
-		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getAttendancebyStudent").setParameter("student", student).getResultList();
-		
+		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesByStudent").setParameter("student", student)
+				.getResultList();
 
 		return gradesByStudent;
+	}
+
+	public List<Grade> getGradeByLastName(String lastname) {
+
+		String studentLastname = lastname.trim();
+
+		Student stu = (Student) em.createNamedQuery("Student.getStudentsByLastName")
+				.setParameter("lastname", studentLastname).getSingleResult();
+
+		Student student = em.find(Student.class, stu.getId());
+
+		List<Grade> gradesByStudent = em.createNamedQuery("Grade.getGradesByStudent").setParameter("student", student)
+				.getResultList();
+
+		return gradesByStudent;
+	}
+
+	public String updateGrade(String userId, String projectId, String grade, String comments) throws ParseException {
+
+		String user = userId.trim();
+		String project = projectId.trim();
+		String gradeString = grade.trim();
+
+		int userInt = Integer.parseInt(user);
+		int projectInt = Integer.parseInt(project);
+		int gradeInt = Integer.parseInt(gradeString);
+
+		GradeId compositeKeyId = new GradeId(userInt, projectInt);
+
+		Grade tempGrade = em.find(Grade.class, compositeKeyId);
+
+		tempGrade.setGrade(gradeInt);
+		tempGrade.setComments(comments);
+
+		em.persist(tempGrade);
+
+		String confirmation = "Grade record for " + tempGrade.getStudent().getFirstname() + " was updated";
+
+		return confirmation;
+
+	}
+
+	public String deleteStudentGradeRecord(String userId, String projectId) throws ParseException {
+
+		String user = userId.trim();
+		String project = projectId.trim();
+
+		int userInt = Integer.parseInt(user);
+		int projectInt = Integer.parseInt(project);
+
+		GradeId compositeKeyId = new GradeId(userInt, projectInt);
+
+		Grade tempGrade = em.find(Grade.class, compositeKeyId);
+
+		em.remove(tempGrade);
+
+		String confirmation = "Grade record for " + tempGrade.getStudent().getFirstname() + " was deleted";
+
+		return confirmation;
+	}
+
+	/*---------------------- TICKET METHODS -----------------------*/
+
+	public List<Ticket> getAllTickets() {
+		List<Ticket> allTickets = new ArrayList<>();
+		allTickets = em.createNamedQuery("Ticket.getAllTickets").getResultList();
+
+		return allTickets;
+
+	}
+
+	public List<Ticket> getTicketByUserId(Student sessionUserId) {
+
+		Student student = em.find(Student.class, sessionUserId.getId());
+
+		List<Ticket> ticketsByStudent = em.createNamedQuery("Ticket.getTicketsByStudent")
+				.setParameter("student", student).getResultList();
+
+		return ticketsByStudent;
+	}
+
+	// create new ticket method
+	public String createNewTicket(User user, String subject, String description) {
+		Ticket t = new Ticket();
+		t.setStudent((Student) (user));
+		t.setDate(new Date());
+		t.setDescription(description);
+
+		// convert string subject into a subject object
+
+		Subject tempSubject = (Subject) em.createNamedQuery("Subject.getSubjectByName").setParameter("name", subject)
+				.getSingleResult();
+
+		// assign values to new ticket object
+		t.setSubject(tempSubject);
+		t.setAvailable("Available");
+		em.merge(t);
+		em.persist(t);
+
+		String confirmation = "Ticket record for " + t.getStudent().getFirstname() + " was created. We suggest you get a burrito while you wait";
+
+		return confirmation;
+	}
+
+	// update ticket method
+	public String updateTicket(User sessionUser, String ticketId, String statusOpen) {
+
+		int tId = Integer.parseInt(ticketId);
+		Ticket tempTicket = em.find(Ticket.class, tId);
+		tempTicket.setStatusOpen(statusOpen);
+
+		em.persist(tempTicket);
+
+		String confirmation = "Ticket number " + tempTicket.getId() + " has been updated";
+		return confirmation;
+	}
+
+	public String deleteTicket(User sessionUser, String ticketId) {
+		int tId = Integer.parseInt(ticketId);
+		Ticket tempTicket = em.find(Ticket.class, tId);
+
+		em.remove(tempTicket);
+
+		String confirmation = "Ticket number " + tempTicket.getId() + " has been deleted";
+		return confirmation;
+
 	}
 
 }
