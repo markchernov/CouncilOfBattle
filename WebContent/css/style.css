@@ -1,0 +1,88 @@
+@CHARSET "ISO-8859-1";
+
+ body {
+	
+	background-color: #b39ddb;
+	
+} 
+
+
+.page-footer deep-purple {
+	
+	
+	display: inline-flex;
+	
+	
+}
+
+
+.main {
+	max-width: 100%; 
+	margin-center: auto; 
+	/* margin: 0 auto; */ 
+}
+
+.SD-logo{
+	width: 100%;
+	text-align:center;	
+	#SD-logo{
+	width: 100%;
+	float: center;
+	opacity: 0.4;
+    filter: alpha(opacity=40);	
+
+}
+
+.staff{
+	float: right;
+}
+
+.about-logo{
+	float: left;
+}
+.aboutme-box{
+	display: inline;
+}
+
+.content img{
+    text-align: right;
+    padding-top: 0px;
+    padding-bottom: 150px;
+    float: right;
+    display: inline;
+    
+}
+
+
+
+
+.content #pad{
+    padding-top: 100px;
+    padding-bottom:100px;
+}
+
+.meetUs{
+    display: inline;
+    color: #ffffff ;
+    padding-top: 80%;
+}
+
+body{
+    background-color: #000000 ;
+}
+
+.content #bio{
+    margin-top: 50px;
+}
+
+
+.content {
+   width: 100%;
+   overflow: hidden;
+   display: inline;
+   color: #ffffff ;
+    text-align: left;
+    display: inline;
+    float: left;
+
+}
