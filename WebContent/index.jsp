@@ -9,30 +9,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta httep-equiv="Content-Type" content="text/html" charset="UTF-8">
-<title>ClassroomHelper</title> 
-<!--TODO: Choose CSS styling  -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-<link href="css/animate.css" type="text/css" rel="stylesheet" />
-
+  <meta httep-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <title>ClassroomHelper</title> 
+  <!--TODO: Choose CSS styling  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/animate.css" type="text/css" rel="stylesheet" />
 </head>
+
 <body class="body blue lighten-5">
-	<header>
+  <header>
+  <nav>
+	<div class="nav-wrapper blue darken-3">
+	  <a href="#" class="brand-logo center">Classroom Helper </a>
+		<ul id="nav-mobile" class="left hide-on-med-and-down">
+		  <li><a href=index.jsp>Home</a></li>
+		  <li><a href="http://www.lmgtfy.com/?q=what+is+the+internet%3F">Help</a></li>
+		</ul>
+	</div>
+  </nav>
 
-		<nav>
-			<div class="nav-wrapper blue darken-3">
-				<a href="#" class="brand-logo center">Classroom Helper </a>
-				<ul id="nav-mobile" class="left hide-on-med-and-down">
-					<li><a href=index.jsp>Home</a></li>
-					<li><a href="http://www.lmgtfy.com/?q=what+is+the+internet%3F">Help</a></li>
-				</ul>
-			</div>
-		</nav>
-
-	</header>
+  </header>
 	<h2>Welcome to Skill Distillery's Classroom Helper</h2>
 	      <div class="row"  class= "center-align">
         <div class="col s12 m6" class="center-align">
