@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HelperDAO {
 
 	@PersistenceContext
-
 	private EntityManager em;
 
 	/*---------------------- USER METHODS -----------------------*/
